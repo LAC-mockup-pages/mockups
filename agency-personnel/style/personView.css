@@ -14,9 +14,16 @@
 .bloc-adrs .input-field {
   padding-left: 10px;
 }
+
 .table {
   margin: 0;
 }
+
+.high-focus {
+  font-size: 1.3em;
+  font-weight: 800;
+}
+
 .history-table,
 .proDev-table,
 .instructional-hours-table,

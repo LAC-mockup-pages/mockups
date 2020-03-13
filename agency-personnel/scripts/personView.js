@@ -76,6 +76,10 @@ const persoInfo = (arrPersoInfo, arrPhonesEmails) => {
   return personInfoBloc;
 };
 
+const toggleFocus = elmnt => {
+  $(elmnt).toggleClass("high-focus");
+};
+
 //* Add button, title and headers
 const topBanner = (personId, title, list = null) => {
   let headerLine = "";
@@ -112,7 +116,7 @@ const createHistoryBody = (personID, arr, list, blockName) => {
     <td class='${blockName}-cell cell-data'>${list[status]}</td>
   </tr>`;
   }
-  return `<div class="${blockName}-table">
+  return `<div class="${blockName}-table" onmouseover="toggleFocus(this)" onmouseout="toggleFocus(this)">
       <table class="table" id='${personID}-${blockName}'>
         <tbody class='${blockName}-body'>${dataRow}</tbody>
     </table></div>`;
@@ -161,7 +165,7 @@ const createProDevBody = (personID, arr, blockName) => {
     <td class='${blockName}-cell-hrs cell-data col-sm-2'>${hours}</td>
   </tr>`;
   }
-  return `<div class="${blockName}-table">
+  return `<div class="${blockName}-table" onmouseover="toggleFocus(this)" onmouseout="toggleFocus(this)">
       <table class="table" id='${personID}-${blockName}'>
         <tbody class='${blockName}-body'>${dataRow}</tbody>
     </table></div>`;
