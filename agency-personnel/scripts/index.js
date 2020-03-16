@@ -197,6 +197,7 @@ $(document).ready(() => {
 
     // Invoking all the blocs for personView
     const blocPerso = persoInfo(
+      rowID,
       listFields.slice(1, 9),
       homeAdrsFields.slice(4)
     );

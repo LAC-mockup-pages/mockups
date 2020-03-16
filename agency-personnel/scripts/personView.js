@@ -14,8 +14,15 @@ const createInputField = (
 };
 
 //* First block ==> Info on person
-const persoInfo = (arrPersoInfo, arrPhonesEmails) => {
-  let personInfoBloc = "";
+const persoInfo = (personID, arrPersoInfo, arrPhonesEmails) => {
+  let personInfoBloc = `
+  <div class="sub-header blue-bg blue-light-text" data-blockId="${personID}">
+    <div class="container-fluid row">
+       <div class="sub-header-title">Personnel Information</div>
+    </div>
+  </div>
+  `;
+  console.log("arrPersoInfo :", arrPersoInfo);
   // first part of person bloc
   for (let i = 0; i < 3; i++) {
     const labelField = placeholderList[i];
