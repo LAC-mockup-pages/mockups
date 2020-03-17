@@ -10,15 +10,15 @@ function addRecord(e, bloc) {
   $(".modal-body form").remove();
   $(".modal-body").append("<form id='modal-form'>Form Here</form>");
   let list;
-  // switch (blockName) {
-  //   case "History":
-  //     list=
-  //     break;
+  switch (blockName) {
+    case "History":
+      list = "list";
+      break;
 
-  //   default:
-  //     console.log('blockName :', `${blockName} Not Found!`);
-  //     break;
-  // }
+    default:
+      console.log("blockName :", `${blockName} Not Found!`);
+      break;
+  }
   return false;
 }
 
