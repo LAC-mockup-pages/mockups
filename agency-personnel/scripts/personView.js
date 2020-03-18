@@ -22,7 +22,7 @@ const persoInfo = (personID, arrPersoInfo, arrPhonesEmails) => {
     </div>
   </div>
   `;
-  console.log("arrPersoInfo :", arrPersoInfo);
+
   // first part of person bloc
   for (let i = 0; i < 3; i++) {
     const labelField = placeholderList[i];

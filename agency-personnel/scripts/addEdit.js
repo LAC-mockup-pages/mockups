@@ -5,20 +5,33 @@ function addRecord(e, bloc) {
   const blockName = $(bloc)
     .attr("data-blockId")
     .split("-");
-  console.log("blockName :", blockName);
   $("#modalBloc").modal("toggle");
   $(".modal-body form").remove();
-  $(".modal-body").append("<form id='modal-form'>Form Here</form>");
-  let list;
-  switch (blockName) {
+  let list = [];
+  let block = "";
+  switch (blockName[1]) {
     case "History":
-      list = "list";
+      list = historyHeaderList;
       break;
 
     default:
-      console.log("blockName :", `${blockName} Not Found!`);
+      console.log("Message :", `${blockName[1]} Not Done Yet!`);
       break;
   }
+
+  for (let item of list) {
+    const identifier = `${bloc}-${item[0]}`;
+    block += createInputField(
+      identifier,
+      item[0].toLowerCase(),
+      item[0],
+      "",
+      "",
+      ""
+    );
+  }
+  $(".modal-body").append(`<form id='modal-form'>${block}</form>`);
+
   return false;
 }
 
