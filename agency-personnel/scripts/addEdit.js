@@ -20,7 +20,7 @@ function addRecord(e, bloc) {
   }
 
   for (let item of list) {
-    const identifier = `${bloc}-${item[0]}`;
+    const identifier = `${$(bloc).attr("data-blockId")}-${item[0]}`;
     block += createInputField(
       identifier,
       item[0].toLowerCase(),
