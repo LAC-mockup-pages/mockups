@@ -14,6 +14,26 @@ function addRecord(e, bloc) {
       list = historyHeaderList;
       break;
 
+    case "Professional Development":
+      list = proDevHeaderList;
+      break;
+
+    case "Instructional Hours":
+      list = instrHrsList;
+      break;
+
+    case "Non Instructional Hours":
+      list = nonInstrHrsList.slice(0, nonInstrHrsList.length - 1);
+      break;
+
+    case "Home Address":
+      list = homeAdrsList;
+      break;
+
+    case "Work Address":
+      list = workAdrsList;
+      break;
+
     default:
       console.log("Message :", `${blockName[1]} Not Done Yet!`);
       break;
