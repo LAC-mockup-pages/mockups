@@ -1,6 +1,6 @@
 // Actions and logic
 
-const outcomesData = [
+const agencyData = [
   {
     id: 1,
     CategoryName: "Social Services",
@@ -83,6 +83,7 @@ const outcomesData = [
     ]
   }
 ];
+const categories = categoryData;
 
 const placeholderList = ["id", "Category", "Description"];
 
@@ -90,7 +91,7 @@ const headerList = ["id", "Category", "Description"];
 
 const labelList = ["id", "Category", "Description"];
 
-const categoryList = outcomesData
+const categoryList = agencyData
   .sort((a, b) => (a.CategoryName > b.CategoryName ? 1 : -1))
   .map(item => [item.id, item.CategoryName]);
 
@@ -162,12 +163,12 @@ $(document).ready(() => {
   // * data viewing
   createNewRecord();
   viewHeaders();
-  viewData(outcomesData);
+  viewData(agencyData);
 
   //* Adding a new outcome
   $("#new-select").change(function() {
     const selectedOption = Number($(this).val());
-    const selectedObj = outcomesData.filter(obj => obj.id === selectedOption);
+    const selectedObj = agencyData.filter(obj => obj.id === selectedOption);
     $(".table-body").empty();
     viewData(selectedObj);
 
@@ -186,7 +187,7 @@ $(document).ready(() => {
     $(".modal-body form").remove();
     $(".modal-body").append("<form id='modal-form'></form>");
 
-    const textValue = outcomesData.filter(obj => obj.id === rowID[0])[0]
+    const textValue = agencyData.filter(obj => obj.id === rowID[0])[0]
       .Descriptions[rowID[1]].Text;
     let optionList = "";
 
