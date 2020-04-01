@@ -104,7 +104,7 @@ const createNewRecord = () => {
   }
 
   $("#new-outcome").append(
-    `   <select id="new-select" form="new-outcome" class="form-control red-text">${optionList}</select>
+    `<select id="new-select" form="new-outcome" class="form-control red-text">${optionList}</select>
         <input type="text" id="input-new-outcome" class="form-control blue-text" placeholder="Description" spellcheck="true" required>
     <button type="submit" id="submit-btn" class="btn btn-primary">Add</button>
     <button type="button" id="cancel-btn" class="btn btn-default">Cancel</button>`
@@ -142,9 +142,10 @@ const createBody = list => {
   const rows = dataList.map(item => {
     const values = item.outcomes
       .map(arr => {
-        return `<div class="inside-value" id=${arr[0]}>${arr[1]}</div>`;
+        return `<div class="inside-value" id=${arr[0]} title="Click to edit" data-catid=${item.catId}>${arr[1]}</div>`;
       })
       .join("");
+
     return `<tr id=${item.catId}>
     <td class="cell-data">${item.cat}</td>
     <td>${values}
@@ -203,33 +204,48 @@ $(document).ready(() => {
   });
 
   //* Select outcome
-  $("[title^='click']").click(function() {
-    const rowID = $(this)
-      .attr("id")
-      .split("-")
-      .map(item => Number(item));
+  $("[title^='Click']").click(function(evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+
+    const catId = $(this).attr("data-catid");
+    const agencyId = $("tbody").attr("id");
+    const selectedTds = $(`#${catId}`).get(0).cells;
+
+    console.log("agencyId : ", agencyId);
+
+    const formEdit = `
+    <form role="form" class="form-inline">
+    <label for="Category">Category</label>
+    <input type="text" id=${$(selectedTds[0]).text()}>
+
+    </form>`;
+
     $("#modalBloc").modal("toggle");
     $(".modal-body form").remove();
-    $(".modal-body").append("<form id='modal-form'></form>");
 
-    const textValue = agencyData.filter(obj => obj.id === rowID[0])[0]
-      .Descriptions[rowID[1]].Text;
-    let optionList = "";
-
-    for (let category of categoryList) {
-      const attrOption = category[0] === rowID[0] ? "selected" : "";
-      optionList += `<option id=${category[0]} value='${category[1]}' ${attrOption}>${category[1]}</option>`;
-    }
-
-    $("#modal-form").append(
-      `<div class="input-field">
-          <label for="modal-select">Category</label>
-          <select id="modal-select" form="modal-form">${optionList}</select>
-      </div>
-      <div class="input-field">
-        <label for=${rowID.join("-")}>Description</label>
-        <input type="text" id=${rowID.join("-")} value='${textValue}'>
-      </div>`
+    $(".modal-body").append(
+      "<form id='modal-form'>Selected outcome here</form>"
     );
+
+    // const textValue = agencyData.filter(obj => obj.id === rowID[0])[0]
+    //   .Descriptions[rowID[1]].Text;
+    // let optionList = "";
+
+    // for (let category of categoryList) {
+    //   const attrOption = category[0] === rowID[0] ? "selected" : "";
+    //   optionList += `<option id=${category[0]} value='${category[1]}' ${attrOption}>${category[1]}</option>`;
+    // }
+
+    // $("#modal-form").append(
+    //   `<div class="input-field">
+    //       <label for="modal-select">Category</label>
+    //       <select id="modal-select" form="modal-form">${optionList}</select>
+    //   </div>
+    //   <div class="input-field">
+    //     <label for=${rowID.join("-")}>Description</label>
+    //     <input type="text" id=${rowID.join("-")} value='${textValue}'>
+    //   </div>`
+    // );
   });
 });
