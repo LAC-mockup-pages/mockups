@@ -63,7 +63,13 @@ tbody {
   line-height: 40px;
 }
 
-.inside-row:hover {
+.inside-value {
+  line-height: 40px;
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+.inside-value:hover {
   background-color: #d3e4f0;
 }
 

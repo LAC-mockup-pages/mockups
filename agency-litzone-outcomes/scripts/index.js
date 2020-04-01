@@ -111,35 +111,6 @@ const createNewRecord = () => {
   );
 };
 
-const viewHeaders = () => {
-  for (let i = 1; i < headerList.length; i++) {
-    $(".table thead").append(`<th>${headerList[i]}</th>`);
-  }
-};
-
-const createDataRow = (numID, arrText) => {
-  let insideRow = "";
-  const arrTextIndexed = arrText.map((line, indx) => [indx, line.Text]);
-
-  for (let textLine of arrTextIndexed.sort((a, b) => (a[1] > b[1] ? 1 : -1))) {
-    insideRow += `<tr class="inside-row" id=${numID +
-      "-" +
-      textLine[0]} title="click to Edit"><td>${textLine[1]}</td></tr>`;
-  }
-  return insideRow;
-};
-
-const viewData = arr => {
-  for (record of arr.sort((a, b) =>
-    a.CategoryName > b.CategoryName ? 1 : -1
-  )) {
-    const { id, CategoryName, Descriptions } = record;
-    const row = createDataRow(id, Descriptions);
-    $(".table-body").append(
-      `<tr id=${id}><td class="cell-data">${CategoryName}</td><td><table>${row}</table></td></tr>`
-    );
-  }
-};
 const createDataList = list => {
   const catList = [];
   for (const item of list) {
@@ -147,7 +118,6 @@ const createDataList = list => {
       catList.push(item.OutcomeSortOrder);
     }
   }
-
   const dataList = catList.map(num => {
     const category = categoryData.filter(
       item => item.OutcomeSortOrder === num
@@ -157,7 +127,6 @@ const createDataList = list => {
       .map(item => [item.ID, item.Description]);
     return { cat: category, catId: num, outcomes: outcomes };
   });
-  console.log("dataList :", dataList);
   return dataList;
 };
 
@@ -167,17 +136,34 @@ const createHeader = list => {
 };
 
 const createBody = list => {
-  createDataList(list);
+  const dataList = createDataList(list);
+  const agId = data[0].AgencyID;
+
+  const rows = dataList.map(item => {
+    const values = item.outcomes
+      .map(arr => {
+        return `<div class="inside-value" id=${arr[0]}>${arr[1]}</div>`;
+      })
+      .join("");
+    return `<tr id=${item.catId}>
+    <td class="cell-data">${item.cat}</td>
+    <td>${values}
+    </td>
+    </tr>`;
+  });
+
+  return `<tbody class="table-body" id=${agId}>${rows}</tbody>`;
 };
 
 const createView = list => {
-  let result = "";
   const headerValues = Object.keys(list[0]).slice(3);
   const tableHead = createHeader(headerValues);
   const orderedList = list.sort((a, b) => (a.Category > b.Category ? 1 : -1));
-  console.log("orderedList :", orderedList);
-  createBody(orderedList);
-  return ``;
+  const tableBody = createBody(orderedList);
+  return `<table class="table">
+    ${tableHead}
+    ${tableBody}
+  </table>`;
 };
 
 $(document).ready(() => {
@@ -202,9 +188,7 @@ $(document).ready(() => {
 
   // * data viewing
   createNewRecord();
-  viewHeaders();
-  viewData(agencyData);
-  createView(data);
+  $(".data-view").append(createView(data));
 
   //* Adding a new outcome
   $("#new-select").change(function() {
