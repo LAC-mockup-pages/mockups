@@ -83,6 +83,7 @@ const agencyData = [
     ]
   }
 ];
+const data = outcomesData;
 const categories = categoryData;
 
 const placeholderList = ["id", "Category", "Description"];
@@ -139,6 +140,45 @@ const viewData = arr => {
     );
   }
 };
+const createDataList = list => {
+  const catList = [];
+  for (const item of list) {
+    if (!catList.includes(item.OutcomeSortOrder)) {
+      catList.push(item.OutcomeSortOrder);
+    }
+  }
+
+  const dataList = catList.map(num => {
+    const category = categoryData.filter(
+      item => item.OutcomeSortOrder === num
+    )[0].Category;
+    const outcomes = data
+      .filter(item => item.OutcomeSortOrder === num)
+      .map(item => [item.ID, item.Description]);
+    return { cat: category, catId: num, outcomes: outcomes };
+  });
+  console.log("dataList :", dataList);
+  return dataList;
+};
+
+const createHeader = list => {
+  const result = list.map(item => `<th>${item}</th>`).join("");
+  return `<thead>${result}</thead>`;
+};
+
+const createBody = list => {
+  createDataList(list);
+};
+
+const createView = list => {
+  let result = "";
+  const headerValues = Object.keys(list[0]).slice(3);
+  const tableHead = createHeader(headerValues);
+  const orderedList = list.sort((a, b) => (a.Category > b.Category ? 1 : -1));
+  console.log("orderedList :", orderedList);
+  createBody(orderedList);
+  return ``;
+};
 
 $(document).ready(() => {
   // * sub-navbar/index.js
@@ -164,6 +204,7 @@ $(document).ready(() => {
   createNewRecord();
   viewHeaders();
   viewData(agencyData);
+  createView(data);
 
   //* Adding a new outcome
   $("#new-select").change(function() {
