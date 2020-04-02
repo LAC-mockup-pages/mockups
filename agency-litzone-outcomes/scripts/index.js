@@ -167,10 +167,9 @@ const createView = list => {
   </table>`;
 };
 
-const saveMods = (elmnt, evnt) => {
-  evnt.preventDefault();
-  evnt.stopPropagation();
-  const submittedData = $(elmnt).serializeArray();
+const saveMods = form => {
+  const submittedData = $(form).serializeArray();
+
   console.log("submittedData :", submittedData);
 };
 
@@ -229,7 +228,8 @@ $(document).ready(() => {
     </div>
     <div class="form-group input-field">
       <label for="Description">Description</label>
-      <input type="text" name="Description" value='${descriptionText}'>
+      <input type="text" name="Description"
+          value='${descriptionText}' spellcheck="true">
     </div>
     `;
 
@@ -238,5 +238,14 @@ $(document).ready(() => {
       .empty()
       .append(editForm)
       .attr("data-identifier", identifier);
+  });
+
+  //* Saving mods after editing selected outcome
+  $("#save-btn").click(function(evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+    const form = `#${$(this).attr("form")}`;
+    saveMods(form);
+    $("#modalBloc").modal("toggle");
   });
 });
