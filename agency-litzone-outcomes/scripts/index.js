@@ -167,10 +167,36 @@ const createView = list => {
   </table>`;
 };
 
+const mergeArraysToObject = (keysArray, valuesArray) => {
+  const result = {};
+  const len = keysArray.length;
+  for (let i = 0; i < len; i++) {
+    const val = valuesArray[i] ? valuesArray[i] : "";
+    result[keysArray[i]] = val;
+  }
+  return result;
+};
+
+const mergeHashToObject = (hashTable, obj) => {
+  for (let record of hashTable) {
+    if (record.name !== "Category") obj[record.name] = record.value;
+  }
+  return obj;
+};
+
 const saveMods = form => {
   const submittedData = $(form).serializeArray();
+  const keys = ["ID", "AgencyID", "OutcomeSortOrder"];
+  const val = $(form)
+    .attr("data-identifier")
+    .split("-");
+  const firstStep = mergeArraysToObject(keys, val);
+  const result = mergeHashToObject(submittedData, firstStep);
 
-  console.log("submittedData :", submittedData);
+  //! =================================================
+  //! JSON Object to send back to database
+  console.log("result :", JSON.stringify(result));
+  //! =================================================
 };
 
 $(document).ready(() => {
@@ -217,9 +243,9 @@ $(document).ready(() => {
     const catId = $(this).attr("data-catid");
     const selectedTds = $(`#${catId}`).get(0).cells;
     const descriptionText = $(this).text();
-    const identifier = `${$(this).attr("id")}-
-                        ${$("tbody").attr("id")}-
-                        ${catId}`;
+    const identifier = `${$(this).attr("id")}-${$("tbody").attr(
+      "id"
+    )}-${catId}`;
 
     const editForm = `
     <div class="form-group input-field">
