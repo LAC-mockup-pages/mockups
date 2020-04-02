@@ -1,5 +1,4 @@
 // Actions and logic
-
 const agencyData = [
   {
     id: 1,
@@ -83,6 +82,7 @@ const agencyData = [
     ]
   }
 ];
+
 const data = outcomesData;
 const categories = categoryData;
 
@@ -167,6 +167,13 @@ const createView = list => {
   </table>`;
 };
 
+const saveMods = (elmnt, evnt) => {
+  evnt.preventDefault();
+  evnt.stopPropagation();
+  const submittedData = $(elmnt).serializeArray();
+  console.log("submittedData :", submittedData);
+};
+
 $(document).ready(() => {
   // * sub-navbar/index.js
   $("#sub-nav li").click(function() {
@@ -209,43 +216,27 @@ $(document).ready(() => {
     evnt.stopPropagation();
 
     const catId = $(this).attr("data-catid");
-    const agencyId = $("tbody").attr("id");
     const selectedTds = $(`#${catId}`).get(0).cells;
+    const descriptionText = $(this).text();
+    const identifier = `${$(this).attr("id")}-
+                        ${$("tbody").attr("id")}-
+                        ${catId}`;
 
-    console.log("agencyId : ", agencyId);
-
-    const formEdit = `
-    <form role="form" class="form-inline">
-    <label for="Category">Category</label>
-    <input type="text" id=${$(selectedTds[0]).text()}>
-
-    </form>`;
+    const editForm = `
+    <div class="form-group input-field">
+      <label for="Category">Category</label>
+      <input type="text" name="Category" value='${$(selectedTds[0]).text()}'>
+    </div>
+    <div class="form-group input-field">
+      <label for="Description">Description</label>
+      <input type="text" name="Description" value='${descriptionText}'>
+    </div>
+    `;
 
     $("#modalBloc").modal("toggle");
-    $(".modal-body form").remove();
-
-    $(".modal-body").append(
-      "<form id='modal-form'>Selected outcome here</form>"
-    );
-
-    // const textValue = agencyData.filter(obj => obj.id === rowID[0])[0]
-    //   .Descriptions[rowID[1]].Text;
-    // let optionList = "";
-
-    // for (let category of categoryList) {
-    //   const attrOption = category[0] === rowID[0] ? "selected" : "";
-    //   optionList += `<option id=${category[0]} value='${category[1]}' ${attrOption}>${category[1]}</option>`;
-    // }
-
-    // $("#modal-form").append(
-    //   `<div class="input-field">
-    //       <label for="modal-select">Category</label>
-    //       <select id="modal-select" form="modal-form">${optionList}</select>
-    //   </div>
-    //   <div class="input-field">
-    //     <label for=${rowID.join("-")}>Description</label>
-    //     <input type="text" id=${rowID.join("-")} value='${textValue}'>
-    //   </div>`
-    // );
+    $("#modal-form")
+      .empty()
+      .append(editForm)
+      .attr("data-identifier", identifier);
   });
 });

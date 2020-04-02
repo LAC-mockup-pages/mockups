@@ -289,15 +289,20 @@
             </button>
             <h4 class="modal-title">Editing an Outcome</h4>
           </div>
-          <div class="modal-body container"></div>
+          <div class="modal-body container-fluid">
+            <form id="modal-form" role="form"></form>
+          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
               Close
             </button>
             <button
-              type="button"
+              type="submit"
               class="btn btn-primary"
+              form="modal-form"
               data-dismiss="modal"
+              onsubmit="saveMods(event,
+                        document.querySelector('#modal-form'))"
               id="save-btn"
             >
               Save changes
