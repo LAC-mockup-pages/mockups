@@ -106,7 +106,7 @@ th {
   border-bottom: 1px solid #2479b5;
 }
 
-#modal-select,
+.modal-select,
 #new-select {
   font-size: 1.3em;
   line-height: 50px;

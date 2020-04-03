@@ -139,19 +139,19 @@ const createBody = list => {
   const dataList = createDataList(list);
   const agId = data[0].AgencyID;
 
-  const rows = dataList.map(item => {
-    const values = item.outcomes
-      .map(arr => {
-        return `<div class="inside-value" id=${arr[0]} title="Click to edit" data-catid=${item.catId}>${arr[1]}</div>`;
-      })
-      .join("");
+  const rows = dataList
+    .map(item => {
+      const values = item.outcomes
+        .map(arr => {
+          return `<div class="inside-value" id=${arr[0]} title="Click to edit" data-catid=${item.catId}>${arr[1]}</div>`;
+        })
+        .join("");
 
-    return `<tr id=${item.catId}>
-    <td class="cell-data">${item.cat}</td>
-    <td>${values}
-    </td>
+      return `<tr id=${item.catId}><td class="cell-data">${item.cat}</td>
+    <td>${values}</td>
     </tr>`;
-  });
+    })
+    .join("");
 
   return `<tbody class="table-body" id=${agId}>${rows}</tbody>`;
 };
@@ -161,10 +161,7 @@ const createView = list => {
   const tableHead = createHeader(headerValues);
   const orderedList = list.sort((a, b) => (a.Category > b.Category ? 1 : -1));
   const tableBody = createBody(orderedList);
-  return `<table class="table">
-    ${tableHead}
-    ${tableBody}
-  </table>`;
+  return `<table class="table">${tableHead}${tableBody}</table>`;
 };
 
 const mergeArraysToObject = (keysArray, valuesArray) => {
@@ -179,14 +176,16 @@ const mergeArraysToObject = (keysArray, valuesArray) => {
 
 const mergeHashToObject = (hashTable, obj) => {
   for (let record of hashTable) {
-    if (record.name !== "Category") obj[record.name] = record.value;
+    obj[record.name] = record.value;
   }
   return obj;
 };
 
 const saveMods = form => {
   const submittedData = $(form).serializeArray();
-  const keys = ["ID", "AgencyID", "OutcomeSortOrder"];
+  console.log("submittedData :", submittedData);
+
+  const keys = ["ID", "AgencyID"];
   const val = $(form)
     .attr("data-identifier")
     .split("-");
@@ -197,6 +196,8 @@ const saveMods = form => {
   //! JSON Object to send back to database
   console.log("result :", JSON.stringify(result));
   //! =================================================
+
+  //ToDO Reloading/resetting with new data
 };
 
 $(document).ready(() => {
@@ -221,7 +222,7 @@ $(document).ready(() => {
 
   // * data viewing
   createNewRecord();
-  $(".data-view").append(createView(data));
+  $("#view-bloc").append(createView(data));
 
   //* Adding a new outcome
   $("#new-select").change(function() {
@@ -241,16 +242,20 @@ $(document).ready(() => {
     evnt.stopPropagation();
 
     const catId = $(this).attr("data-catid");
-    const selectedTds = $(`#${catId}`).get(0).cells;
     const descriptionText = $(this).text();
-    const identifier = `${$(this).attr("id")}-${$("tbody").attr(
-      "id"
-    )}-${catId}`;
+    const identifier = `${$(this).attr("id")}-${$("tbody").attr("id")}`;
+
+    const optionList = categories
+      .map(item => {
+        const selected = item.OutcomeSortOrder === catId ? " selected" : "";
+        return `<option value=${item.OutcomeSortOrder}${selected}>${item.Category}</option>`;
+      })
+      .join("");
 
     const editForm = `
     <div class="form-group input-field">
       <label for="Category">Category</label>
-      <input type="text" name="Category" value='${$(selectedTds[0]).text()}'>
+      <select id="Category" class="modal-select" name="Category">${optionList}</select>
     </div>
     <div class="form-group input-field">
       <label for="Description">Description</label>
