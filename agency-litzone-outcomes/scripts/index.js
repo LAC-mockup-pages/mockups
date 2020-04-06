@@ -94,12 +94,16 @@ const mergeHashToObject = (hashTable, obj) => {
 
 const saveMods = (form) => {
   const submittedData = $(form).serializeArray();
-  console.log("submittedData :", submittedData);
-
   const keys = ["ID", "AgencyID"];
   const val = $(form).attr("data-identifier").split("-");
   const firstStep = mergeArraysToObject(keys, val);
   const result = mergeHashToObject(submittedData, firstStep);
+
+  // alphaNumCheck() <== data-check.js
+  if (!alphaNumCheck(result.Description)) {
+    $(form)[0].reset();
+    return;
+  }
 
   //! =================================================
   //! JSON Object to send back to database
@@ -129,7 +133,7 @@ $(document).ready(() => {
     $("html, body").animate({ scrollTop: 0 }, "600");
   });
 
-  // * data viewing
+  // * Data viewing
   createNewRecord(categories);
   $("#view-bloc").append(createView(data));
 
@@ -142,13 +146,20 @@ $(document).ready(() => {
     $("#cancel-btn").click(() => {
       location.reload();
     });
+
     $("#submit-btn").click(function (evnt) {
       evnt.preventDefault();
       evnt.stopPropagation();
       const form = `#${$(this).attr("form")}`;
+      const newDescription = $(form + ">input").val();
+
+      // alphaNumCheck() <== data-check.js
+      if (!alphaNumCheck(newDescription)) {
+        $(form)[0].reset();
+        return;
+      }
       const agencyId = $("table-body").attr("id");
       const newCategory = $(form + ">select").val();
-      const newDescription = $(form + ">input").val();
       const result = {
         AgencyID: agencyId,
         Category: newCategory,
