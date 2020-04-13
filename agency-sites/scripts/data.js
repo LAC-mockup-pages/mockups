@@ -1,4 +1,4 @@
-        const sitesData = [
+        const sitesDataServer = [
                 { "ID": "5929", "AgencyID": "PRA", "SiteID": "ASISTS_12.4", "SiteName": "ASISTS_Release 12.4Edit", "SiteManager": "Raj Srinivasan", "Address": "85 Broad Street", "City": "New York", "State": "NY", "Zip": "10004", "County": null, "Telephone": "", "CSD": "", "CPD": "", "CD": "", "AD": "", "SD": "" },
                 { "ID": "5679", "AgencyID": "PRA", "SiteID": "BooBooVille", "SiteName": "BooBooVille", "SiteManager": "Hurly Girly", "Address": "123 Shananigans Street", "City": "Funville", "State": "NY", "Zip": "123457896", "County": null, "Telephone": "", "CSD": "", "CPD": "", "CD": "", "AD": "", "SD": "" },
                 { "ID": "4453", "AgencyID": "PRA", "SiteID": "zzz_BKLY29", "SiteName": "Brooklyn 29", "SiteManager": "Barny Benjamin", "Address": "17 Main St", "City": "Brooklyn", "State": "NY", "Zip": "10234", "County": null, "Telephone": "(718) 458-4588", "CSD": "", "CPD": "", "CD": "", "AD": "", "SD": "" },
