@@ -10,7 +10,7 @@ const sitesData = [
       City: "Evanston",
       State: "IL",
       Zip: "60208",
-      County: "potenti in"
+      County: "potenti in",
     },
     Telephone: "847-623-4449",
     Email: "ewell0@wix.com",
@@ -18,7 +18,7 @@ const sitesData = [
     CPD: null,
     CD: null,
     AD: null,
-    SD: null
+    SD: null,
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ const sitesData = [
       City: "Tucson",
       State: "AZ",
       Zip: "85710",
-      County: "faucibus"
+      County: "faucibus",
     },
     Telephone: "520-427-6295",
     Email: "hwillshee1@histats.com",
@@ -38,7 +38,7 @@ const sitesData = [
     CPD: 22,
     CD: 21,
     AD: 11,
-    SD: 16
+    SD: 16,
   },
   {
     id: 3,
@@ -50,7 +50,7 @@ const sitesData = [
       City: "Atlanta",
       State: "GA",
       Zip: "30316",
-      County: "auctor"
+      County: "auctor",
     },
     Telephone: "404-618-3820",
     Email: "abelvard2@arizona.edu",
@@ -58,7 +58,7 @@ const sitesData = [
     CPD: 21,
     CD: 22,
     AD: 9,
-    SD: 11
+    SD: 11,
   },
   {
     id: 4,
@@ -70,7 +70,7 @@ const sitesData = [
       City: "Albany",
       State: "NY",
       Zip: "12205",
-      County: "volutpat"
+      County: "volutpat",
     },
     Telephone: "518-324-9281",
     Email: "daire3@linkedin.com",
@@ -78,7 +78,7 @@ const sitesData = [
     CPD: 14,
     CD: 9,
     AD: 6,
-    SD: 8
+    SD: 8,
   },
   {
     id: 5,
@@ -90,7 +90,7 @@ const sitesData = [
       City: "Indianapolis",
       State: "IN",
       Zip: "46254",
-      County: "sagittis"
+      County: "sagittis",
     },
     Telephone: "317-440-9970",
     Email: "llammas4@wiley.com",
@@ -98,7 +98,7 @@ const sitesData = [
     CPD: 14,
     CD: 14,
     AD: 18,
-    SD: 23
+    SD: 23,
   },
   {
     id: 6,
@@ -110,7 +110,7 @@ const sitesData = [
       City: "Albany",
       State: "NY",
       Zip: "12210",
-      County: "cursus urna"
+      County: "cursus urna",
     },
     Telephone: "518-859-6513",
     Email: "snussey5@amazon.com",
@@ -118,7 +118,7 @@ const sitesData = [
     CPD: 20,
     CD: 14,
     AD: 6,
-    SD: 14
+    SD: 14,
   },
   {
     id: 7,
@@ -130,7 +130,7 @@ const sitesData = [
       City: "Kansas City",
       State: "MO",
       Zip: "64130",
-      County: "ut nulla"
+      County: "ut nulla",
     },
     Telephone: "816-920-5001",
     Email: "hjozwik6@usa.gov",
@@ -138,7 +138,7 @@ const sitesData = [
     CPD: 9,
     CD: 1,
     AD: 22,
-    SD: 7
+    SD: 7,
   },
   {
     id: 8,
@@ -150,7 +150,7 @@ const sitesData = [
       City: "Raleigh",
       State: "NC",
       Zip: "27635",
-      County: "mauris morbi"
+      County: "mauris morbi",
     },
     Telephone: "919-612-7338",
     Email: "gwiz7@upenn.edu",
@@ -158,7 +158,7 @@ const sitesData = [
     CPD: 12,
     CD: 25,
     AD: 20,
-    SD: 15
+    SD: 15,
   },
   {
     id: 9,
@@ -170,7 +170,7 @@ const sitesData = [
       City: "El Paso",
       State: "TX",
       Zip: "88519",
-      County: "porta"
+      County: "porta",
     },
     Telephone: "915-535-2481",
     Email: "cceller8@cornell.edu",
@@ -178,7 +178,7 @@ const sitesData = [
     CPD: 6,
     CD: 13,
     AD: 14,
-    SD: 2
+    SD: 2,
   },
   {
     id: 10,
@@ -190,7 +190,7 @@ const sitesData = [
       City: "New York City",
       State: "NY",
       Zip: "10014",
-      County: "blandit"
+      County: "blandit",
     },
     Telephone: "718-445-2101",
     Email: "cmacconaghy9@usatoday.com",
@@ -198,7 +198,7 @@ const sitesData = [
     CPD: 13,
     CD: 25,
     AD: 10,
-    SD: 20
+    SD: 20,
   },
   {
     id: 11,
@@ -210,7 +210,7 @@ const sitesData = [
       City: "Schenectady",
       State: "NY",
       Zip: "12325",
-      County: "eros"
+      County: "eros",
     },
     Telephone: "518-134-6493",
     Email: "vgehrelsa@sciencedaily.com",
@@ -218,7 +218,7 @@ const sitesData = [
     CPD: 13,
     CD: 11,
     AD: 12,
-    SD: 8
+    SD: 8,
   },
   {
     id: 12,
@@ -230,7 +230,7 @@ const sitesData = [
       City: "Dallas",
       State: "TX",
       Zip: "75260",
-      County: null
+      County: null,
     },
     Telephone: "214-538-1686",
     Email: "dhollingbyb@europa.eu",
@@ -238,7 +238,7 @@ const sitesData = [
     CPD: null,
     CD: null,
     AD: null,
-    SD: null
+    SD: null,
   },
   {
     id: 13,
@@ -250,7 +250,7 @@ const sitesData = [
       City: "Houston",
       State: "TX",
       Zip: "77065",
-      County: null
+      County: null,
     },
     Telephone: "281-160-0022",
     Email: "hbonifacec@hubpages.com",
@@ -258,7 +258,7 @@ const sitesData = [
     CPD: null,
     CD: null,
     AD: null,
-    SD: null
+    SD: null,
   },
   {
     id: 14,
@@ -270,7 +270,7 @@ const sitesData = [
       City: "Austin",
       State: "TX",
       Zip: "78759",
-      County: "a"
+      County: "a",
     },
     Telephone: "512-917-8724",
     Email: "kcrossbyd@ucoz.ru",
@@ -278,7 +278,7 @@ const sitesData = [
     CPD: 7,
     CD: 7,
     AD: 13,
-    SD: 9
+    SD: 9,
   },
   {
     id: 15,
@@ -290,7 +290,7 @@ const sitesData = [
       City: "Birmingham",
       State: "AL",
       Zip: "35295",
-      County: "amet consectetuer"
+      County: "amet consectetuer",
     },
     Telephone: "205-349-3674",
     Email: "cmeriote@wix.com",
@@ -298,7 +298,7 @@ const sitesData = [
     CPD: 18,
     CD: 20,
     AD: 3,
-    SD: 23
+    SD: 23,
   },
   {
     id: 16,
@@ -310,7 +310,7 @@ const sitesData = [
       City: "Shreveport",
       State: "LA",
       Zip: "71105",
-      County: "non quam"
+      County: "non quam",
     },
     Telephone: "318-302-1810",
     Email: "apignyf@1und1.de",
@@ -318,7 +318,7 @@ const sitesData = [
     CPD: 20,
     CD: 20,
     AD: 15,
-    SD: 21
+    SD: 21,
   },
   {
     id: 17,
@@ -330,7 +330,7 @@ const sitesData = [
       City: "Seattle",
       State: "WA",
       Zip: "98121",
-      County: null
+      County: null,
     },
     Telephone: "253-758-0311",
     Email: "abrimmacombeg@taobao.com",
@@ -338,7 +338,7 @@ const sitesData = [
     CPD: null,
     CD: null,
     AD: null,
-    SD: null
+    SD: null,
   },
   {
     id: 18,
@@ -350,7 +350,7 @@ const sitesData = [
       City: "Cape Coral",
       State: "FL",
       Zip: "33915",
-      County: "quisque porta"
+      County: "quisque porta",
     },
     Telephone: "239-263-4293",
     Email: "bbuschh@yelp.com",
@@ -358,7 +358,7 @@ const sitesData = [
     CPD: 7,
     CD: 15,
     AD: 16,
-    SD: 5
+    SD: 5,
   },
   {
     id: 19,
@@ -370,7 +370,7 @@ const sitesData = [
       City: "San Jose",
       State: "CA",
       Zip: "95194",
-      County: "consequat lectus"
+      County: "consequat lectus",
     },
     Telephone: "408-722-3272",
     Email: "hgrewcocki@aol.com",
@@ -378,7 +378,7 @@ const sitesData = [
     CPD: 15,
     CD: 21,
     AD: 15,
-    SD: 24
+    SD: 24,
   },
   {
     id: 20,
@@ -390,7 +390,7 @@ const sitesData = [
       City: "Los Angeles",
       State: "CA",
       Zip: "90081",
-      County: "curabitur convallis"
+      County: "curabitur convallis",
     },
     Telephone: "213-189-4862",
     Email: "lmclaganj@cafepress.com",
@@ -398,7 +398,7 @@ const sitesData = [
     CPD: 19,
     CD: 13,
     AD: 6,
-    SD: 22
+    SD: 22,
   },
   {
     id: 21,
@@ -410,7 +410,7 @@ const sitesData = [
       City: "Kansas City",
       State: "KS",
       Zip: "66160",
-      County: "eu orci"
+      County: "eu orci",
     },
     Telephone: "913-196-3411",
     Email: "jlarozek@drupal.org",
@@ -418,7 +418,7 @@ const sitesData = [
     CPD: 25,
     CD: 7,
     AD: 9,
-    SD: 12
+    SD: 12,
   },
   {
     id: 22,
@@ -430,7 +430,7 @@ const sitesData = [
       City: "Milwaukee",
       State: "WI",
       Zip: "53210",
-      County: "non"
+      County: "non",
     },
     Telephone: "414-607-6116",
     Email: "gcordl@flickr.com",
@@ -438,7 +438,7 @@ const sitesData = [
     CPD: 15,
     CD: 6,
     AD: 2,
-    SD: 2
+    SD: 2,
   },
   {
     id: 23,
@@ -450,7 +450,7 @@ const sitesData = [
       City: "Nashville",
       State: "TN",
       Zip: "37245",
-      County: null
+      County: null,
     },
     Telephone: "615-123-3658",
     Email: "ifanshawem@chron.com",
@@ -458,7 +458,7 @@ const sitesData = [
     CPD: null,
     CD: null,
     AD: null,
-    SD: null
+    SD: null,
   },
   {
     id: 24,
@@ -470,7 +470,7 @@ const sitesData = [
       City: "Carson City",
       State: "NV",
       Zip: "89706",
-      County: null
+      County: null,
     },
     Telephone: "775-867-8529",
     Email: "mtacen@multiply.com",
@@ -478,7 +478,7 @@ const sitesData = [
     CPD: null,
     CD: null,
     AD: null,
-    SD: null
+    SD: null,
   },
   {
     id: 25,
@@ -490,7 +490,7 @@ const sitesData = [
       City: "Bridgeport",
       State: "CT",
       Zip: "06673",
-      County: null
+      County: null,
     },
     Telephone: "203-846-2599",
     Email: "kteareo@squidoo.com",
@@ -498,7 +498,7 @@ const sitesData = [
     CPD: null,
     CD: null,
     AD: null,
-    SD: null
+    SD: null,
   },
   {
     id: 26,
@@ -510,7 +510,7 @@ const sitesData = [
       City: "Tallahassee",
       State: "FL",
       Zip: "32304",
-      County: "dui vel"
+      County: "dui vel",
     },
     Telephone: "850-420-7014",
     Email: "sweatherburnp@amazon.com",
@@ -518,7 +518,7 @@ const sitesData = [
     CPD: 25,
     CD: 11,
     AD: 10,
-    SD: 3
+    SD: 3,
   },
   {
     id: 27,
@@ -530,7 +530,7 @@ const sitesData = [
       City: "Cumming",
       State: "GA",
       Zip: "30130",
-      County: "enim lorem"
+      County: "enim lorem",
     },
     Telephone: "706-647-7424",
     Email: "dgoninq@statcounter.com",
@@ -538,7 +538,7 @@ const sitesData = [
     CPD: 16,
     CD: 25,
     AD: 16,
-    SD: 9
+    SD: 9,
   },
   {
     id: 28,
@@ -550,7 +550,7 @@ const sitesData = [
       City: "Dallas",
       State: "TX",
       Zip: "75342",
-      County: "convallis"
+      County: "convallis",
     },
     Telephone: "469-223-6741",
     Email: "abirtwisler@naver.com",
@@ -558,7 +558,7 @@ const sitesData = [
     CPD: 18,
     CD: 12,
     AD: 22,
-    SD: 14
+    SD: 14,
   },
   {
     id: 29,
@@ -570,7 +570,7 @@ const sitesData = [
       City: "San Diego",
       State: "CA",
       Zip: "92165",
-      County: "posuere metus"
+      County: "posuere metus",
     },
     Telephone: "619-339-4800",
     Email: "abrightlings@chicagotribune.com",
@@ -578,7 +578,7 @@ const sitesData = [
     CPD: 20,
     CD: 25,
     AD: 12,
-    SD: 9
+    SD: 9,
   },
   {
     id: 30,
@@ -590,7 +590,7 @@ const sitesData = [
       City: "Evansville",
       State: "IN",
       Zip: "47747",
-      County: null
+      County: null,
     },
     Telephone: "812-881-2179",
     Email: "jbaackt@ocn.ne.jp",
@@ -598,7 +598,7 @@ const sitesData = [
     CPD: null,
     CD: null,
     AD: null,
-    SD: null
+    SD: null,
   },
   {
     id: 31,
@@ -610,7 +610,7 @@ const sitesData = [
       City: "Nashville",
       State: "TN",
       Zip: "37235",
-      County: "sollicitudin"
+      County: "sollicitudin",
     },
     Telephone: "615-551-8581",
     Email: "jdobrovolskiu@umich.edu",
@@ -618,7 +618,7 @@ const sitesData = [
     CPD: 4,
     CD: 14,
     AD: 22,
-    SD: 15
+    SD: 15,
   },
   {
     id: 32,
@@ -630,7 +630,7 @@ const sitesData = [
       City: "Metairie",
       State: "LA",
       Zip: "70033",
-      County: "primis in"
+      County: "primis in",
     },
     Telephone: "504-839-8545",
     Email: "fehlerdingv@ucla.edu",
@@ -638,7 +638,7 @@ const sitesData = [
     CPD: 14,
     CD: 18,
     AD: 5,
-    SD: 14
+    SD: 14,
   },
   {
     id: 33,
@@ -650,7 +650,7 @@ const sitesData = [
       City: "Topeka",
       State: "KS",
       Zip: "66606",
-      County: "vulputate"
+      County: "vulputate",
     },
     Telephone: "785-664-4510",
     Email: "ebewsheaw@dagondesign.com",
@@ -658,7 +658,7 @@ const sitesData = [
     CPD: 3,
     CD: 16,
     AD: 11,
-    SD: 12
+    SD: 12,
   },
   {
     id: 34,
@@ -670,7 +670,7 @@ const sitesData = [
       City: "Allentown",
       State: "PA",
       Zip: "18105",
-      County: "primis in"
+      County: "primis in",
     },
     Telephone: "610-782-7809",
     Email: "cphillotx@auda.org.au",
@@ -678,7 +678,7 @@ const sitesData = [
     CPD: 11,
     CD: 20,
     AD: 25,
-    SD: 20
+    SD: 20,
   },
   {
     id: 35,
@@ -690,7 +690,7 @@ const sitesData = [
       City: "Southfield",
       State: "MI",
       Zip: "48076",
-      County: "aliquet"
+      County: "aliquet",
     },
     Telephone: "810-404-5733",
     Email: "wvivieny@abc.net.au",
@@ -698,7 +698,7 @@ const sitesData = [
     CPD: 17,
     CD: 8,
     AD: 6,
-    SD: 7
+    SD: 7,
   },
   {
     id: 36,
@@ -710,7 +710,7 @@ const sitesData = [
       City: "Everett",
       State: "WA",
       Zip: "98206",
-      County: "etiam pretium"
+      County: "etiam pretium",
     },
     Telephone: "425-673-9051",
     Email: "phymorz@over-blog.com",
@@ -718,7 +718,7 @@ const sitesData = [
     CPD: 19,
     CD: 14,
     AD: 9,
-    SD: 24
+    SD: 24,
   },
   {
     id: 37,
@@ -730,7 +730,7 @@ const sitesData = [
       City: "Fort Lauderdale",
       State: "FL",
       Zip: "33305",
-      County: "donec"
+      County: "donec",
     },
     Telephone: "954-107-3836",
     Email: "hgemson10@state.gov",
@@ -738,7 +738,7 @@ const sitesData = [
     CPD: 16,
     CD: 10,
     AD: 15,
-    SD: 15
+    SD: 15,
   },
   {
     id: 38,
@@ -750,7 +750,7 @@ const sitesData = [
       City: "Youngstown",
       State: "OH",
       Zip: "44555",
-      County: "odio"
+      County: "odio",
     },
     Telephone: "330-857-5524",
     Email: "gbeggini11@state.tx.us",
@@ -758,7 +758,7 @@ const sitesData = [
     CPD: 25,
     CD: 24,
     AD: 1,
-    SD: 10
+    SD: 10,
   },
   {
     id: 39,
@@ -770,7 +770,7 @@ const sitesData = [
       City: "Norcross",
       State: "GA",
       Zip: "30092",
-      County: "aliquam"
+      County: "aliquam",
     },
     Telephone: "678-818-4985",
     Email: "iwynter12@tuttocitta.it",
@@ -778,7 +778,7 @@ const sitesData = [
     CPD: 23,
     CD: 13,
     AD: 22,
-    SD: 25
+    SD: 25,
   },
   {
     id: 40,
@@ -790,7 +790,7 @@ const sitesData = [
       City: "Las Vegas",
       State: "NV",
       Zip: "89125",
-      County: "nam"
+      County: "nam",
     },
     Telephone: "702-735-3714",
     Email: "sostick13@wp.com",
@@ -798,8 +798,8 @@ const sitesData = [
     CPD: 6,
     CD: 20,
     AD: 13,
-    SD: 11
-  }
+    SD: 11,
+  },
 ];
 
 const placeholderList = [
@@ -811,7 +811,7 @@ const placeholderList = [
   "ZIP",
   "County",
   "Phone",
-  "Email"
+  "Email",
 ];
 
 const headerList = [
@@ -822,7 +822,7 @@ const headerList = [
   "Address",
   "County",
   "Phone",
-  "Email"
+  "Email",
 ];
 
 const labelList = [
@@ -841,8 +841,29 @@ const labelList = [
   "CPD",
   "CD",
   "AD",
-  "SD"
+  "SD",
 ];
+const dataSites = sitesDataServer.slice(0);
+const countyList = countyData.slice(0);
+const labelObj = {
+  ID: "ID",
+  AgencyID: "agencyId",
+  SiteID: "Site ID",
+  SiteName: "Site Name",
+  SiteManager: "Manager",
+  Address: "Address",
+  City: "City",
+  State: "State",
+  Zip: "ZIP",
+  County: "County Code",
+  Telephone: "Phone",
+  SiteEmail: "Email",
+  CSD: "Community School Dist.",
+  CPD: "Community Planning Dist.",
+  CD: "Congressional Dist.",
+  AD: "Assembly Dist.",
+  SD: "Senatorial Dist.",
+};
 
 const createNewSite = () => {
   for (let i = 0; i < placeholderList.length; i++) {
@@ -880,7 +901,7 @@ const createDataRow = (...args) => {
   return row;
 };
 
-const viewData = arr => {
+const viewData = (arr) => {
   for (site of arr) {
     const {
       id,
@@ -894,7 +915,7 @@ const viewData = arr => {
       CPD,
       CD,
       AD,
-      SD
+      SD,
     } = site;
 
     const { StreetAdrs, City, State, Zip, County } = Adress;
@@ -929,14 +950,14 @@ const flatten = (obj, path = "") => {
   }, {});
 };
 
-const createListFields = num => {
-  const selectedRecord = sitesData.filter(record => record.id === num);
+const createListFields = (num) => {
+  const selectedRecord = sitesData.filter((record) => record.id === num);
   const flattenedRecord = flatten(selectedRecord);
   const keyList = Object.keys(flattenedRecord);
   const list = keyList.map((key, indx) => [
     key,
     labelList[indx],
-    flattenedRecord[key]
+    flattenedRecord[key],
   ]);
 
   return list;
@@ -944,7 +965,7 @@ const createListFields = num => {
 
 $(document).ready(() => {
   // * sub-navbar/index.js
-  $("#sub-nav li").click(function() {
+  $("#sub-nav li").click(function () {
     $("#sub-nav li").removeClass("blue-light-bg blue-text");
     $(this).toggleClass("blue-light-bg blue-text");
   });
@@ -957,7 +978,7 @@ $(document).ready(() => {
         ? "inline-block"
         : "none";
   });
-  btnToTop.click(e => {
+  btnToTop.click((e) => {
     e.preventDefault();
     $("html, body").animate({ scrollTop: 0 }, "600");
   });
@@ -970,7 +991,7 @@ $(document).ready(() => {
   // //* Adding a new site
 
   // //* Select site
-  $("[title^='click'").click(function() {
+  $("[title^='click'").click(function () {
     const rowID = Number($(this).attr("id"));
     const listFields = createListFields(rowID);
     $("#modalBloc").modal("toggle");
