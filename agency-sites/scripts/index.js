@@ -855,7 +855,7 @@ const labelObj = {
   City: "City",
   State: "State",
   Zip: "ZIP",
-  County: "County Code",
+  County: "County",
   Telephone: "Phone",
   SiteEmail: "Email",
   CSD: "Community School Dist.",
@@ -882,72 +882,39 @@ const createNewSite = () => {
   );
 };
 
-const viewHeaders = () => {
-  for (let i = 1; i < headerList.length; i++) {
-    $(".table thead").append(`<th>${headerList[i]}</th>`);
-  }
-};
+const createViewBloc = (dataObj, labels) => {
+  const excludedLabels = [
+    "ID",
+    "AgencyID",
+    "City",
+    "State",
+    "Zip",
+    "CSD",
+    "CPD",
+    "CD",
+    "AD",
+    "SD",
+  ];
 
-const createDataRow = (...args) => {
-  const rowData = Array.from(args);
-  const classList = headerList.slice(1);
-  let row = "";
+  const labelList = Object.keys(labels)
+    .filter((key) => !excludedLabels.includes(key))
+    .map((key) => labels[key]);
 
-  for (let i = 0; i < rowData.length; i++) {
-    const option = classList[i].replace(/\s/gi, "-").toLowerCase();
-    row += `<td class="cell-data ${option}">${rowData[i]}</td>`;
-  }
+  const bodyLabelList = labelList
+    .slice(0, 4)
+    .concat(["City", "State", "ZIP"], labelList.slice(4));
 
-  return row;
-};
+  // createHeaders() <== helperFunctions()
+  const headerLine = createHeaders(labelList);
+  const tableBody = createBody(dataObj, bodyLabelList);
+  // const tableBody = "<h2>Table Body</h2>";
+  $("#view-bloc").append(
+    `<table class="table">${headerLine}${tableBody}</table>`
+  );
 
-const viewData = (arr) => {
-  for (site of arr) {
-    const {
-      id,
-      SiteName,
-      SiteID,
-      SiteMngr,
-      Adress,
-      Telephone,
-      Email,
-      CSD,
-      CPD,
-      CD,
-      AD,
-      SD,
-    } = site;
-
-    const { StreetAdrs, City, State, Zip, County } = Adress;
-    const fullAddress = `${StreetAdrs}<br>${City.toUpperCase()}<br>${State} - ${Zip}`;
-    const newRecord = !CSD && !CPD && !CD && !AD && !SD ? " new-record" : "";
-
-    $(".table tbody").append(
-      `<tr class='table-row${newRecord}' id=${id} title='click to Edit'></tr>`
-    );
-
-    $(".table tbody tr:last-child").append(
-      `${createDataRow(
-        SiteName,
-        SiteID,
-        SiteMngr,
-        fullAddress,
-        County,
-        Telephone,
-        Email
-      )}`
-    );
-  }
-};
-
-const flatten = (obj, path = "") => {
-  if (!(obj instanceof Object)) return { [path.replace(/\.$/g, "")]: obj };
-
-  return Object.keys(obj).reduce((output, key) => {
-    return obj instanceof Array
-      ? { ...output, ...flatten(obj[key], path) }
-      : { ...output, ...flatten(obj[key], key + ".") };
-  }, {});
+  // Elements hidden so they are included in the selection used to
+  // create the modal form for editing.
+  $(".City, .State, .Zip").toggleClass("hidden");
 };
 
 const createListFields = (num) => {
@@ -984,9 +951,11 @@ $(document).ready(() => {
   });
 
   // * data viewing
-  createNewSite();
-  viewHeaders();
-  viewData(sitesData);
+  // createNewSite();
+  // viewHeaders();
+  // viewData(sitesData);
+
+  createViewBloc(dataSites, labelObj);
 
   // //* Adding a new site
 

@@ -20,9 +20,9 @@ body {
   border-radius: 5px;
 }
 
-.data-viewing {
-  margin-top: 1%;
+.data-view {
   border-radius: 5px;
+  padding-bottom: 2%;
 }
 
 .label-text {
