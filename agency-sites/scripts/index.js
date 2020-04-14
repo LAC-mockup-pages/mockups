@@ -886,6 +886,7 @@ const createBody = (dataList, labels) => {
   let rows = "";
   for (const record of dataList) {
     const identifier = `${record.ID}-${record.AgencyID}`;
+    record.SiteEmail = !record.SiteEmail ? "" : record.SiteEmail;
 
     // zipCodeFormat() <== helperFunctions.js
     const zipCode = zipCodeFormat(record.Zip);
@@ -897,10 +898,14 @@ const createBody = (dataList, labels) => {
       ? phoneFormat(phoneFormat(record.Telephone))
       : "";
 
+    const countyValue = !record.County
+      ? ""
+      : countyList.filter((obj) => obj.FIPS === record.County)[0].CountyDesc;
+    console.log("countyValue :", countyValue);
+
     const fieldsArray = Object.keys(record).filter((fieldName) =>
       labels.includes(labelObj[fieldName])
     );
-
     const row = fieldsArray
       .map((key) => {
         let value = "";
@@ -910,6 +915,9 @@ const createBody = (dataList, labels) => {
             break;
           case "Telephone":
             value = phoneNumber;
+            break;
+          case "County":
+            value = countyValue;
             break;
           default:
             value = record[key];
@@ -944,7 +952,7 @@ const createViewBloc = (dataObj, labels) => {
 
   // createHeaders() <== helperFunctions()
   const headerLine = createHeaders(labelList);
-  const tableBody = createBody(dataObj, bodyLabelList);
+  const tableBody = createBody(dataObj, bodyLabelList, countyList);
   $("#view-bloc").append(
     `<table class="table">${headerLine}${tableBody}</table>`
   );
