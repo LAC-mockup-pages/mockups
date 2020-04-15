@@ -41,6 +41,7 @@ const createNewSite = () => {
 
 const createBody = (dataList, labels) => {
   let rows = "";
+  dataList = dataList.sort((a, b) => b.ID - a.ID);
   for (const record of dataList) {
     const identifier = `${record.ID}-${record.AgencyID}`;
     record.SiteEmail = !record.SiteEmail ? "" : record.SiteEmail;
@@ -147,14 +148,11 @@ const createForm = (elmnt) => {
 
   const tdList = elmnt[0].cells;
 
-  console.log("tdList :", tdList);
-
   for (let item of tdList) {
     const key = $(item).attr("class").split(" ")[1];
     let value = $(item).text();
     formData[key] = [labelObj[key], value];
   }
-
   const fieldList = Object.keys(formData);
   console.log("fieldList :", fieldList);
   const formFields = Object.keys(formData)
@@ -165,7 +163,6 @@ const createForm = (elmnt) => {
       if (fieldName === "County") {
         return createSelect(countyList, fieldName, formData.County[1], 0);
       }
-
       switch (fieldName) {
         case "Address":
           fieldText = formData.Address[1].slice(
@@ -181,7 +178,6 @@ const createForm = (elmnt) => {
           // zipCodeFormat() <== helperFunctions()
           fieldText = zipCodeFormat(formData.Zip[1]);
           break;
-
         default:
           fieldText = formData[fieldName][1];
           break;
@@ -266,5 +262,5 @@ $(document).ready(() => {
     $(".input-field").slice(0, 2).toggleClass("hidden");
   });
 
-  // //* Deleting source
+  //* Saving modified site
 });
