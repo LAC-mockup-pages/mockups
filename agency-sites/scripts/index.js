@@ -58,7 +58,6 @@ const createBody = (dataList, labels) => {
     const countyValue = !record.County
       ? ""
       : countyList.filter((obj) => obj.FIPS === record.County)[0].CountyDesc;
-    console.log("countyValue :", countyValue);
 
     const fieldsArray = Object.keys(record).filter((fieldName) =>
       labels.includes(labelObj[fieldName])
@@ -120,6 +119,26 @@ const createViewBloc = (dataObj, labels) => {
   $(hiddenElements).toggleClass("hidden");
 };
 
+const createSelect = (hashTable, keyValue, selectedValue = "", numSelected) => {
+  const [primary, secondary] = Object.keys(hashTable[0]);
+  const optionList = hashTable
+    .map((item) => {
+      const selected = item[primary] === selectedValue ? " selected" : "";
+      return `<option value=${item[primary]}${selected}>
+          ${item[secondary]}</option>`;
+    })
+    .join("");
+  const elementChoice = [
+    `<div class="form-group input-field">
+  <label for=${keyValue}>County</label>
+  <select id=${keyValue} class="modal-select" name=${keyValue}>${optionList}</select>
+</div>`,
+    `<select id=${keyValue} class="modal-select form-control" name=${keyValue}><option selected disabled>Select an option</option>${optionList}</select>`,
+  ];
+
+  return elementChoice[numSelected];
+};
+
 const createForm = (elmnt) => {
   const idArray = $(elmnt).attr("id").split("-");
   const formData = {};
@@ -128,19 +147,22 @@ const createForm = (elmnt) => {
 
   const tdList = elmnt[0].cells;
 
+  console.log("tdList :", tdList);
+
   for (let item of tdList) {
     const key = $(item).attr("class").split(" ")[1];
     let value = $(item).text();
     formData[key] = [labelObj[key], value];
   }
 
-  const fieldList = Object.keys(formData).filter((item) => item !== "County");
-
-  const formFields = fieldList
+  const fieldList = Object.keys(formData);
+  console.log("fieldList :", fieldList);
+  const formFields = Object.keys(formData)
     .map((fieldName) => {
       let fieldText = "";
       let option = "";
-      if (fieldName === "CountyDesc") {
+      let labelClass = "";
+      if (fieldName === "County") {
         return createSelect(countyList, fieldName, formData.County[1], 0);
       }
 
@@ -151,7 +173,7 @@ const createForm = (elmnt) => {
             formData.Address[1].indexOf(formData.City[1])
           );
           break;
-        case "ReferralSiteID":
+        case "SiteID":
           fieldText = formData[fieldName][1];
           option = "disabled";
           break;
@@ -164,13 +186,26 @@ const createForm = (elmnt) => {
           fieldText = formData[fieldName][1];
           break;
       }
-
+      if (
+        [
+          "SiteName",
+          "SiteManager",
+          "Address",
+          "City",
+          "State",
+          "Zip",
+          "Telephone",
+        ].includes(fieldName)
+      ) {
+        labelClass = " red-text";
+        option += " required";
+      }
       // createInputField() <== helperFunctions.js
       return createInputField(
         fieldName,
         formData[fieldName][0],
         fieldText,
-        "",
+        labelClass,
         "",
         option
       );
