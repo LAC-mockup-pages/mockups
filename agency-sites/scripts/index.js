@@ -153,8 +153,8 @@ const createForm = (elmnt) => {
     let value = $(item).text();
     formData[key] = [labelObj[key], value];
   }
-  const fieldList = Object.keys(formData);
-  console.log("fieldList :", fieldList);
+  // const fieldList = Object.keys(formData);
+  // console.log("fieldList :", fieldList);
   const formFields = Object.keys(formData)
     .map((fieldName) => {
       let fieldText = "";
@@ -211,6 +211,34 @@ const createForm = (elmnt) => {
   return formFields;
 };
 
+// Used for new partner and edited partner data set
+const saveMods = (form) => {
+  const result = {};
+  const submittedData = $(form).serializeArray();
+  console.log("submittedData :", submittedData);
+  //  validateUserInput() <== data-check.js
+  if (!validateUserInput(submittedData)) $(form)[0].reset();
+  for (let field of submittedData) {
+    if (field.name === "CountyDesc") {
+      result.County = field.value;
+      countyDescValue = countyList.filter(
+        (item) => item.FIPS === field.value
+      )[0].CountyDesc;
+      field.value = countyDescValue;
+    }
+    // phoneFormat <== helperFunctions()
+    if (field.name === "Telephone") field.value = phoneFormat(field.value);
+    result[field.name] = field.value;
+  }
+  console.log("result :", result);
+  //! =================================================
+  //! JSON Object to send back to database
+  console.log("result :", JSON.stringify(result));
+  //! =================================================
+
+  //ToDO Reloading/resetting with new data
+};
+
 $(document).ready(() => {
   // * sub-navbar/index.js
   $("#sub-nav li").click(function () {
@@ -262,5 +290,12 @@ $(document).ready(() => {
     $(".input-field").slice(0, 2).toggleClass("hidden");
   });
 
-  //* Saving modified site
+  //* Saving mods after editing selected outcome
+  $("#save-btn").click(function (evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+    const form = `#${$(this).attr("form")}`;
+    saveMods(form);
+    $("#modalBloc").modal("toggle");
+  });
 });
