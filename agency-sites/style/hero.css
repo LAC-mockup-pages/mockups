@@ -35,10 +35,29 @@ body {
   color: #2479b5;
   font-size: 1.2em;
   padding: 0.5%;
+  margin: 5px 2px;
+}
+
+#State,
+#Zip {
+  max-width: 100px;
+}
+
+#County {
+  max-width: 200px;
+}
+#Telephone,
+#Email {
+  max-width: 150px;
 }
 
 #new-site {
   margin-left: 3%;
+}
+
+#submit-btn,
+#cancel-btn {
+  margin-left: 1%;
 }
 
 .new-record {

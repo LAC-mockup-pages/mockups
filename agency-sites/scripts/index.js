@@ -22,21 +22,29 @@ const labelObj = {
   SD: "Senatorial Dist.",
 };
 
-const createNewSite = () => {
-  for (let i = 0; i < placeholderList.length; i++) {
-    const newLine = "";
-
-    $("#new-site").append(`${newLine}<input
-    type="text"
-    class="form-control"
-    placeholder='${placeholderList[i]}'
-    required
-  />`);
-  }
-
-  $("#new-site").append(
-    `<button type="submit" id="submit-btn" class="btn btn-primary">Add New Site</button>`
+const createNewRecord = (labelsObject, agencyId) => {
+  let result = [];
+  const keyList = Object.keys(labelsObject).filter(
+    (key) => !["ID", "SiteID", "CSD", "CPD", "CD", "AD", "SD"].includes(key)
   );
+  for (key of keyList) {
+    let option = " required";
+    let classOption = "";
+    if (["AgencyID", "County"].includes(key)) {
+      const agency = (option = key === "AgencyID" ? ` value=${agencyId}` : "");
+      classOption = " hidden";
+    }
+    let inputElement = `<input type="text" class="form-control${classOption}" id=${key} name="${key}" placeholder="${labelsObject[key]}"${option} autocomplete="new-password" spellcheck="off">`;
+
+    if (key === "County") {
+      inputElement = createSelect(countyData, key, "", 1);
+    }
+    result.push(inputElement);
+  }
+  result.push(
+    '<button type="button" id="submit-btn" form="new-site" class="btn btn-primary">Add</button><button type="button" id="cancel-btn" form="new-site" class="btn btn-default">Cancel</button>'
+  );
+  $("#new-site").append(result.join(""));
 };
 
 const createBody = (dataList, labels) => {
@@ -264,12 +272,11 @@ $(document).ready(() => {
     $("html, body").animate({ scrollTop: 0 }, "600");
   });
 
-  // * data viewing
-  // createNewSite();
-
+  // * Data viewing
   createViewBloc(dataSites, labelObj);
+  createNewRecord(labelObj, dataSites[0].AgencyID);
 
-  // //* Adding a new site
+  //* Adding a new site
 
   //* Canceling
   $("#cancel-btn").click(function (evnt) {
