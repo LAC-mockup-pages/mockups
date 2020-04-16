@@ -83,7 +83,6 @@ tbody > tr:hover {
   max-width: 80px;
   text-align: center;
   font-size: 14px;
-  /* padding: 0 10px; */
 }
 
 .small-cell {
@@ -120,7 +119,8 @@ th {
   font-size: 1.2em;
 }
 
-.input-field > input {
+.input-field > input,
+.input-field > select {
   font-size: 1.3em;
   font-weight: 700;
   border: none;

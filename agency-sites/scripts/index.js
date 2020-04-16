@@ -121,8 +121,6 @@ const createViewBloc = (dataObj, labels) => {
 };
 
 const createSelect = (hashTable, keyValue, selectedValue = "", numSelected) => {
-  console.log("keyValue :", keyValue);
-  console.log("selectedValue :", selectedValue);
   let firstOption = "<option disabled>Select an option</option>";
   const [primary, secondary] = Object.keys(hashTable[0]);
   let optionList = hashTable
@@ -145,8 +143,6 @@ const createSelect = (hashTable, keyValue, selectedValue = "", numSelected) => {
     `<select id="${keyValue}" class="modal-select form-control" name=${keyValue}><option selected disabled>Select an option</option>${optionList}</select>`,
   ];
 
-  console.log("object :", elementChoice[numSelected]);
-
   return elementChoice[numSelected];
 };
 
@@ -164,7 +160,6 @@ const createForm = (elmnt) => {
     formData[key] = [labelObj[key], value];
   }
 
-  console.log("formData :", formData);
   const formFields = Object.keys(formData)
     .map((fieldName) => {
       let fieldText = "";
@@ -226,7 +221,6 @@ const createForm = (elmnt) => {
 const saveMods = (form) => {
   const result = {};
   const submittedData = $(form).serializeArray();
-  console.log("submittedData :", submittedData);
 
   //  validateUserInput() <== data-check.js
   if (!validateUserInput(submittedData)) $(form)[0].reset();
@@ -242,7 +236,6 @@ const saveMods = (form) => {
     if (field.name === "Telephone") field.value = phoneFormat(field.value);
     result[field.name] = field.value;
   }
-  console.log("result :", result);
   //! =================================================
   //! JSON Object to send back to database
   console.log("result :", JSON.stringify(result));
