@@ -225,7 +225,7 @@ const createForm = (elmnt) => {
   return formFields;
 };
 
-// Used for new partner and edited partner data set
+// Used for new site and edited site data set
 const saveMods = (form) => {
   const result = {};
   const submittedData = $(form).serializeArray();
@@ -277,6 +277,13 @@ $(document).ready(() => {
   createNewRecord(labelObj, dataSites[0].AgencyID);
 
   //* Adding a new site
+  $("#submit-btn").click(function (evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+    const formId = "#" + $(this).attr("form");
+    saveMods(formId);
+    $(formId)[0].reset();
+  });
 
   //* Canceling
   $("#cancel-btn").click(function (evnt) {
