@@ -12,7 +12,7 @@ const labelObj = {
   City: "City",
   State: "State",
   Zip: "ZIP",
-  County: "County",
+  County: "County Name",
   Telephone: "Phone",
   SiteEmail: "Email",
   CSD: "Community School Dist.",
@@ -57,7 +57,7 @@ const createBody = (dataList, labels) => {
       : "";
 
     const countyValue = !record.County
-      ? ""
+      ? " "
       : countyList.filter((obj) => obj.FIPS === record.County)[0].CountyDesc;
 
     const fieldsArray = Object.keys(record).filter((fieldName) =>
@@ -121,21 +121,31 @@ const createViewBloc = (dataObj, labels) => {
 };
 
 const createSelect = (hashTable, keyValue, selectedValue = "", numSelected) => {
+  console.log("keyValue :", keyValue);
+  console.log("selectedValue :", selectedValue);
+  let firstOption = "<option disabled>Select an option</option>";
   const [primary, secondary] = Object.keys(hashTable[0]);
-  const optionList = hashTable
+  let optionList = hashTable
     .map((item) => {
-      const selected = item[primary] === selectedValue ? " selected" : "";
-      return `<option value=${item[primary]}${selected}>
+      const selected = item[primary] === selectedValue ? "selected" : "";
+      return `<option value="${item[primary]}" ${selected}>
           ${item[secondary]}</option>`;
     })
     .join("");
+
+  if (!selectedValue) {
+    firstOption = "<option selected disabled>Select an option</option>";
+  }
+
   const elementChoice = [
-    `<div class="form-group input-field">
-  <label for=${keyValue}>County</label>
-  <select id=${keyValue} class="modal-select" name=${keyValue}>${optionList}</select>
+    `<div class= "input-field form-group">
+  <label for="${keyValue}">${labelObj[keyValue]}</label>
+  <select id="${keyValue}" class="modal-select" name="${keyValue}">${firstOption}${optionList}</select>
 </div>`,
-    `<select id=${keyValue} class="modal-select form-control" name=${keyValue}><option selected disabled>Select an option</option>${optionList}</select>`,
+    `<select id="${keyValue}" class="modal-select form-control" name=${keyValue}><option selected disabled>Select an option</option>${optionList}</select>`,
   ];
+
+  console.log("object :", elementChoice[numSelected]);
 
   return elementChoice[numSelected];
 };
@@ -153,15 +163,16 @@ const createForm = (elmnt) => {
     let value = $(item).text();
     formData[key] = [labelObj[key], value];
   }
-  // const fieldList = Object.keys(formData);
-  // console.log("fieldList :", fieldList);
+
+  console.log("formData :", formData);
   const formFields = Object.keys(formData)
     .map((fieldName) => {
       let fieldText = "";
       let option = "";
       let labelClass = "";
       if (fieldName === "County") {
-        return createSelect(countyList, fieldName, formData.County[1], 0);
+        const countyCode = formData.County[1].split(" ")[0];
+        return createSelect(countyList, fieldName, countyCode, 0);
       }
       switch (fieldName) {
         case "Address":
@@ -216,10 +227,11 @@ const saveMods = (form) => {
   const result = {};
   const submittedData = $(form).serializeArray();
   console.log("submittedData :", submittedData);
+
   //  validateUserInput() <== data-check.js
   if (!validateUserInput(submittedData)) $(form)[0].reset();
   for (let field of submittedData) {
-    if (field.name === "CountyDesc") {
+    if (field.name === "County") {
       result.County = field.value;
       countyDescValue = countyList.filter(
         (item) => item.FIPS === field.value
