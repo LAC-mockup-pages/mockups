@@ -25,7 +25,7 @@ const labelObj = {
 const createNewRecord = (labelsObject, agencyId) => {
   let result = [];
   const keyList = Object.keys(labelsObject).filter(
-    (key) => !["ID", "SiteID", "CSD", "CPD", "CD", "AD", "SD"].includes(key)
+    (key) => !["ID", "SiteEmail", "CSD", "CPD", "CD", "AD", "SD"].includes(key)
   );
   for (key of keyList) {
     let option = " required";
@@ -44,7 +44,8 @@ const createNewRecord = (labelsObject, agencyId) => {
   result.push(
     '<button type="button" id="submit-btn" form="new-site" class="btn btn-primary">Add</button><button type="button" id="cancel-btn" form="new-site" class="btn btn-default">Cancel</button>'
   );
-  $("#new-site").append(result.join(""));
+  const formContent = result.join("");
+  $("#new-site").append(formContent);
 };
 
 const createBody = (dataList, labels) => {
