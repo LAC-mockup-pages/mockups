@@ -187,7 +187,7 @@ const createForm = (elmnt) => {
           break;
         case "SiteID":
           fieldText = formData[fieldName][1];
-          option = "disabled";
+          // option = "disabled";
           break;
         case "Zip":
           // zipCodeFormat() <== helperFunctions()
@@ -199,6 +199,7 @@ const createForm = (elmnt) => {
       }
       if (
         [
+          "SiteID",
           "SiteName",
           "SiteManager",
           "Address",
@@ -245,9 +246,11 @@ const saveMods = (form) => {
     if (field.name === "Telephone") field.value = phoneFormat(field.value);
     result[field.name] = field.value;
   }
+
+  const message = `Result from ${form} :>>`;
   //! =================================================
   //! JSON Object to send back to database
-  console.log("result :", JSON.stringify(result));
+  console.log(message, JSON.stringify(result));
   //! =================================================
 
   //ToDO Reloading/resetting with new data
@@ -278,7 +281,7 @@ $(document).ready(() => {
   createNewRecord(labelObj, dataSites[0].AgencyID);
 
   //* Adding a new site
-  $("#submit-btn").click(function (evnt) {
+  $(document).on("click", "#submit-btn", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
     const formId = "#" + $(this).attr("form");
