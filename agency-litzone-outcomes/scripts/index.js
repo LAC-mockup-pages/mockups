@@ -1,7 +1,7 @@
 // Actions and logic
 
-const data = outcomesData;
-const categories = categoryData;
+const dataOutcomes = outcomesData.slice(0);
+const categories = categoryData.slice(0);
 
 const createNewRecord = (list) => {
   const optionList = list.map(
@@ -33,7 +33,7 @@ const createDataList = (list) => {
     const category = categoryData.filter(
       (item) => item.OutcomeSortOrder === num
     )[0].Category;
-    const outcomes = data
+    const outcomes = dataOutcomes
       .filter((item) => item.OutcomeSortOrder === num)
       .map((item) => [item.ID, item.Description]);
     return { cat: category, catId: num, outcomes: outcomes };
@@ -48,7 +48,7 @@ const createHeader = (list) => {
 
 const createBody = (list) => {
   const dataList = createDataList(list);
-  const agId = data[0].AgencyID;
+  const agId = dataOutcomes[0].AgencyID;
 
   const rows = dataList
     .map((item) => {
@@ -104,10 +104,10 @@ const saveMods = (form) => {
     $(form)[0].reset();
     return;
   }
-
+  const message = `Result from ${form} : >> `;
   //! =================================================
   //! JSON Object to send back to database
-  console.log("result :", JSON.stringify(result));
+  console.log(message, JSON.stringify(result));
   //! =================================================
 
   //ToDO Reloading/resetting with new data
@@ -135,7 +135,7 @@ $(document).ready(() => {
 
   // * Data viewing
   createNewRecord(categories);
-  $("#view-bloc").append(createView(data));
+  $("#view-bloc").append(createView(dataOutcomes));
 
   //* Adding a new outcome
   $("#new-select").change(function () {
@@ -147,13 +147,13 @@ $(document).ready(() => {
       location.reload();
     });
 
-    $("#submit-btn").click(function (evnt) {
+    $(document).on("click", "#submit-btn", function (evnt) {
       evnt.preventDefault();
       evnt.stopPropagation();
       const form = `#${$(this).attr("form")}`;
       const newDescription = $(form + ">input").val();
 
-      // alphaNumCheck() <== data-check.js
+      // alphaNumCheck() <== dataOutcomes-check.js
       if (!alphaNumCheck(newDescription)) {
         $(form)[0].reset();
         return;
@@ -176,7 +176,7 @@ $(document).ready(() => {
   });
 
   //* Select outcome
-  $("[title^='Click']").click(function (evnt) {
+  $(document).on("click", ".table tbody tr", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
 
