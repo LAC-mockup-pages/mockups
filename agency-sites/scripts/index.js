@@ -37,7 +37,7 @@ const createNewRecord = (labelsObject, agencyId) => {
     let inputElement = `<input type="text" class="form-control${classOption}" id=${key} name="${key}" placeholder="${labelsObject[key]}"${option} autocomplete="new-password" spellcheck="off">`;
 
     if (key === "County") {
-      inputElement = createSelect(countyData, key, "", 1);
+      inputElement = createSelect(countyList, key, "", 1);
     }
     result.push(inputElement);
   }
@@ -300,7 +300,7 @@ $(document).ready(() => {
   });
 
   //* Select sites
-  $("[title^='Click']").click(function (evnt) {
+  $(document).on("click", ".table tbody tr", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
 
