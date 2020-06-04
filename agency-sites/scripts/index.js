@@ -250,6 +250,7 @@ const saveMods = (form) => {
   const message = result.ID
     ? "Result from Editing :>>"
     : "Result from Adding new site :>>";
+  console.table(result);
   //! =================================================
   //! JSON Object to send back to database
   console.log(message, JSON.stringify(result));
