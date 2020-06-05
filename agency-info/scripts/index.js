@@ -19,7 +19,7 @@ const rowLabels = {
   AD: "Assembly Dist.",
   SD: "Senatorial Dist.",
   PrepCode: "Prep Code",
-  AgencyEmail: "Email"
+  AgencyEmail: "Email",
 };
 
 // Indexes needed for each bloc, in order
@@ -27,10 +27,10 @@ const blocItems = {
   topLeft: [2, 3, 4, 5, 12, 17],
   topRight: [6, 7, 8, 9, 10, 18],
   bottomLeft: [11, 13, 14],
-  bottomRight: [15, 16]
+  bottomRight: [15, 16],
 };
 
-const createRow = arr => {
+const createRow = (arr) => {
   // phoneFormat() <== helpers.js
   const text = arr[0] === "Telephone" ? phoneFormat(arr[2]) : arr[2];
   const row = `<tr class="table-row" id=${arr[0]}>
@@ -53,7 +53,7 @@ const createBloc = (blocName, listIndex, listFields) => {
     </div>`;
 };
 
-const renderViewBloc = obj => {
+const renderViewBloc = (obj) => {
   // createFieldList() <== helpers.js
   const listFields = createFieldList(obj, rowLabels);
   const identifier = `${obj.ID}-${obj.AgencyID}`;
@@ -78,12 +78,10 @@ const renderViewBloc = obj => {
     </div>`;
 };
 
-const saveMods = (evnt, elmnt) => {
-  evnt.stopPropagation();
-  const id = $(elmnt).attr("id");
-  const idList = id.split("-");
+const saveMods = (elmnt) => {
+  const idList = elmnt.split("-");
   let result = { ID: idList[0], AgencyID: idList[1] };
-  const list = $(`#${id} input`).get();
+  const list = $(`#${elmnt} input`).get();
   for (let row of list) {
     const key = $(row).attr("id");
     // phoneFormat() <== helpers.js
@@ -104,7 +102,7 @@ const saveMods = (evnt, elmnt) => {
 
 $(document).ready(() => {
   // * sub-navbar/index.js
-  $("#sub-nav li").click(function() {
+  $("#sub-nav li").click(function () {
     $("#sub-nav li").removeClass("blue-light-bg blue-text");
     $(this).toggleClass("blue-light-bg blue-text");
   });
@@ -115,10 +113,10 @@ $(document).ready(() => {
 
   //* Data bloc editing
 
-  $("[title^='Click']").click(function(event) {
+  $("[title^='Click']").click(function (event) {
     event.stopPropagation();
     $("#modalTopBloc").modal("toggle");
-    $(".modal-body form").remove();
+    $("#edit-form").empty();
 
     const blocDataId = $(this).attr("data-id");
     const blocId = $(this).attr("id");
@@ -127,7 +125,7 @@ $(document).ready(() => {
     const nestedListValues = [];
     let modalBloc = "";
 
-    const listValues = $.map(listRows, function(row) {
+    const listValues = $.map(listRows, function (row) {
       const rowId = $(row).attr("id");
       const rowData = $(`#${rowId} td`).get();
       const label = $(rowData[0]).text();
@@ -142,9 +140,14 @@ $(document).ready(() => {
       // createInputField() <== helpers.js
       modalBloc += createInputField(item[0], item[1], item[2]);
     }
+    $("#edit-form").append(modalBloc).attr("data-bloc-id", blocDataId);
+  });
 
-    $(".modal-body").append(
-      `<form role="form" id="${blocDataId}">${modalBloc}</form>`
-    );
+  $("#save-button").click(function (evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+    const formID = $(this).attr("form");
+    const id = $(`#${formID}`).attr("data-bloc-id");
+    saveMods(id);
   });
 });
