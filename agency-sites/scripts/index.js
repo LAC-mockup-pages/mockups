@@ -231,9 +231,19 @@ const createForm = (elmnt) => {
 const saveMods = (form) => {
   const result = {};
   const submittedData = $(form).serializeArray();
+  $(`#new-site input`).removeClass("yellow-bg");
 
+  // Highlights invalid fields with yellow background
   //  validateUserInput() <== data-check.js
-  if (!validateUserInput(submittedData)) $(form)[0].reset();
+  const validatedList = validateUserInput(submittedData);
+  const checkFlag = validatedList.some((item) => !item.correct);
+  if (checkFlag) {
+    const list = validatedList.filter((obj) => obj.correct === false);
+    for (let field of list) {
+      $(`#${field.name}`).addClass("yellow-bg");
+    }
+    return;
+  }
 
   for (let field of submittedData) {
     if (field.name === "County") {
@@ -256,6 +266,8 @@ const saveMods = (form) => {
   //! JSON Object to send back to database
   console.log(message, JSON.stringify(result));
   //! =================================================
+
+  if (form === "#new-site") location.reload();
 
   //ToDO Reloading/resetting with new data
 };
@@ -290,7 +302,6 @@ $(document).ready(() => {
     evnt.stopPropagation();
     const formId = "#" + $(this).attr("form");
     saveMods(formId);
-    $(formId)[0].reset();
   });
 
   //* Canceling

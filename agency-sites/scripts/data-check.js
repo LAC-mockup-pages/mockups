@@ -11,32 +11,24 @@ const validateUserInput = (dataList) => {
 
   for (let field of dataList) {
     switch (field.name) {
-      case "ReferralSiteName":
-      case "ReferralSiteManager":
-      case "Address":
-      case "City":
-        correct = alphaNumCheck(field.value);
-        checkedFieldList.push({ ...field, correct });
-        break;
-
       case "State":
         correct = field.value.length < 3;
         checkedFieldList.push({ ...field, correct });
+        break;
 
       case "Zip":
-        correct = field.value.length < 11 && Number(field.value);
+        correct = field.value.length < 11 && Boolean(Number(field.value));
         checkedFieldList.push({ ...field, correct });
-
         break;
+
       case "Telephone":
         correct = field.value.length < 13;
         checkedFieldList.push({ ...field, correct });
-
         break;
-      default:
-        correct = true;
-        checkedFieldList.push({ ...field, correct });
 
+      default:
+        correct = alphaNumCheck(field.value);
+        checkedFieldList.push({ ...field, correct });
         break;
     }
   }
