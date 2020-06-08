@@ -24,3 +24,9 @@
                     { "FIPS": "36017", "CountyDesc": "36017 Chenango" },
                     { "FIPS": "36013", "CountyDesc": "36013 Chautauqua" }
                 ];
+
+const sessionVariable = {
+    AgencyID: "PRA",
+    AuditUserID: '<%= Session["UserID"] %>',
+    FiscalYear: ["2016", "2017"],
+    };

@@ -229,7 +229,8 @@ const createForm = (elmnt) => {
 
 // Used for new site and edited site data set
 const saveMods = (form) => {
-  const result = {};
+  const { AuditUserID } = sessionVariable;
+  const result = { AuditUserID };
   const submittedData = $(form).serializeArray();
   $(`#new-site input`).removeClass("yellow-bg");
 
@@ -267,7 +268,7 @@ const saveMods = (form) => {
   console.log(message, JSON.stringify(result));
   //! =================================================
 
-  if (form === "#new-site") location.reload();
+  // if (form === "#new-site") location.reload();
 
   //ToDO Reloading/resetting with new data
 };
@@ -308,8 +309,7 @@ $(document).ready(() => {
   $("#cancel-btn").click(function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
-    const formId = "#" + $(this).attr("form");
-    $(formId)[0].reset();
+    location.reload();
   });
 
   //* Select sites
