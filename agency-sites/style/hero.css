@@ -68,6 +68,7 @@ body {
 .delete-msg {
   color: rgb(197, 65, 65);
   text-align: left;
+  font-weight: 600;
 }
 
 #submit-btn {
