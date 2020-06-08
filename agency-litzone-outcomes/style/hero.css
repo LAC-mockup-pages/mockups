@@ -29,8 +29,9 @@ body {
 }
 
 #new-outcome > .form-control {
-  font-size: 1.4em;
+  font-size: 1.3em;
   padding: 0.5%;
+  line-height: 1.7em;
 }
 
 #new-outcome {
@@ -38,9 +39,15 @@ body {
 }
 
 :required::placeholder,
+.form-control:required,
 .delete-msg {
   color: rgb(197, 65, 65);
   text-align: left;
+  font-weight: 700;
+}
+
+#OutcomeSortOrder-view > option {
+  color: #283838;
 }
 
 #submit-btn {

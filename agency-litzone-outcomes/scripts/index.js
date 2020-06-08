@@ -4,19 +4,22 @@ const dataOutcomes = outcomesData.slice(0);
 const categories = categoryData.slice(0);
 
 const createNewRecord = (list) => {
-  const optionList = list.map(
-    (item) =>
-      `<option class="blue-text" value='${item.OutcomeSortOrder}'>
-        ${item.Category}</option>`
-  );
+  // const optionList = list.map(
+  //   (item) =>
+  //     `<option class="blue-text" value='${item.OutcomeSortOrder}'>
+  //       ${item.Category}</option>`
+  // );
 
-  const agency = $(".table-body").attr("id");
+  // const agency = $(".table-body").attr("id");
+  const selectCategory = elementSelectNewRecord({
+    hashTable: categories,
+    keyValue: "OutcomeSortOrder",
+    option: "required",
+  });
 
   $("#new-outcome").append(
-    `<select id="new-select" form="new-outcome" class="form-control red-text">
-        <option class='red-text' disabled selected>Select a Category</option>
-        ${optionList}</select>
-      <input type="text" id="input-new-outcome" class="form-control blue-text" placeholder="Description" spellcheck="true" required>
+    `${selectCategory}
+      <input type="text" id="input-new-outcome" class="form-control blue-text" name="Description" placeholder="Description" spellcheck="true" required>
     <button type="button" id="submit-btn" form="new-outcome" class="btn btn-primary">Add</button>
     <button type="button" id="cancel-btn" class="btn btn-default">Cancel</button>`
   );
@@ -97,8 +100,9 @@ const saveMods = (form) => {
   const keys = ["ID", "AgencyID"];
   const val = $(form).attr("data-identifier").split("-");
   const firstStep = mergeArraysToObject(keys, val);
-  const result = mergeHashToObject(submittedData, firstStep);
-
+  const mergedObject = mergeHashToObject(submittedData, firstStep);
+  const { UserID } = sessionVariable;
+  const result = mergedObject;
   // alphaNumCheck() <== data-check.js
   if (!alphaNumCheck(result.Description)) {
     $(form)[0].reset();

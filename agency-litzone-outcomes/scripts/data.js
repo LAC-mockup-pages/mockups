@@ -23,3 +23,9 @@
                     { "OutcomeSortOrder": "9", "Category": "Legal Services" },
                     { "OutcomeSortOrder": "10", "Category": "Citizenship" }
             ];
+
+        const sessionVariable = {
+        AgencyID: "PRA",
+        AuditUserID: '<%= Session["UserID"] %>',
+        FiscalYear: ["2016", "2017"],
+        };
