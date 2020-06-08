@@ -4,13 +4,7 @@ const dataOutcomes = outcomesData.slice(0);
 const categories = categoryData.slice(0);
 
 const createNewRecord = (list) => {
-  // const optionList = list.map(
-  //   (item) =>
-  //     `<option class="blue-text" value='${item.OutcomeSortOrder}'>
-  //       ${item.Category}</option>`
-  // );
-
-  // const agency = $(".table-body").attr("id");
+  // elementSelectNewRecord() <== helpers/helperFunctions.js
   const selectCategory = elementSelectNewRecord({
     hashTable: categories,
     keyValue: "OutcomeSortOrder",
