@@ -39,13 +39,11 @@ body {
 }
 
 #State,
+#County,
 #Zip {
-  max-width: 100px;
+  max-width: fit-content;
 }
 
-#County {
-  max-width: 200px;
-}
 #Telephone,
 #Email {
   max-width: 150px;
@@ -65,10 +63,11 @@ body {
 }
 
 :required::placeholder,
+.form-control:required,
 .delete-msg {
   color: rgb(197, 65, 65);
   text-align: left;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 #submit-btn {

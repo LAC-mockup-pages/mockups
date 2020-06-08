@@ -39,6 +39,14 @@ const createNewRecord = (labelsObject, agencyId) => {
     if (key === "County") {
       inputElement = createSelect(countyList, key, "", 1);
     }
+    if (key === "State") {
+      inputElement = elementSelectNewRecord({
+        hashTable: ddlStates,
+        keyValue: "State",
+        option,
+      });
+    }
+
     result.push(inputElement);
   }
   result.push(
@@ -168,7 +176,6 @@ const createForm = (elmnt) => {
     let value = $(item).text();
     formData[key] = [labelObj[key], value];
   }
-
   const formFields = Object.keys(formData)
     .map((fieldName) => {
       let fieldText = "";
@@ -177,6 +184,11 @@ const createForm = (elmnt) => {
       if (fieldName === "County") {
         const countyCode = formData.County[1].split(" ")[0];
         return createSelect(countyList, fieldName, countyCode, 0);
+      }
+
+      if (fieldName === "State") {
+        const stateCode = formData.State[1];
+        return createSelect(ddlStates, fieldName, stateCode, 0);
       }
       switch (fieldName) {
         case "Address":

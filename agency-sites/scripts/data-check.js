@@ -7,10 +7,18 @@ const validateUserInput = (dataList) => {
   };
 
   const checkedFieldList = [];
-  let correct;
+  let correct = true;
 
   for (let field of dataList) {
     switch (field.name) {
+      case "SiteID":
+      case "SiteName":
+      case "SiteManager":
+      case "City":
+        correct = alphaNumCheck(field.value);
+        checkedFieldList.push({ ...field, correct });
+        break;
+
       case "State":
         correct = field.value.length < 3;
         checkedFieldList.push({ ...field, correct });
@@ -27,7 +35,6 @@ const validateUserInput = (dataList) => {
         break;
 
       default:
-        correct = alphaNumCheck(field.value);
         checkedFieldList.push({ ...field, correct });
         break;
     }
