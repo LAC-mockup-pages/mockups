@@ -6,33 +6,39 @@ const validateUserInput = (dataList) => {
     return /\w+$/i.test(str);
   };
 
-  const numCheck = (str) => {
-    return /\d/g.test(str);
-  };
+  const checkedFieldList = [];
+  let correct;
 
-  let resultTest = true;
   for (let field of dataList) {
     switch (field.name) {
       case "ReferralSiteName":
       case "ReferralSiteManager":
       case "Address":
       case "City":
-        resultTest = alphaNumCheck(field.value);
+        correct = alphaNumCheck(field.value);
+        checkedFieldList.push({ ...field, correct });
         break;
+
       case "State":
-        resultTest = field.value.length < 3;
+        correct = field.value.length < 3;
+        checkedFieldList.push({ ...field, correct });
+
       case "Zip":
-        resultTest = field.value.length < 11 && Number(field.value);
-        console.log("Number? >> ", Number(field.value));
+        correct = field.value.length < 11 && Number(field.value);
+        checkedFieldList.push({ ...field, correct });
+
         break;
       case "Telephone":
-        resultTest = field.value.length < 13;
+        correct = field.value.length < 13;
+        checkedFieldList.push({ ...field, correct });
+
         break;
       default:
-        resultTest = true;
+        correct = true;
+        checkedFieldList.push({ ...field, correct });
+
         break;
     }
   }
-
-  return resultTest;
+  return checkedFieldList;
 };

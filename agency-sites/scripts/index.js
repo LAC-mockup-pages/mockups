@@ -234,6 +234,7 @@ const saveMods = (form) => {
 
   //  validateUserInput() <== data-check.js
   if (!validateUserInput(submittedData)) $(form)[0].reset();
+
   for (let field of submittedData) {
     if (field.name === "County") {
       result.County = field.value;
