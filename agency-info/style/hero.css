@@ -10,14 +10,21 @@ body {
   border-width: 6px 3px;
   border-radius: 5px;
 }
+.quarter-bloc {
+  padding: 0 2%;
+}
 
 .table-row {
   line-height: 45px;
   color: #283838;
 }
 
+.close {
+  color: red;
+  font-size: 3em;
+}
+
 .separation {
-  /* border-bottom: 2px solid #fff; */
   border-bottom: 2px solid #d3e4f0;
   margin: 3% 0;
 }
