@@ -13,7 +13,7 @@ const createNewRecord = (list) => {
 
   $("#new-outcome").append(
     `${selectCategory}
-      <input type="text" id="input-new-outcome" class="form-control" name="Description" placeholder="Description" spellcheck="true" required>
+      <input type="text" id="input-new-outcome" class="form-control" name="Description" placeholder="Description" autocomplete="off" spellcheck="true" required>
     <button type="button" id="submit-btn" form="new-outcome" class="btn btn-primary">Add</button>
     <button type="button" id="cancel-btn" class="btn btn-default">Cancel</button>`
   );
@@ -139,32 +139,30 @@ $(document).ready(() => {
   // * Data viewing
   createNewRecord(categories);
   $("#view-bloc").append(createView(dataOutcomes));
-  $("#OutcomeSortOrder-view, #input-new-outcome").bind("change", function (
-    evnt
-  ) {
+
+  //* Adding a new outcome
+  $("#OutcomeSortOrder-view").bind("change", function (evnt) {
+    evnt.stopPropagation();
+    $(this).toggleClass("dark-text").prop("required", false);
+    const selectedOption = $(this).val();
+    const row = $(`#${selectedOption}`).get();
+    $(".table-body").empty().append(row);
+  });
+
+  $("#input-new-outcome").bind("keyup", function (evnt) {
     evnt.stopPropagation();
     $(this).toggleClass("dark-text").prop("required", false);
   });
 
-  //* Adding a new outcome
-  $("#OutcomeSortOrder-view").change(function (evnt) {
-    evnt.stopPropagation();
-    const selectedOption = $(this).val();
-    const row = $(`#${selectedOption}`).get();
-    $(".table-body").empty().append(row);
-    // $("#input-new-outcome").removeClass("yellow-bg");
-
-    $("#cancel-btn").click(() => {
-      location.reload();
-    });
-
-    $(document).on("click", "#submit-btn", function (evnt) {
-      evnt.stopPropagation();
-      const formId = `#${$(this).attr("form")}`;
-      saveMods(formId);
-    });
+  $("#cancel-btn").click(() => {
+    location.reload();
   });
 
+  $(document).on("click", "#submit-btn", function (evnt) {
+    evnt.stopPropagation();
+    const formId = `#${$(this).attr("form")}`;
+    saveMods(formId);
+  });
   //* Select outcome
   $(document).on("click", ".table tbody tr", function (evnt) {
     evnt.preventDefault();
