@@ -149,7 +149,7 @@ $(document).ready(() => {
     $(".table-body").empty().append(row);
   });
 
-  $("#input-new-outcome").bind("keyup", function (evnt) {
+  $("#input-new-outcome").bind("focus", function (evnt) {
     evnt.stopPropagation();
     $(this).toggleClass("dark-text").prop("required", false);
   });
