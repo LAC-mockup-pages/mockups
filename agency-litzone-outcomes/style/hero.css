@@ -24,9 +24,9 @@ body {
   padding: 0 0 0.5% 0.5%;
 }
 
-.new-record {
+/* .new-record {
   background-color: #b3f1cc;
-}
+} */
 
 #new-outcome > .form-control {
   font-size: 1.3em;

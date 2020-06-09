@@ -13,7 +13,7 @@ const createNewRecord = (list) => {
 
   $("#new-outcome").append(
     `${selectCategory}
-      <input type="text" id="input-new-outcome" class="form-control blue-text" name="Description" placeholder="Description" spellcheck="true" required>
+      <input type="text" id="input-new-outcome" class="form-control" name="Description" placeholder="Description" spellcheck="true" required>
     <button type="button" id="submit-btn" form="new-outcome" class="btn btn-primary">Add</button>
     <button type="button" id="cancel-btn" class="btn btn-default">Cancel</button>`
   );
@@ -89,11 +89,19 @@ const mergeHashToObject = (hashTable, obj) => {
   return obj;
 };
 
-const saveMods = (fieldList, formId) => {
+const saveMods = (formId) => {
   const { AuditUserID, AgencyID } = sessionVariable;
   const resultObj = { AuditUserID, AgencyID };
+  const submittedData = $(formId).serializeArray();
+  $(`${formId} input`).removeClass("yellow-bg");
 
-  for (const field of fieldList) {
+  const newDescription = submittedData[1].value;
+  if (!alphaNumCheck(newDescription)) {
+    $("#input-new-outcome").toggleClass("yellow-bg");
+    return;
+  }
+
+  for (const field of submittedData) {
     resultObj[field.name] = field.value;
   }
 
@@ -144,7 +152,7 @@ $(document).ready(() => {
     const selectedOption = $(this).val();
     const row = $(`#${selectedOption}`).get();
     $(".table-body").empty().append(row);
-    $("#input-new-outcome").removeClass("yellow-background");
+    // $("#input-new-outcome").removeClass("yellow-bg");
 
     $("#cancel-btn").click(() => {
       location.reload();
@@ -153,36 +161,7 @@ $(document).ready(() => {
     $(document).on("click", "#submit-btn", function (evnt) {
       evnt.stopPropagation();
       const formId = `#${$(this).attr("form")}`;
-      const submittedData = $(formId).serializeArray();
-
-      console.log("submittedData :>> ", submittedData);
-
-      // alphaNumCheck() <== data-check.js
-      if (!alphaNumCheck(submittedData[1].value)) {
-        $("#input-new-outcome").addClass("yellow-background");
-        return;
-      }
-      saveMods(submittedData, formId);
-      // const newDescription = $(form + ">input").val();
-
-      //   if (!alphaNumCheck(newDescription)) {
-      //     $(form)[0].reset();
-      //     return;
-      //   }
-      //   const agencyId = $("table-body").attr("id");
-      //   const newCategory = $(form + ">select").val();
-      //   const result = {
-      //     AgencyID: agencyId,
-      //     Category: newCategory,
-      //     Description: newDescription,
-      //   };
-
-      //   //! =================================================
-      //   //! JSON Object to send back to database
-      //   console.log("result :", JSON.stringify(result));
-      //   //! =================================================
-
-      //   //ToDO Reloading/resetting with new data
+      saveMods(formId);
     });
   });
 
