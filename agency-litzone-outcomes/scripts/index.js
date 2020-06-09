@@ -89,23 +89,20 @@ const mergeHashToObject = (hashTable, obj) => {
   return obj;
 };
 
-const saveMods = (form) => {
-  const submittedData = $(form).serializeArray();
-  const keys = ["ID", "AgencyID"];
-  const val = $(form).attr("data-identifier").split("-");
-  const firstStep = mergeArraysToObject(keys, val);
-  const mergedObject = mergeHashToObject(submittedData, firstStep);
-  const { UserID } = sessionVariable;
-  const result = mergedObject;
-  // alphaNumCheck() <== data-check.js
-  if (!alphaNumCheck(result.Description)) {
-    $(form)[0].reset();
-    return;
+const saveMods = (fieldList, formId) => {
+  const { AuditUserID, AgencyID } = sessionVariable;
+  const resultObj = { AuditUserID, AgencyID };
+
+  for (const field of fieldList) {
+    resultObj[field.name] = field.value;
   }
-  const message = `Result from ${form} : >> `;
+
+  const message = `Result from ${formId} : >> `;
+  console.table(resultObj);
+  const result = ["outcomesData", JSON.stringify(resultObj)];
   //! =================================================
   //! JSON Object to send back to database
-  console.log(message, JSON.stringify(result));
+  console.log(message, result);
   //! =================================================
 
   //ToDO Reloading/resetting with new data
@@ -134,42 +131,58 @@ $(document).ready(() => {
   // * Data viewing
   createNewRecord(categories);
   $("#view-bloc").append(createView(dataOutcomes));
+  $("#OutcomeSortOrder-view, #input-new-outcome").bind("change", function (
+    evnt
+  ) {
+    evnt.stopPropagation();
+    $(this).toggleClass("dark-text").prop("required", false);
+  });
 
   //* Adding a new outcome
-  $("#new-select").change(function () {
+  $("#OutcomeSortOrder-view").change(function (evnt) {
+    evnt.stopPropagation();
     const selectedOption = $(this).val();
     const row = $(`#${selectedOption}`).get();
     $(".table-body").empty().append(row);
+    $("#input-new-outcome").removeClass("yellow-background");
 
     $("#cancel-btn").click(() => {
       location.reload();
     });
 
     $(document).on("click", "#submit-btn", function (evnt) {
-      evnt.preventDefault();
       evnt.stopPropagation();
-      const form = `#${$(this).attr("form")}`;
-      const newDescription = $(form + ">input").val();
+      const formId = `#${$(this).attr("form")}`;
+      const submittedData = $(formId).serializeArray();
 
-      // alphaNumCheck() <== dataOutcomes-check.js
-      if (!alphaNumCheck(newDescription)) {
-        $(form)[0].reset();
+      console.log("submittedData :>> ", submittedData);
+
+      // alphaNumCheck() <== data-check.js
+      if (!alphaNumCheck(submittedData[1].value)) {
+        $("#input-new-outcome").addClass("yellow-background");
         return;
       }
-      const agencyId = $("table-body").attr("id");
-      const newCategory = $(form + ">select").val();
-      const result = {
-        AgencyID: agencyId,
-        Category: newCategory,
-        Description: newDescription,
-      };
+      saveMods(submittedData, formId);
+      // const newDescription = $(form + ">input").val();
 
-      //! =================================================
-      //! JSON Object to send back to database
-      console.log("result :", JSON.stringify(result));
-      //! =================================================
+      //   if (!alphaNumCheck(newDescription)) {
+      //     $(form)[0].reset();
+      //     return;
+      //   }
+      //   const agencyId = $("table-body").attr("id");
+      //   const newCategory = $(form + ">select").val();
+      //   const result = {
+      //     AgencyID: agencyId,
+      //     Category: newCategory,
+      //     Description: newDescription,
+      //   };
 
-      //ToDO Reloading/resetting with new data
+      //   //! =================================================
+      //   //! JSON Object to send back to database
+      //   console.log("result :", JSON.stringify(result));
+      //   //! =================================================
+
+      //   //ToDO Reloading/resetting with new data
     });
   });
 
