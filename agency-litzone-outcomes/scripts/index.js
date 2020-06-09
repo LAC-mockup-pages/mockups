@@ -164,13 +164,13 @@ $(document).ready(() => {
     saveMods(formId);
   });
   //* Select outcome for editing
-  $(document).on("click", ".table tbody tr", function (evnt) {
+  $(document).on("click", ".table tbody tr td div", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
 
     const catId = $(this).attr("data-catid");
+    const recordId = $(this).attr("id");
     const descriptionText = $(this).text();
-    const identifier = `${$(this).attr("id")}-${$("tbody").attr("id")}`;
 
     const optionList = categories
       .map((item) => {
@@ -181,6 +181,7 @@ $(document).ready(() => {
       .join("");
 
     const editForm = `
+    <input type="text" class="hidden" name="ID" value=${recordId} />
     <div class="form-group input-field">
       <label for="Category">Category</label>
       <select id="Category" class="modal-select" name="Category">${optionList}</select>
@@ -193,10 +194,7 @@ $(document).ready(() => {
     `;
 
     $("#modalBloc").modal("toggle");
-    $("#modal-form")
-      .empty()
-      .append(editForm)
-      .attr("data-identifier", identifier);
+    $("#modal-form").empty().append(editForm);
   });
 
   //* Saving mods after editing selected outcome
