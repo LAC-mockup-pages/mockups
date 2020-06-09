@@ -163,7 +163,7 @@ $(document).ready(() => {
     const formId = `#${$(this).attr("form")}`;
     saveMods(formId);
   });
-  //* Select outcome
+  //* Select outcome for editing
   $(document).on("click", ".table tbody tr", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
