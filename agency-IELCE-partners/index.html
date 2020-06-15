@@ -50,9 +50,9 @@
 
     <script src="scripts/index.js" type="text/javascript" defer></script>
     <link />
-    <!-- !============================= -->
+    <!-- !===================================== -->
     <!-- ! File: /agency/IELCEPartnersinfo.aspx -->
-    <!-- !============================= -->
+    <!-- !===================================== -->
 
     <title>Mock-up Agency IET/IELCE Partners</title>
   </head>
@@ -263,7 +263,7 @@
     </header>
     <!-- Hero -->
     <div class="container hero blue-bg">
-      <!-- New source entry-->
+      <!-- New partner entry-->
       <div class="container-fluid partner-entry blue-bg">
         <div class="label-text blue-light-text">
           New Partner (Elements in red are required):
@@ -271,10 +271,7 @@
         <form class="form-inline blue-bg" role="form" id="new-partner"></form>
       </div>
       <!-- Data viewing -->
-      <table class="table">
-        <thead></thead>
-        <tbody></tbody>
-      </table>
+      <table class="table" id="main-table"></table>
     </div>
     <a id="btn-top"
       ><span class="glyphicon glyphicon-eject" aria-hidden="false"></span> Back
@@ -304,6 +301,14 @@
               id="save-btn"
             >
               Save changes
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-dismiss="modal"
+              id="delete-btn"
+            >
+              Delete partner
             </button>
           </div>
         </div>
