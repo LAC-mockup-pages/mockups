@@ -78,8 +78,9 @@ const createTableBody = (dataList, labels) => {
     if (record.AmountAct) record.AmountAct = currencyFormat(record.AmountAct);
 
     // phoneFormat() <== helperFunction.js
-    if (Telephone) record.Telephone = phoneFormat(Telephone);
-    record.Address = `${Address}<br>${City} ${State} ${Zip}`;
+    if (Telephone) record.Telephone = phoneFormat(phoneFormat(Telephone));
+    // zipCodeFormat() <== helperFunctions.js
+    record.Address = `${Address}<br>${City} ${State} ${zipCodeFormat(Zip)}`;
 
     // createRow() <== helperFunction.js
     rows += createRow({
