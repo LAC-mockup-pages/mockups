@@ -23,28 +23,29 @@ const labelList = [
 ];
 
 const rowLabels = {
-  ID: "10",
-  AgencyID: "PRA",
-  IELCEPartnerID: "PRAIELCE10",
-  PartnerName: "IEL-12.3",
-  PartnerManager: "ASISTS Data Services ",
-  Address: "85 Broad Street ",
-  City: "New York ",
-  State: "NY",
-  Zip: "10004-____",
-  County: "",
-  Telephone: "",
-  PartnerFSID: "EPE",
-  AmountProj: "70000.00",
-  AmountAct: "70000.00",
-  PartnerTrainingType: "Workforce Readiness",
-  PartnerCredential: "Certification",
-  CountyDesc: "",
-  PartnerFSIDDesc: "EPE",
+  ID: "ID",
+  AgencyID: "Agency Id",
+  IELCEPartnerID: "Partner ID",
+  PartnerName: "Name",
+  PartnerManager: "Manager",
+  Address: "Address",
+  City: "City",
+  State: "State",
+  Zip: "ZIP",
+  Telephone: "Phone",
+  County: "County",
+  CountyDesc: "County Description",
+  PartnerFSID: "Fund Code",
+  PartnerFSIDDesc: "Fund Source",
+  AmountProj: "Projected $$",
+  AmountAct: "Actual $$",
+  PartnerTrainingType: "Training Type",
+  PartnerCredential: "Credential",
 };
 
 const createNewRecord = () => {
   const newLine = "";
+  const placeholderList = ["placehold 1", "placehold 2"];
   const $newRecord = $("#new-partner");
   for (let i = 0; i < placeholderList.length; i++) {
     $newRecord.append(`${newLine}<input
@@ -60,10 +61,29 @@ const createNewRecord = () => {
   );
 };
 
-const viewHeaders = () => {
-  for (let i = 0; i < headerList.length; i++) {
-    $(".table thead").append(`<th>${headerList[i]}</th>`);
-  }
+const createViewBloc = () => {
+  // Create table header
+  const headerList = Object.keys(rowLabels)
+    .filter(
+      (key) =>
+        ![
+          "ID",
+          "AgencyID",
+          "City",
+          "State",
+          "Zip",
+          "CountyDesc",
+          "PartnerFSID",
+        ].includes(key)
+    )
+    .map((field) => rowLabels[field]);
+  // createHeaders() <== helperFunctions.js
+  const tableHeader = createHeaders(headerList);
+
+  //Create table body
+  const tableBody = "";
+  const viewBloc = tableHeader + tableBody;
+  return viewBloc;
 };
 
 const createDataRow = (...args) => {
@@ -124,30 +144,6 @@ const viewData = (arr) => {
   }
 };
 
-//* Flattens a nested JSON object
-const flatten = (obj, path = "") => {
-  if (!(obj instanceof Object)) return { [path.replace(/\.$/g, "")]: obj };
-
-  return Object.keys(obj).reduce((output, key) => {
-    return obj instanceof Array
-      ? { ...output, ...flatten(obj[key], path) }
-      : { ...output, ...flatten(obj[key], key + ".") };
-  }, {});
-};
-
-const createListFields = (num, arr) => {
-  const selectedRecord = arr.filter((record) => record.id === num);
-  const flattenedRecord = flatten(selectedRecord);
-  const keyList = Object.keys(flattenedRecord);
-  const list = keyList.map((key, indx) => [
-    key,
-    labelList[indx],
-    flattenedRecord[key],
-  ]);
-
-  return list;
-};
-
 $(document).ready(() => {
   // * sub-navbar/index.js
   $("#sub-nav li").click(function () {
@@ -170,8 +166,9 @@ $(document).ready(() => {
 
   // * data viewing
   createNewRecord();
-  viewHeaders();
-  viewData(ielcePartnersData);
+  // viewHeaders();
+  // viewData(ielcePartnersData);
+  $("#main-table").append(createViewBloc());
 
   // //* Adding a new partner
 

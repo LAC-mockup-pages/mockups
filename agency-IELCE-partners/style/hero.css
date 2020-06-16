@@ -7,7 +7,7 @@ body {
 }
 
 .hero {
-  margin-top: 5px;
+  margin: 0.5% 3%;
   padding: 0 0 1% 0;
   border-width: 6px 3px;
 }
@@ -127,9 +127,4 @@ th {
 .modal-header,
 .modal-footer {
   background-color: #d3e4f0;
-}
-
-.delete-msg {
-  width: fit-content;
-  border-bottom: 2px solid rgb(197, 65, 65);
 }
