@@ -3,25 +3,6 @@
 const partnersList = ielcePartnersData.slice(0);
 const stateList = ddlStates.slice(0);
 
-const labelList = [
-  "id",
-  "Partner Name",
-  "Partner ID",
-  "Partner Manager",
-  "Street Address",
-  "City",
-  "State",
-  "ZIP",
-  "County",
-  "Phone",
-  "Email",
-  "FS ID",
-  "Projected Amount",
-  "Amount",
-  "Training Type",
-  "Credential",
-];
-
 const rowLabels = {
   ID: "ID",
   AgencyID: "Agency Id",
@@ -61,8 +42,7 @@ const createNewRecord = () => {
   );
 };
 
-const createViewBloc = () => {
-  // Create table header
+const createTableHeader = () => {
   const headerList = Object.keys(rowLabels)
     .filter(
       (key) =>
@@ -80,68 +60,43 @@ const createViewBloc = () => {
   // createHeaders() <== helperFunctions.js
   const tableHeader = createHeaders(headerList);
 
-  //Create table body
-  const tableBody = "";
+  return tableHeader;
+};
+
+const createTableBody = (dataList, labels) => {
+  let rows = "";
+  const filteredLabelList = Object.keys(labels).filter(
+    (item) => !["AgencyID"].includes(item)
+  );
+  const hiddenList = ["ID", "City", "State", "Zip", "County", "PartnerFSID"];
+  for (const record of dataList) {
+    const { Address, City, State, Zip, Telephone } = record;
+
+    // currencyFormat() <== helperFunction.js
+    if (record.AmountProj)
+      record.AmountProj = currencyFormat(record.AmountProj);
+    if (record.AmountAct) record.AmountAct = currencyFormat(record.AmountAct);
+
+    // phoneFormat() <== helperFunction.js
+    if (Telephone) record.Telephone = phoneFormat(Telephone);
+    record.Address = `${Address}<br>${City} ${State} ${Zip}`;
+
+    // createRow() <== helperFunction.js
+    rows += createRow({
+      record,
+      labelList: filteredLabelList,
+      labelObj: rowLabels,
+      hiddenList,
+    });
+  }
+  return `<tbody>${rows}</tbody>`;
+};
+
+const createViewBloc = () => {
+  const tableHeader = createTableHeader();
+  const tableBody = createTableBody(partnersList, rowLabels);
   const viewBloc = tableHeader + tableBody;
   return viewBloc;
-};
-
-const createDataRow = (...args) => {
-  const rowData = Array.from(args);
-  // const classList = headerList.slice(1);
-  let row = "";
-
-  for (let i = 0; i < rowData.length; i++) {
-    const option = headerList[i].replace(/\s/gi, "-").toLowerCase();
-    let val = rowData[i] ? rowData[i] : "";
-    if (val instanceof Array)
-      val = rowData[i][0] + "<br>" + "ID: " + rowData[i][1];
-    row += `<td class="cell-data ${option}">${val}</td>`;
-  }
-
-  return row;
-};
-
-const viewData = (arr) => {
-  for (record of arr) {
-    const {
-      id,
-      PartnerName,
-      PartnerID,
-      PartnerMngr,
-      Address,
-      Phone,
-      Email,
-      FSID,
-      ProjectedAmount,
-      Amount,
-      TrainingType,
-      Credential,
-    } = record;
-
-    const { StreetAdrs, City, State, Zip, County } = Address;
-    const fullAddress = `${StreetAdrs}<br>${City.toUpperCase()}<br>${State} - ${Zip}`;
-
-    $(".table tbody").append(
-      `<tr class='table-row' id=${id} title='click to Edit'></tr>`
-    );
-
-    $(".table tbody tr:last-child").append(
-      `${createDataRow(
-        [PartnerName, PartnerID],
-        PartnerMngr,
-        fullAddress,
-        County,
-        Phone,
-        Email,
-        FSID,
-        ProjectedAmount,
-        Amount,
-        TrainingType,
-        Credential
-      )}`
-    );
-  }
 };
 
 $(document).ready(() => {
@@ -166,8 +121,6 @@ $(document).ready(() => {
 
   // * data viewing
   createNewRecord();
-  // viewHeaders();
-  // viewData(ielcePartnersData);
   $("#main-table").append(createViewBloc());
 
   // //* Adding a new partner
