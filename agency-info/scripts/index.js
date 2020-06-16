@@ -1,5 +1,27 @@
 //* Actions and logic
-
+const agTest = [
+  {
+    ID: "14",
+    AgencyID: "PRA",
+    AgencyName: "Practice Agency",
+    SEDID: "LACNYC",
+    Division: "AAA Division",
+    ProgramManager: "Ichabad Crane ",
+    Address: "85 Broad Street 27th Floor ",
+    City: "New York ",
+    State: "NY",
+    Zip: "10004",
+    Telephone: "2128033355",
+    CSD: "3",
+    EPERate: "0.0000",
+    CPD: "13",
+    CD: "5",
+    AD: "4",
+    SD: "8",
+    PrepCode: "11254",
+    AgencyEmail: "asists@gmail.com",
+  },
+];
 //! Add a <script> element in index.js pointing to data.js, then:
 let agencyData = ag[0]; //! That is all that's needed
 let newAgencyData = {};
@@ -30,7 +52,14 @@ const blocItems = {
   bottomRight: [15, 16],
 };
 
-const createRow = (arr) => {
+const labelsBloc = {
+  topLeft: [2, 3, 4, 5, 12, 17],
+  topRight: [6, 7, 8, 9, 10, 18],
+  bottomLeft: [11, 13, 14],
+  bottomRight: [15, 16],
+};
+
+const createOneRow = (arr) => {
   // phoneFormat() <== helpers.js
   const text = arr[0] === "Telephone" ? phoneFormat(arr[2]) : arr[2];
   const row = `<tr class="table-row" id=${arr[0]}>
@@ -44,7 +73,7 @@ const createRow = (arr) => {
 const createBloc = (blocName, listIndex, listFields) => {
   let blocRows = "";
   for (let indx of listIndex) {
-    blocRows += createRow(listFields[indx]);
+    blocRows += createOneRow(listFields[indx]);
   }
   return `<div class="quarter-bloc col-md-6">
       <table class="table-responsive" id="${blocName}">
