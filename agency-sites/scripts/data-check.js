@@ -19,8 +19,13 @@ const validateUserInput = (dataList) => {
         checkedFieldList.push({ ...field, correct });
         break;
 
-      case "State":
-        correct = field.value.length < 3;
+      case "State-view":
+        correct = field.value.length < 3 && field.value.length > 0;
+        checkedFieldList.push({ ...field, correct });
+        break;
+
+      case "County":
+        correct = field.value.length < 6 && field.value.length > 0;
         checkedFieldList.push({ ...field, correct });
         break;
 
@@ -30,7 +35,7 @@ const validateUserInput = (dataList) => {
         break;
 
       case "Telephone":
-        correct = field.value.length < 13;
+        correct = field.value.length < 13 && field.value.length > 0;
         checkedFieldList.push({ ...field, correct });
         break;
 

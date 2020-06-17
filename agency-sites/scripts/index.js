@@ -150,15 +150,16 @@ const createSelect = (hashTable, keyValue, selectedValue = "", numSelected) => {
     .join("");
 
   if (!selectedValue) {
-    firstOption = "<option selected disabled>Select an option</option>";
+    firstOption =
+      "<option selected value='' disabled>Select an option</option>";
   }
 
   const elementChoice = [
     `<div class= "input-field form-group">
   <label for="${keyValue}">${labelObj[keyValue]}</label>
-  <select id="${keyValue}" class="modal-select" name="${keyValue}">${firstOption}${optionList}</select>
+  <select id="${keyValue}" class="modal-select"  name="${keyValue}">${firstOption}${optionList}</select>
 </div>`,
-    `<select id="${keyValue}" class="modal-select form-control" name=${keyValue}><option selected disabled>Select an option</option>${optionList}</select>`,
+    `<select id="${keyValue}" class="modal-select form-control"  name=${keyValue}><option selected value="" disabled>Select an option</option>${optionList}</select>`,
   ];
 
   return elementChoice[numSelected];
@@ -233,15 +234,21 @@ const saveMods = (form) => {
   const { AuditUserID } = sessionVariable;
   const result = { AuditUserID };
   const submittedData = $(form).serializeArray();
-  $(`#new-site input`).removeClass("yellow-bg");
-
+  $(`#new-site input, select`).removeClass("yellow-bg");
+  console.log("submittedData :>> ", submittedData);
   // Highlights invalid fields with yellow background
   //  validateUserInput() <== data-check.js
   const validatedList = validateUserInput(submittedData);
+  console.log("validatedList :>> ", validatedList);
   const checkFlag = validatedList.some((item) => !item.correct);
   if (checkFlag) {
     const list = validatedList.filter((obj) => obj.correct === false);
     for (let field of list) {
+      console.log("State value : ", $("#State-view").val());
+      if (!$("#State-view").val()) $("#State-view").addClass("yellow-bg");
+      if (!$("#County").val()) $("#County").addClass("yellow-bg");
+      console.log("County value : ", $("#County").val());
+
       $(`#${field.name}`).addClass("yellow-bg");
     }
     return;
