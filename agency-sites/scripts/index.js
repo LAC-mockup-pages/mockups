@@ -28,8 +28,9 @@ const createNewRecord = (labelsObject, agencyId) => {
     (key) => !["ID", "SiteEmail", "CSD", "CPD", "CD", "AD", "SD"].includes(key)
   );
   for (key of keyList) {
-    let option = " required";
+    let option = "";
     let classOption = "";
+    if (["SiteID", "SiteName"].includes(key)) option = " required";
     if (["AgencyID", "County"].includes(key)) {
       const agency = (option = key === "AgencyID" ? ` value=${agencyId}` : "");
       classOption = " hidden";
@@ -199,7 +200,6 @@ const createForm = (elmnt) => {
           break;
         case "SiteID":
           fieldText = formData[fieldName][1];
-          // option = "disabled";
           break;
         case "Zip":
           // zipCodeFormat() <== helperFunctions()
@@ -209,18 +209,7 @@ const createForm = (elmnt) => {
           fieldText = formData[fieldName][1];
           break;
       }
-      if (
-        [
-          "SiteID",
-          "SiteName",
-          "SiteManager",
-          "Address",
-          "City",
-          "State",
-          "Zip",
-          "Telephone",
-        ].includes(fieldName)
-      ) {
+      if (["SiteID", "SiteName"].includes(fieldName)) {
         labelClass = " red-text";
         option += " required";
       }
@@ -308,6 +297,7 @@ $(document).ready(() => {
   // * Data viewing
   createViewBloc(dataSites, labelObj);
   createNewRecord(labelObj, dataSites[0].AgencyID);
+  $("#State-view").addClass("modal-select");
 
   //* Adding a new site
   $(document).on("click", "#submit-btn", function (evnt) {
