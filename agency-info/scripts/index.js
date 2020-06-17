@@ -7,10 +7,17 @@ let newAgencyData = {};
 //! modified if the Data fields from server are modified
 // Labels used when DataObject keys need modifying
 const rowLabels = {
-  SEDID: "SED ID",
+  ID: "ID",
+  AgencyID: "Agency ID",
   AgencyName: "Agency Name",
+  SEDID: "SED ID",
+  Division: "Division",
   ProgramManager: "Program Manager",
+  Address: "Address",
+  City: "City",
+  State: "State",
   Zip: "ZIP",
+  Telephone: "Phone",
   CSD: "Community School Dist.",
   EPERate: "EPE Rate",
   CPD: "Community Planning Dist.",
@@ -20,7 +27,6 @@ const rowLabels = {
   PrepCode: "Prep Code",
   AgencyEmail: "Email",
 };
-
 // Indexes needed for each bloc, in order
 const blocItems = {
   topLeft: [2, 3, 4, 5, 12, 17],
@@ -39,7 +45,8 @@ const labelsBloc = {
 const createOneRow = (arr) => {
   // phoneFormat() <== helpers.js
   const text = arr[0] === "Telephone" ? phoneFormat(arr[2]) : arr[2];
-  const row = `<tr class="table-row" id=${arr[0]}>
+  const optionHidden = ["ID", "AgencyID"].includes(arr[0]) ? " hidden" : "";
+  const row = `<tr class="table-row${optionHidden}" id=${arr[0]}>
       <td class="row-label col-md-2">${arr[1]}</td>
       <td class="row-data col-md-3">${text}</td>
     </tr>`;
@@ -47,10 +54,11 @@ const createOneRow = (arr) => {
   return row;
 };
 
-const createBloc = (blocName, listIndex, listFields) => {
+const createBloc = (blocName, dataObj) => {
   let blocRows = "";
-  for (let indx of listIndex) {
-    blocRows += createOneRow(listFields[indx]);
+  for (const key in dataObj) {
+    const rowData = [key, rowLabels[key], dataObj[key]];
+    blocRows += createOneRow(rowData);
   }
   return `<div class="quarter-bloc col-md-6">
       <table class="table-responsive" id="${blocName}">
