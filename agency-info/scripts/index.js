@@ -1,36 +1,31 @@
 //* Actions and logic
 //! Add a <script> element in index.js pointing to data.js, then:
-let agencyData = ag[0]; //! That is all that's needed
+let agencyData = [ag[0]]; //! That is all that's needed
 
 // Labels used when DataObject keys need modifying
-const rowLabels = {
-  ID: "ID",
-  AgencyID: "Agency ID",
-  AgencyName: "Agency Name",
-  SEDID: "SED ID",
-  Division: "Division",
-  ProgramManager: "Program Manager",
-  Address: "Address",
-  City: "City",
-  State: "State",
-  Zip: "ZIP",
-  Telephone: "Phone",
-  CSD: "Community School Dist.",
-  EPERate: "EPE Rate",
-  CPD: "Community Planning Dist.",
-  CD: "Congressional Dist.",
-  AD: "Assembly Dist.",
-  SD: "Senatorial Dist.",
-  PrepCode: "Prep Code",
-  AgencyEmail: "Email",
-};
-
-const labelsBloc = {
-  topLeft: [2, 3, 4, 5, 12, 17],
-  topRight: [6, 7, 8, 9, 10, 18],
-  bottomLeft: [11, 13, 14],
-  bottomRight: [15, 16],
-};
+const rowLabels = [
+  {
+    ID: "ID",
+    AgencyID: "Agency ID",
+    AgencyName: "Agency Name",
+    SEDID: "SED ID",
+    Division: "Division",
+    ProgramManager: "Program Manager",
+    Address: "Address",
+    City: "City",
+    State: "State",
+    Zip: "ZIP",
+    Telephone: "Phone",
+    CSD: "Community School Dist.",
+    EPERate: "EPE Rate",
+    CPD: "Community Planning Dist.",
+    CD: "Congressional Dist.",
+    AD: "Assembly Dist.",
+    SD: "Senatorial Dist.",
+    PrepCode: "Prep Code",
+    AgencyEmail: "Email",
+  },
+];
 
 // list = [key,label,value] from createBloc()
 const createOneRow = (list) => {
@@ -52,8 +47,9 @@ const createOneRow = (list) => {
 // dataObj type: JS object, fields selected to appear in this blocName
 const createBloc = (blocName, dataObj) => {
   let blocRows = "";
+  const labels = rowLabels[0];
   for (const key in dataObj) {
-    blocRows += createOneRow([key, rowLabels[key], dataObj[key]]);
+    blocRows += createOneRow([key, labels[key], dataObj[key]]);
   }
   return `<div class="quarter-bloc col-md-6">
             <table class="table-responsive" id="${blocName}">
@@ -158,7 +154,7 @@ $(document).ready(() => {
 
   // * Data viewing
 
-  $(".hero").append(renderViewBloc(agencyData));
+  $(".hero").append(renderViewBloc(agencyData[0]));
 
   //* Data bloc editing
 
