@@ -41,12 +41,15 @@ const labelsBloc = {
   bottomRight: [15, 16],
 };
 
-const createOneRow = (arr) => {
+// list = [key,label,value] from createBloc()
+const createOneRow = (list) => {
+  const [key, label, value] = list;
+
   // phoneFormat() <== helpers.js
-  const text = arr[0] === "Telephone" ? phoneFormat(arr[2]) : arr[2];
-  const optionHidden = ["ID", "AgencyID"].includes(arr[0]) ? " hidden" : "";
-  const row = `<tr class="table-row${optionHidden}" id=${arr[0]}>
-      <td class="row-label col-md-2">${arr[1]}</td>
+  const text = key === "Telephone" ? phoneFormat(value) : value;
+  const optionHidden = ["ID", "AgencyID"].includes(key) ? " hidden" : "";
+  const row = `<tr class="table-row${optionHidden}" id=${key}>
+      <td class="row-label col-md-2">${label}</td>
       <td class="row-data col-md-3">${text}</td>
     </tr>`;
 
