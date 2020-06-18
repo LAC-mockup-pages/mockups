@@ -63,10 +63,12 @@ const createBloc = (blocName, dataObj) => {
     blocRows += createOneRow(rowData);
   }
   return `<div class="quarter-bloc col-md-6">
-      <table class="table-responsive" id="${blocName}">
-        ${blocRows}
-      </table>
-    </div>`;
+            <table class="table-responsive" id="${blocName}">
+              <tbody>
+                ${blocRows}
+              </tbody>
+            </table>
+          </div>`;
 };
 
 const renderViewBloc = (obj) => {
