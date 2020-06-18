@@ -121,37 +121,34 @@ const saveMods = (form) => {
   $(`#edit-form input, select`).removeClass("yellow-bg");
 
   //TODO Data validation - add data-check.js + functions
-  const validatedList = submittedData;
+  const validatedList = validateUserInput(submittedData);
   const checkFlag = validatedList.some((item) => !item.correct);
   if (checkFlag) {
     const list = validatedList.filter((obj) => !obj.correct);
     for (let field of list) {
-      console.log("State value : ", $("#State-view").val());
-      if (!$("#State-view").val()) $("#State-view").addClass("yellow-bg");
-      $(`#${field.name}`).addClass("yellow-bg");
+      // console.log("State value : ", $("#State-view").val());
+      // if (!$("#State-view").val()) $("#State-view").addClass("yellow-bg");
+      $(`#${field.name}-view`).addClass("yellow-bg");
     }
     return;
   }
 
-  // const idList = elmnt.split("-");
-  // let result = { ID: idList[0], AgencyID: idList[1] };
-  // const list = $(`#${elmnt} input`).get();
-  // for (let row of list) {
-  //   const key = $(row).attr("id");
-  //   // phoneFormat() <== helpers.js
-  //   const val = key === "Telephone" ? phoneFormat($(row).val()) : $(row).val();
-  //   result[key] = val;
-  // }
+  for (const field of submittedData) {
+    // phoneFormat <== helperFunctions()
+    if (field.name === "Telephone") field.value = phoneFormat(field.value);
+    result[field.name] = field.value;
+  }
 
-  // // updateDataObject() <== helpers.js
-  // const updatedData = updateDataObject(result, agencyData);
+  const message = `Result from ${form} :>>`;
+  console.table(result);
+  const resultList = ["ag", JSON.stringify(result)];
+  //! =================================================
+  //! JSON Object to send back to database
+  console.log(message, resultList);
+  //! =================================================
 
-  // //! Data object to send back to Database
-  // console.log("JSON Object :", JSON.stringify(updatedData));
-
-  // $("#modalTopBloc").modal("toggle");
-
-  //TODO Update page with response from Database update
+  //ToDO Reloading/resetting with new data
+  // location.reload();
 };
 
 $(document).ready(() => {
@@ -192,6 +189,8 @@ $(document).ready(() => {
       const [keyVal, labelVal, value] = item;
       const optionHidden = keyVal === "ID" ? "hidden" : "";
 
+      //TODO Add test for State to switch to select element
+
       // elementInput() <== helpers.js
       modalBloc += elementInput({
         keyVal,
@@ -204,6 +203,7 @@ $(document).ready(() => {
       });
     }
     $("#edit-form").append(modalBloc);
+    $("#AgencyEmail-view").attr("type", "email");
   });
 
   // Save button in modal form
