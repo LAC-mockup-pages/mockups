@@ -67,7 +67,6 @@ const createBloc = (blocName, dataObj) => {
 const renderViewBloc = (dataObj) => {
   let {
     ID,
-    AgencyID,
     AgencyName,
     SEDID,
     Division,
@@ -86,10 +85,8 @@ const renderViewBloc = (dataObj) => {
     AD,
     SD,
   } = dataObj;
-  const identifier = `${ID}-${AgencyID}`;
   const topLeft = createBloc("topLeft", {
     ID,
-    AgencyID,
     AgencyName,
     SEDID,
     Division,
@@ -105,14 +102,14 @@ const renderViewBloc = (dataObj) => {
     Telephone,
     AgencyEmail,
   });
-  const bottomLeft = createBloc("bottomLeft", { CSD, CPD, CD });
+  const bottomLeft = createBloc("bottomLeft", { ID, CSD, CPD, CD });
   const bottomRight = createBloc("bottomRight", { AD, SD });
   return `
-    <div class="container row" id="top-bloc" title="Click to Edit" data-id="${identifier}">
+    <div class="container row" id="top-bloc" title="Click to Edit">
       ${topLeft}${topRight}
     </div>
     <div class="separation"></div>
-    <div class="container row" id="bottom-bloc" title="Click to Edit" data-id="${identifier}">
+    <div class="container row" id="bottom-bloc" title="Click to Edit">
       ${bottomLeft}${bottomRight}
     </div>`;
 };
