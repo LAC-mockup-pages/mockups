@@ -153,8 +153,6 @@ $(document).ready(() => {
     event.stopPropagation();
     $("#modalTopBloc").modal("toggle");
     $("#edit-form").empty();
-
-    const blocDataId = $(this).attr("data-id");
     const blocId = $(this).attr("id");
     const listRows = $.makeArray($(`#${blocId} .table-row`).get());
     let i = 0;
@@ -173,17 +171,35 @@ $(document).ready(() => {
       i += 3;
     }
     for (let item of nestedListValues) {
-      // createInputField() <== helpers.js
-      modalBloc += createInputField(item[0], item[1], item[2]);
+      const [keyVal, labelVal, value] = item;
+      const optionHidden = keyVal === "ID" ? "hidden" : "";
+
+      // elementInput() <== helpers.js
+      modalBloc += elementInput({
+        keyVal,
+        labelVal,
+        value,
+        labelClassVal: "",
+        classVal: "",
+        option: "",
+        optionHidden,
+      });
     }
-    $("#edit-form").append(modalBloc).attr("data-bloc-id", blocDataId);
+    $("#edit-form").append(modalBloc);
   });
 
+  // Save button in modal form
   $("#save-button").on("click", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
     const formID = $(this).attr("form");
-    const id = $(`#${formID}`).attr("data-bloc-id");
-    saveMods(id);
+    saveMods(`#${formID}`);
+  });
+
+  // Close button in modal form
+  $("#close-button").on("click", function (evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+    $("#modalTopBloc").modal("toggle");
   });
 });
