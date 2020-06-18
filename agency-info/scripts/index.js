@@ -2,8 +2,6 @@
 //! Add a <script> element in index.js pointing to data.js, then:
 let agencyData = ag[0]; //! That is all that's needed
 
-//! NB: Objects rowLabels and blocItems will need to be
-//! modified if the Data fields from server are modified
 // Labels used when DataObject keys need modifying
 const rowLabels = {
   ID: "ID",
@@ -25,13 +23,6 @@ const rowLabels = {
   SD: "Senatorial Dist.",
   PrepCode: "Prep Code",
   AgencyEmail: "Email",
-};
-// Indexes needed for each bloc, in order
-const blocItems = {
-  topLeft: [2, 3, 4, 5, 12, 17],
-  topRight: [6, 7, 8, 9, 10, 18],
-  bottomLeft: [11, 13, 14],
-  bottomRight: [15, 16],
 };
 
 const labelsBloc = {
@@ -62,8 +53,7 @@ const createOneRow = (list) => {
 const createBloc = (blocName, dataObj) => {
   let blocRows = "";
   for (const key in dataObj) {
-    const rowData = [key, rowLabels[key], dataObj[key]];
-    blocRows += createOneRow(rowData);
+    blocRows += createOneRow([key, rowLabels[key], dataObj[key]]);
   }
   return `<div class="quarter-bloc col-md-6">
             <table class="table-responsive" id="${blocName}">
@@ -74,28 +64,56 @@ const createBloc = (blocName, dataObj) => {
           </div>`;
 };
 
-const renderViewBloc = (obj) => {
-  // createFieldList() <== helpers.js
-  const listFields = createFieldList(obj, rowLabels);
-  const identifier = `${obj.ID}-${obj.AgencyID}`;
-  let topBloc = "";
-  let bottomBloc = "";
-
-  for (const key in blocItems) {
-    if (key.startsWith("top")) {
-      topBloc += createBloc(key, blocItems[key], listFields);
-    } else {
-      bottomBloc += createBloc(key, blocItems[key], listFields);
-    }
-  }
-
+const renderViewBloc = (dataObj) => {
+  let {
+    ID,
+    AgencyID,
+    AgencyName,
+    SEDID,
+    Division,
+    ProgramManager,
+    EPERate,
+    PrepCode,
+    Address,
+    City,
+    State,
+    Zip,
+    Telephone,
+    AgencyEmail,
+    CSD,
+    CPD,
+    CD,
+    AD,
+    SD,
+  } = dataObj;
+  const identifier = `${ID}-${AgencyID}`;
+  const topLeft = createBloc("topLeft", {
+    ID,
+    AgencyID,
+    AgencyName,
+    SEDID,
+    Division,
+    ProgramManager,
+    EPERate,
+    PrepCode,
+  });
+  const topRight = createBloc("topRight", {
+    Address,
+    City,
+    State,
+    Zip,
+    Telephone,
+    AgencyEmail,
+  });
+  const bottomLeft = createBloc("bottomLeft", { CSD, CPD, CD });
+  const bottomRight = createBloc("bottomRight", { AD, SD });
   return `
     <div class="container row" id="top-bloc" title="Click to Edit" data-id="${identifier}">
-      ${topBloc}
+      ${topLeft}${topRight}
     </div>
     <div class="separation"></div>
     <div class="container row" id="bottom-bloc" title="Click to Edit" data-id="${identifier}">
-      ${bottomBloc}
+      ${bottomLeft}${bottomRight}
     </div>`;
 };
 
@@ -128,7 +146,7 @@ $(document).ready(() => {
     $(this).toggleClass("blue-light-bg blue-text");
   });
 
-  // * data viewing
+  // * Data viewing
 
   $(".hero").append(renderViewBloc(agencyData));
 
