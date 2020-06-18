@@ -56,6 +56,9 @@ const createOneRow = (list) => {
   return row;
 };
 
+// Args from renderViewBloc()
+// blocName type: string
+// dataObj type: JS object, fields selected to appear in this blocName
 const createBloc = (blocName, dataObj) => {
   let blocRows = "";
   for (const key in dataObj) {
