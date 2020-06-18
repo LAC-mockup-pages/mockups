@@ -1,7 +1,6 @@
 //* Actions and logic
 //! Add a <script> element in index.js pointing to data.js, then:
 let agencyData = ag[0]; //! That is all that's needed
-let newAgencyData = {};
 
 //! NB: Objects rowLabels and blocItems will need to be
 //! modified if the Data fields from server are modified
@@ -127,7 +126,7 @@ $(document).ready(() => {
 
   //* Data bloc editing
 
-  $("[title^='Click']").click(function (event) {
+  $(document).on("click", ".hero > div", function (event) {
     event.stopPropagation();
     $("#modalTopBloc").modal("toggle");
     $("#edit-form").empty();
@@ -157,7 +156,7 @@ $(document).ready(() => {
     $("#edit-form").append(modalBloc).attr("data-bloc-id", blocDataId);
   });
 
-  $("#save-button").click(function (evnt) {
+  $("#save-button").on("click", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
     const formID = $(this).attr("form");
