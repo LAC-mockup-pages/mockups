@@ -120,14 +120,11 @@ const saveMods = (form) => {
   const submittedData = $(form).serializeArray();
   $(`#edit-form input, select`).removeClass("yellow-bg");
 
-  //TODO Data validation - add data-check.js + functions
   const validatedList = validateUserInput(submittedData);
   const checkFlag = validatedList.some((item) => !item.correct);
   if (checkFlag) {
     const list = validatedList.filter((obj) => !obj.correct);
     for (let field of list) {
-      // console.log("State value : ", $("#State-view").val());
-      // if (!$("#State-view").val()) $("#State-view").addClass("yellow-bg");
       $(`#${field.name}-view`).addClass("yellow-bg");
     }
     return;
@@ -153,7 +150,8 @@ const saveMods = (form) => {
 
 $(document).ready(() => {
   // * sub-navbar/index.js
-  $("#sub-nav li").click(function () {
+  $("#sub-nav li").on("click", function (event) {
+    evnt.stopPropagation();
     $("#sub-nav li").removeClass("blue-light-bg blue-text");
     $(this).toggleClass("blue-light-bg blue-text");
   });
@@ -189,18 +187,29 @@ $(document).ready(() => {
       const [keyVal, labelVal, value] = item;
       const optionHidden = keyVal === "ID" ? "hidden" : "";
 
-      //TODO Add test for State to switch to select element
-
-      // elementInput() <== helpers.js
-      modalBloc += elementInput({
-        keyVal,
-        labelVal,
-        value,
-        labelClassVal: "",
-        classVal: "",
-        option: "",
-        optionHidden,
-      });
+      if (keyVal === "State") {
+        // elementSelectModal() <== helpers.js
+        modalBloc += elementSelectModal({
+          hashTable: ddlStates,
+          keyValue: keyVal,
+          selectedValue: value,
+          labelVal,
+          labelClassVal: "",
+          option: "",
+          optionText: "a State",
+        });
+      } else {
+        // elementInput() <== helpers.js
+        modalBloc += elementInput({
+          keyVal,
+          labelVal,
+          value,
+          labelClassVal: "",
+          classVal: "",
+          option: "",
+          optionHidden,
+        });
+      }
     }
     $("#edit-form").append(modalBloc);
     $("#AgencyEmail-view").attr("type", "email");
