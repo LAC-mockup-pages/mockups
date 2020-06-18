@@ -114,24 +114,42 @@ const renderViewBloc = (dataObj) => {
     </div>`;
 };
 
-const saveMods = (elmnt) => {
-  const idList = elmnt.split("-");
-  let result = { ID: idList[0], AgencyID: idList[1] };
-  const list = $(`#${elmnt} input`).get();
-  for (let row of list) {
-    const key = $(row).attr("id");
-    // phoneFormat() <== helpers.js
-    const val = key === "Telephone" ? phoneFormat($(row).val()) : $(row).val();
-    result[key] = val;
+const saveMods = (form) => {
+  const { AuditUserID, AgencyID } = sessionVariable[0];
+  const result = { AgencyID, AuditUserID };
+  const submittedData = $(form).serializeArray();
+  $(`#edit-form input, select`).removeClass("yellow-bg");
+
+  //TODO Data validation - add data-check.js + functions
+  const validatedList = submittedData;
+  const checkFlag = validatedList.some((item) => !item.correct);
+  if (checkFlag) {
+    const list = validatedList.filter((obj) => !obj.correct);
+    for (let field of list) {
+      console.log("State value : ", $("#State-view").val());
+      if (!$("#State-view").val()) $("#State-view").addClass("yellow-bg");
+      $(`#${field.name}`).addClass("yellow-bg");
+    }
+    return;
   }
 
-  // updateDataObject() <== helpers.js
-  const updatedData = updateDataObject(result, agencyData);
+  // const idList = elmnt.split("-");
+  // let result = { ID: idList[0], AgencyID: idList[1] };
+  // const list = $(`#${elmnt} input`).get();
+  // for (let row of list) {
+  //   const key = $(row).attr("id");
+  //   // phoneFormat() <== helpers.js
+  //   const val = key === "Telephone" ? phoneFormat($(row).val()) : $(row).val();
+  //   result[key] = val;
+  // }
 
-  //! Data object to send back to Database
-  console.log("JSON Object :", JSON.stringify(updatedData));
+  // // updateDataObject() <== helpers.js
+  // const updatedData = updateDataObject(result, agencyData);
 
-  $("#modalTopBloc").modal("toggle");
+  // //! Data object to send back to Database
+  // console.log("JSON Object :", JSON.stringify(updatedData));
+
+  // $("#modalTopBloc").modal("toggle");
 
   //TODO Update page with response from Database update
 };
