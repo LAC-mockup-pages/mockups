@@ -3,26 +3,28 @@
 const partnersList = ielcePartnersData.slice(0);
 const stateList = ddlStates.slice(0);
 
-const rowLabels = {
-  ID: "ID",
-  AgencyID: "Agency Id",
-  IELCEPartnerID: "Partner ID",
-  PartnerName: "Name",
-  PartnerManager: "Manager",
-  Address: "Address",
-  City: "City",
-  State: "State",
-  Zip: "ZIP",
-  Telephone: "Phone",
-  County: "County",
-  CountyDesc: "County Description",
-  PartnerFSID: "Fund Code",
-  PartnerFSIDDesc: "Fund Source",
-  AmountProj: "Projected $$",
-  AmountAct: "Actual $$",
-  PartnerTrainingType: "Training Type",
-  PartnerCredential: "Credential",
-};
+const rowLabels = [
+  {
+    ID: "ID",
+    AgencyID: "Agency Id",
+    IELCEPartnerID: "Partner ID",
+    PartnerName: "Name",
+    PartnerManager: "Manager",
+    Address: "Address",
+    City: "City",
+    State: "State",
+    Zip: "ZIP",
+    Telephone: "Phone",
+    County: "County",
+    CountyDesc: "County Description",
+    PartnerFSID: "Fund Code",
+    PartnerFSIDDesc: "Fund Source",
+    AmountProj: "Projected $$",
+    AmountAct: "Actual $$",
+    PartnerTrainingType: "Training Type",
+    PartnerCredential: "Credential",
+  },
+];
 
 const createNewRecord = () => {
   const newLine = "";
@@ -38,12 +40,13 @@ const createNewRecord = () => {
   }
 
   $newRecord.append(
-    `<button type="submit" id="submit-btn" class="btn btn-primary">Add New Partner</button>`
+    `<button type="submit" id="submit-btn" class="btn btn-primary">Add</button>`
   );
 };
 
-const createTableHeader = () => {
-  const headerList = Object.keys(rowLabels)
+const createTableHeader = (labels) => {
+  const labelObj = labels[0];
+  const headerList = Object.keys(labelObj)
     .filter(
       (key) =>
         ![
@@ -56,7 +59,7 @@ const createTableHeader = () => {
           "PartnerFSID",
         ].includes(key)
     )
-    .map((field) => rowLabels[field]);
+    .map((field) => labelObj[field]);
   // createHeaders() <== helperFunctions.js
   const tableHeader = createHeaders(headerList);
 
@@ -65,7 +68,7 @@ const createTableHeader = () => {
 
 const createTableBody = (dataList, labels) => {
   let rows = "";
-  const filteredLabelList = Object.keys(labels).filter(
+  const filteredLabelList = Object.keys(labels[0]).filter(
     (item) => !["AgencyID"].includes(item)
   );
   const hiddenList = ["ID", "City", "State", "Zip", "County", "PartnerFSID"];
@@ -94,7 +97,7 @@ const createTableBody = (dataList, labels) => {
 };
 
 const createViewBloc = () => {
-  const tableHeader = createTableHeader();
+  const tableHeader = createTableHeader(rowLabels);
   const tableBody = createTableBody(partnersList, rowLabels);
   const viewBloc = tableHeader + tableBody;
   return viewBloc;
@@ -120,15 +123,19 @@ $(document).ready(() => {
     $("html, body").animate({ scrollTop: 0 }, "600");
   });
 
-  // * data viewing
+  //* Data viewing
   createNewRecord();
   $("#main-table").append(createViewBloc());
 
-  // //* Adding a new partner
+  //* Adding a new partner
 
-  // //* Select partner
-  $("[title^='click'").click(function () {
+  // Save button in new entry bloc
+
+  // Cancel button in new entry bloc
+  //* Select partner
+  $("#main-table tr").on("click", function () {
     const rowID = Number($(this).attr("id"));
+    console.log("rowID :>> ", rowID);
     const listFields = createListFields(rowID, ielcePartnersData);
     $("#modalBloc").modal("toggle");
     $(".modal-body form").remove();
@@ -152,4 +159,8 @@ $(document).ready(() => {
       );
     }
   });
+
+  // Save button in modal form
+
+  // Cancel button in modal form
 });
