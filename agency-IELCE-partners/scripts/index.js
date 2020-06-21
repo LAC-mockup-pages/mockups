@@ -2,6 +2,7 @@
 
 const partnersList = ielcePartnersData.slice(0);
 const stateList = ddlStates.slice(0);
+const countyList = countyData.slice(0);
 
 const rowLabels = [
   {
@@ -16,7 +17,7 @@ const rowLabels = [
     Zip: "ZIP",
     Telephone: "Phone",
     County: "County",
-    CountyDesc: "County Description",
+    CountyDesc: "County Name",
     PartnerFSID: "Fund Code",
     PartnerFSIDDesc: "Fund Source",
     AmountProj: "Projected $$",
@@ -26,22 +27,68 @@ const rowLabels = [
   },
 ];
 
-const createNewRecord = () => {
-  const newLine = "";
-  const placeholderList = ["placehold 1", "placehold 2"];
-  const $newRecord = $("#new-partner");
-  for (let i = 0; i < placeholderList.length; i++) {
-    $newRecord.append(`${newLine}<input
-    type="text"
-    class="form-control"
-    placeholder='${placeholderList[i]}'
-    required
-  />`);
-  }
-
-  $newRecord.append(
-    `<button type="submit" id="submit-btn" class="btn btn-primary">Add</button>`
+const createNewRecord = (labelList) => {
+  let result = "";
+  const keyList = Object.keys(labelList[0]).filter(
+    (key) =>
+      ![
+        "ID",
+        "AgencyID",
+        "PartnerManager",
+        "CountyDesc",
+        "AmountProj",
+        "AmountAct",
+        "PartnerTrainingType",
+        "PartnerCredential",
+      ].includes(key)
   );
+  const requiredList = [
+    "IELCEPartnerID",
+    "PartnerName",
+    "PartnerFSID",
+    "PartnerFSIDDesc",
+  ];
+
+  for (const key of keyList) {
+    let option = requiredList.includes(key) ? " required" : "";
+    let classOption = " input-field";
+    let element = inputNoLabel({
+      key,
+      placehold: labelList[0][key],
+      classOption,
+      option,
+    });
+
+    if (key === "County") {
+      classOption = "modal-select";
+      element = elementSelectNewRecord({
+        hashTable: countyList,
+        keyValue: key,
+        option,
+        optionText: "a county",
+        classOption,
+      });
+    } else if (key === "State") {
+      classOption = "modal-select";
+      element = elementSelectNewRecord({
+        hashTable: stateList,
+        keyValue: key,
+        option,
+        optionText: "a state",
+        classOption,
+      });
+    }
+
+    result += element;
+  }
+  result += `<button type="button" id="submit-btn" form="new-entry"
+            class="btn btn-primary">
+              Add</button>
+          <button type="button" id="cancel-btn" form="new-entry"
+            class="btn btn-default">
+              Cancel</button>`;
+
+  return result;
 };
 
 const createTableHeader = (labels) => {
@@ -124,7 +171,7 @@ $(document).ready(() => {
   });
 
   //* Data viewing
-  createNewRecord();
+  $("#new-entry").append(createNewRecord(rowLabels));
   $("#main-table").append(createViewBloc());
 
   //* Adding a new partner
