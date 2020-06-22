@@ -5,7 +5,16 @@ const validateNewRecord = (list) => {
   const alphaNumCheck = (str) => {
     return /\w/i.test(str);
   };
-
   const result = [];
+
+  for (const obj of list) {
+    switch (obj.name) {
+      default:
+        obj.correct = obj.value ? alphaNumCheck(obj.value) : true;
+        break;
+    }
+    result.push(obj);
+  }
+
   return result;
 };

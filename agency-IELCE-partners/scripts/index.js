@@ -150,6 +150,29 @@ const createViewBloc = () => {
   return viewBloc;
 };
 
+const saveMods = (dataList, formId, tableName = "") => {
+  const { AgencyID, AuditUserID } = sessionVariable;
+  const result = { AgencyID, AuditUserID };
+  console.log("dataList :>> ", dataList);
+
+  for (const field of dataList) {
+    let val = field.value;
+    let name = field.name;
+    if (name === "Amount") val = val.replace(/[$,]/gi, "").trim();
+    result[name] = val;
+  }
+
+  const target = tableName ? tableName : formId;
+  const resultList = [target, JSON.stringify(result)];
+  console.table(result);
+  //! =================================================
+  //! JSON Object to send back to database
+  console.log("result :", resultList);
+  //! =================================================
+
+  //ToDO Reloading/resetting with new data
+};
+
 $(document).ready(() => {
   // * sub-navbar/index.js
   $("#sub-nav li").click(function () {
@@ -174,13 +197,40 @@ $(document).ready(() => {
   $("#new-entry").append(createNewRecord(rowLabels));
   $("#main-table").append(createViewBloc());
 
-  //* Adding a new partner
+  //* Save button in new entry bloc
+  $("#submit-btn").bind("click", function (evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+    const formId = `#${$(this).attr("form")}`;
+    $(`${formId} input`).removeClass("yellow-bg");
+    const newSource = $(formId).serializeArray();
 
-  // Save button in new entry bloc
+    // validateNewRecord() <== data-check.js
+    const validatedList = validateNewRecord(newSource.slice(0));
 
-  // Cancel button in new entry bloc
+    // Background color change for invalid field values
+    const checkFlag = validatedList.some((item) => !item.correct);
+    if (checkFlag) {
+      const list = validatedList.filter((obj) => obj.correct === false);
+      for (let field of list) {
+        $(`[name=${field.name}]`).addClass("yellow-bg");
+      }
+      return;
+    } else {
+      saveMods(newSource, formId, "ielcePartnersData");
+      $(formId)[0].reset();
+    }
+  });
+
+  //* Cancel button in new entry bloc
+  $("#cancel-btn").bind("click", function (evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+    location.reload();
+  });
+
   //* Select partner
-  $("#main-table tr").on("click", function () {
+  $("#main-table tr").bind("click", function () {
     const rowID = Number($(this).attr("id"));
     console.log("rowID :>> ", rowID);
     const listFields = createListFields(rowID, ielcePartnersData);
