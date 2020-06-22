@@ -17,7 +17,7 @@ const rowLabels = [
     Zip: "ZIP",
     Telephone: "Phone",
     County: "County",
-    CountyDesc: "County Name",
+    CountyDesc: "County",
     PartnerFSID: "Fund Code",
     PartnerFSIDDesc: "Fund Source",
     AmountProj: "Projected $$",
@@ -136,7 +136,7 @@ const createTableBody = (dataList, labels) => {
     rows += createRow({
       record,
       labelList: filteredLabelList,
-      labelObj: rowLabels,
+      labelObj: rowLabels[0],
       hiddenList,
     });
   }
@@ -230,31 +230,61 @@ $(document).ready(() => {
   });
 
   //* Select partner
-  $("#main-table tr").bind("click", function () {
-    const rowID = Number($(this).attr("id"));
-    console.log("rowID :>> ", rowID);
-    const listFields = createListFields(rowID, ielcePartnersData);
+  $(document).on("click", ".table tbody tr", function (evnt) {
+    evnt.stopPropagation();
     $("#modalBloc").modal("toggle");
-    $(".modal-body form").remove();
-    $(".modal-body").append("<form id='modal-form'></form>");
+    $("#edit-form").empty();
 
-    for (field of listFields) {
-      const key = field[1],
-        idVal = field[0];
-      let option = "",
-        classOption = "",
-        val = field[2];
+    const sourceId = $(this).attr("id");
+    const tdList = $.makeArray($(`#${sourceId} td`).get());
 
-      if (["id", "PartnerID"].includes(idVal)) option = "disabled";
-      if (placeholderList.includes(key)) classOption = "class='red-text'";
-      if (!val) val = "";
-      $(".modal-body>form").append(
-        `<div class="input-field">
-            <label for=${idVal} ${classOption}>${key}</label>
-            <input type="text" id=${idVal} value='${val}' ${option}>
-          </div>`
-      );
-    }
+    const result = tdList
+      .map((item) => {
+        const keyVal = $(item).attr("data-name");
+        const labelVal = $(item).attr("data-label");
+        const value = $(item).text().trim();
+        let optionHidden = $(item).attr("class").includes("hidden")
+          ? "form-group hidden"
+          : "form-group";
+        let option = "";
+        let classVal = "";
+        let labelClassVal = "";
+        if (keyVal === "County") {
+          return elementSelectModal({
+            hashTable: countyList,
+            keyValue: keyVal,
+            selectedValue: value,
+            labelVal: "County",
+            labelClassVal,
+            option,
+            optionText: " a county",
+          });
+        }
+
+        if (keyVal === "State") {
+          return elementSelectModal({
+            hashTable: stateList,
+            keyValue: keyVal,
+            selectedValue: value,
+            labelVal: "State",
+            labelClassVal,
+            option,
+            optionText: " a state",
+          });
+        } else {
+          return elementInput({
+            keyVal,
+            labelVal,
+            value,
+            labelClassVal,
+            classVal,
+            option,
+            optionHidden,
+          });
+        }
+      })
+      .join("");
+    $("#edit-form").append(result).attr("data-bloc-id", sourceId);
   });
 
   // Save button in modal form

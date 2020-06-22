@@ -289,7 +289,9 @@
             </button>
             <h4 class="modal-title">Editing a Partner</h4>
           </div>
-          <div class="modal-body"></div>
+          <div class="modal-body">
+            <form role="form" id="edit-form"></form>
+          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
               Close
@@ -297,8 +299,9 @@
             <button
               type="button"
               class="btn btn-primary"
-              data-dismiss="modal"
               id="save-btn"
+              form="edit-form"
+              data-dismiss="modal"
             >
               Save changes
             </button>
