@@ -287,7 +287,16 @@ $(document).ready(() => {
     $("#edit-form").append(result).attr("data-bloc-id", sourceId);
   });
 
-  // Save button in modal form
+  //* Save button in modal form
+  $("#save-btn").bind("click", function (evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+    const form = `#${$(this).attr("form")}`;
+    const dataList = $(form).serializeArray();
+    saveMods(dataList, form, "ielcePartnersData");
 
-  // Cancel button in modal form
+    $("#modalBloc").modal("toggle");
+  });
+  //* Cancel button in modal form
+  // Done through data-dismiss="modal" in index.html
 });
