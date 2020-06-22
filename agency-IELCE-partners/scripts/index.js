@@ -11,6 +11,7 @@ const rowLabels = [
     IELCEPartnerID: "Partner ID",
     PartnerName: "Name",
     PartnerManager: "Manager",
+    fullAddress: "Address",
     Address: "Address",
     City: "City",
     State: "State",
@@ -99,6 +100,7 @@ const createTableHeader = (labels) => {
         ![
           "ID",
           "AgencyID",
+          "Address",
           "City",
           "State",
           "Zip",
@@ -118,7 +120,15 @@ const createTableBody = (dataList, labels) => {
   const filteredLabelList = Object.keys(labels[0]).filter(
     (item) => !["AgencyID"].includes(item)
   );
-  const hiddenList = ["ID", "City", "State", "Zip", "County", "PartnerFSID"];
+  const hiddenList = [
+    "ID",
+    "Address",
+    "City",
+    "State",
+    "Zip",
+    "County",
+    "PartnerFSID",
+  ];
   for (const record of dataList) {
     const { Address, City, State, Zip, Telephone } = record;
 
@@ -130,7 +140,7 @@ const createTableBody = (dataList, labels) => {
     // phoneFormat() <== helperFunction.js
     if (Telephone) record.Telephone = phoneFormat(phoneFormat(Telephone));
     // zipCodeFormat() <== helperFunctions.js
-    record.Address = `${Address}<br>${City} ${State} ${zipCodeFormat(Zip)}`;
+    record.fullAddress = `${Address}<br>${City} ${State} ${zipCodeFormat(Zip)}`;
 
     // createRow() <== helperFunction.js
     rows += createRow({
@@ -150,6 +160,57 @@ const createViewBloc = () => {
   return viewBloc;
 };
 
+const createModalForm = (formId) => {
+  const tdList = $.makeArray($(`#${formId} td`).get());
+
+  const result = tdList
+    .map((item) => {
+      const keyVal = $(item).attr("data-name");
+      const labelVal = $(item).attr("data-label");
+      const value = $(item).text().trim();
+      let optionHidden = ["fullAddress", "ID"].includes(keyVal)
+        ? "form-group hidden"
+        : "form-group";
+      let option = "";
+      let classVal = "";
+      let labelClassVal = "";
+      if (keyVal === "County") {
+        return elementSelectModal({
+          hashTable: countyList,
+          keyValue: keyVal,
+          selectedValue: value,
+          labelVal: "County",
+          labelClassVal,
+          option,
+          optionText: " a county",
+        });
+      } else if (keyVal === "State") {
+        return elementSelectModal({
+          hashTable: stateList,
+          keyValue: keyVal,
+          selectedValue: value,
+          labelVal: "State",
+          labelClassVal,
+          option,
+          optionText: " a state",
+        });
+      } else {
+        return elementInput({
+          keyVal,
+          labelVal,
+          value,
+          labelClassVal,
+          classVal,
+          option,
+          optionHidden,
+        });
+      }
+    })
+    .join("");
+
+  return result;
+};
+
 const saveMods = (dataList, formId, tableName = "") => {
   const { AgencyID, AuditUserID } = sessionVariable;
   const result = { AgencyID, AuditUserID };
@@ -158,12 +219,16 @@ const saveMods = (dataList, formId, tableName = "") => {
   for (const field of dataList) {
     let val = field.value;
     let name = field.name;
-    if (name === "Amount") val = val.replace(/[$,]/gi, "").trim();
+    if (name === "fullAddress") continue;
+    if (["AmountProj", "AmountAct"].includes(name))
+      val = val ? val.replace(/[$,]/gi, "").trim() : "";
+    if (name === "Telephone") val = val ? phoneFormat(val) : "";
+    if (name === "Zip") val = val ? zipCodeFormat(val) : "";
     result[name] = val;
   }
 
-  const target = tableName ? tableName : formId;
-  const resultList = [target, JSON.stringify(result)];
+  const target = tableName ? tableName : "No table name";
+  const resultList = [formId, target, JSON.stringify(result)];
   console.table(result);
   //! =================================================
   //! JSON Object to send back to database
@@ -232,59 +297,10 @@ $(document).ready(() => {
   //* Select partner
   $(document).on("click", ".table tbody tr", function (evnt) {
     evnt.stopPropagation();
+    const recordId = $(this).attr("id");
+    const formContent = createModalForm(recordId);
     $("#modalBloc").modal("toggle");
-    $("#edit-form").empty();
-
-    const sourceId = $(this).attr("id");
-    const tdList = $.makeArray($(`#${sourceId} td`).get());
-
-    const result = tdList
-      .map((item) => {
-        const keyVal = $(item).attr("data-name");
-        const labelVal = $(item).attr("data-label");
-        const value = $(item).text().trim();
-        let optionHidden = $(item).attr("class").includes("hidden")
-          ? "form-group hidden"
-          : "form-group";
-        let option = "";
-        let classVal = "";
-        let labelClassVal = "";
-        if (keyVal === "County") {
-          return elementSelectModal({
-            hashTable: countyList,
-            keyValue: keyVal,
-            selectedValue: value,
-            labelVal: "County",
-            labelClassVal,
-            option,
-            optionText: " a county",
-          });
-        }
-
-        if (keyVal === "State") {
-          return elementSelectModal({
-            hashTable: stateList,
-            keyValue: keyVal,
-            selectedValue: value,
-            labelVal: "State",
-            labelClassVal,
-            option,
-            optionText: " a state",
-          });
-        } else {
-          return elementInput({
-            keyVal,
-            labelVal,
-            value,
-            labelClassVal,
-            classVal,
-            option,
-            optionHidden,
-          });
-        }
-      })
-      .join("");
-    $("#edit-form").append(result).attr("data-bloc-id", sourceId);
+    $("#edit-form").empty().append(formContent).attr("data-bloc-id", recordId);
   });
 
   //* Save button in modal form
