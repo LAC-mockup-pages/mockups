@@ -53,6 +53,8 @@ const createNewRecord = (labelList) => {
   for (const key of keyList) {
     let option = requiredList.includes(key) ? " required" : "";
     let classOption = " input-field";
+
+    // inputNoLabel() <== helperFunction.js
     let element = inputNoLabel({
       key,
       placehold: labelList[0][key],
@@ -62,6 +64,8 @@ const createNewRecord = (labelList) => {
 
     if (key === "County") {
       classOption = "modal-select";
+
+      // elementSelectNewRecord() <== helperFunction.js
       element = elementSelectNewRecord({
         hashTable: countyList,
         keyValue: key,
@@ -71,6 +75,8 @@ const createNewRecord = (labelList) => {
       });
     } else if (key === "State") {
       classOption = "modal-select";
+
+      // elementSelectNewRecord() <== helperFunction.js
       element = elementSelectNewRecord({
         hashTable: stateList,
         keyValue: key,
@@ -109,6 +115,7 @@ const createTableHeader = (labels) => {
         ].includes(key)
     )
     .map((field) => labelObj[field]);
+
   // createHeaders() <== helperFunctions.js
   const tableHeader = createHeaders(headerList);
 
@@ -222,7 +229,11 @@ const saveMods = (dataList, formId, tableName = "") => {
     if (name === "fullAddress") continue;
     if (["AmountProj", "AmountAct"].includes(name))
       val = val ? val.replace(/[$,]/gi, "").trim() : "";
+
+    // phoneFormat() <== helperFunction.js
     if (name === "Telephone") val = val ? phoneFormat(val) : "";
+
+    // zipCodeFormat() <== helperFunction.js
     if (name === "Zip") val = val ? zipCodeFormat(val) : "";
     result[name] = val;
   }
@@ -310,9 +321,9 @@ $(document).ready(() => {
     const form = `#${$(this).attr("form")}`;
     const dataList = $(form).serializeArray();
     saveMods(dataList, form, "ielcePartnersData");
-
     $("#modalBloc").modal("toggle");
   });
+
   //* Cancel button in modal form
   // Done through data-dismiss="modal" in index.html
 });
