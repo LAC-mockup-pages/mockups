@@ -85,26 +85,6 @@ th {
 .small-cell {
   max-width: 80px;
 }
-.phone,
-.partner-id {
-  width: 110px;
-  text-align: center;
-  font-size: 14px;
-}
-
-.email,
-.fs-id,
-.projected-amount,
-.amount,
-.training-type,
-.credential {
-  width: 80px;
-  font-size: 14px;
-}
-
-.partner-manager {
-  width: 100px;
-}
 
 .input-field {
   line-height: 30px;
