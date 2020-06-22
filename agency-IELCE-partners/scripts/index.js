@@ -36,6 +36,7 @@ const createNewRecord = (labelList) => {
         "ID",
         "AgencyID",
         "PartnerManager",
+        "fullAddress",
         "CountyDesc",
         "AmountProj",
         "AmountAct",

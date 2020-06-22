@@ -2,20 +2,18 @@ body {
   background-color: #f0e2d5;
 }
 
-.dark-blue-bg {
-  background-color: #1d6294;
-}
-
 .hero {
-  margin: 0.5% 3%;
+  margin: 2% 3%;
   padding: 0 0 1% 0;
   border-width: 6px 3px;
+  border-radius: 5px;
 }
 
 .partner-entry {
-  margin: 1% 0 0 0;
+  margin: 1% 0 2% 0;
   padding: 0 0 2% 0;
   width: 100%;
+  border-radius: 5px;
   border-bottom: 8px solid #f0e2d5;
 }
 
@@ -25,18 +23,19 @@ body {
   padding: 0 0 0.5% 0.5%;
 }
 
-.new-record {
-  background-color: #b3f1cc;
-}
-
-#new-partner > .form-control {
-  color: #2479b5;
-  font-size: 1.2em;
+#new-entry > .form-control {
+  font-size: 1.1em;
   padding: 0.5%;
+  font-weight: 600;
+  margin-right: 0.3%;
 }
 
-#new-partner {
-  margin-left: 3%;
+option {
+  color: #333;
+}
+
+#new-entry {
+  margin-left: 1%;
 }
 
 :required::placeholder,
@@ -46,7 +45,7 @@ body {
 }
 
 #submit-btn {
-  margin-left: 2%;
+  margin: 0 0.5% 0 2%;
 }
 
 tbody {
@@ -85,7 +84,6 @@ th {
 .small-cell {
   max-width: 80px;
 }
-
 .input-field {
   line-height: 30px;
 }
