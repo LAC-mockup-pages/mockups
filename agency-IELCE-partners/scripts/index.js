@@ -169,20 +169,27 @@ const createViewBloc = () => {
 };
 
 const createModalForm = (formId) => {
-  const tdList = $.makeArray($(`#${formId} td`).get());
-
+  const tdList = $.makeArray($(`#${formId} td`).get()).filter(
+    (item) => $(item).attr("data-name") !== "CountyDesc"
+  );
   const result = tdList
     .map((item) => {
       const keyVal = $(item).attr("data-name");
       const labelVal = $(item).attr("data-label");
-      const value = $(item).text().trim();
+      let value = $(item).text().trim();
       let optionHidden = ["fullAddress", "ID"].includes(keyVal)
         ? "form-group hidden"
         : "form-group";
       let option = "";
       let classVal = "";
       let labelClassVal = "";
+
+      // zipCodeFormat() elementSelectModal() elementInput()
+      //    <== helperFunctions.js
+      if (keyVal === "Zip") value = zipCodeFormat(value);
       if (keyVal === "County") {
+        console.log("value for County :>> ", value, typeof value);
+
         return elementSelectModal({
           hashTable: countyList,
           keyValue: keyVal,

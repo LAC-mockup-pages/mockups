@@ -12,7 +12,8 @@ const ielcePartnersData = [
                     { "FIPS": "36015", "CountyDesc": "36015 Chemung" },
                     { "FIPS": "36019", "CountyDesc": "36019 Clinton" },
                     { "FIPS": "36017", "CountyDesc": "36017 Chenango" },
-                    { "FIPS": "36013", "CountyDesc": "36013 Chautauqua" }
+                    { "FIPS": "36013", "CountyDesc": "36013 Chautauqua" },
+                    { "FIPS": "36061", "CountyDesc": "36061 NY County (Manhattan)" }, {"FIPS":"36035","CountyDesc":"Fulton"}
         ]
         
         const sessionVariable = {
