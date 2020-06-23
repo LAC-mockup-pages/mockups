@@ -27,15 +27,15 @@ body {
   font-size: 1.1em;
   padding: 0.5%;
   font-weight: 600;
-  margin-right: 0.3%;
+  margin: 0.2%;
+}
+
+#new-entry {
+  margin: 0 3% 0 3%;
 }
 
 option {
   color: #333;
-}
-
-#new-entry {
-  margin-left: 1%;
 }
 
 :required::placeholder {
@@ -61,7 +61,7 @@ tbody {
 }
 
 .table > tbody > tr > td {
-  line-height: 40px;
+  line-height: 2em;
 }
 
 tbody > tr:hover {
@@ -76,19 +76,22 @@ th {
   color: #fff;
 }
 
-.table > tbody > tr > .cell-data {
-  line-height: 25px;
+.col-width-small,
+#IELCEPartnerID,
+#Zip,
+#Telephone,
+#PartnerFSID {
+  max-width: 10%;
 }
 
-.county {
-  max-width: 80px;
-  text-align: center;
-  font-size: 14px;
+.col-width-large {
+  max-width: 25%;
 }
 
-.small-cell {
-  max-width: 80px;
+.col-width-medium {
+  max-width: 15%;
 }
+
 .input-field {
   line-height: 30px;
 }
@@ -104,6 +107,16 @@ th {
   border: none;
   text-indent: 4px;
   width: 60%;
+  border-bottom: 1px solid #2479b5;
+}
+
+.modal-select {
+  margin-top: 0.5%;
+  font-size: 1.3em;
+  line-height: 50px;
+  font-weight: 700;
+  padding: 5px;
+  border: none;
   border-bottom: 1px solid #2479b5;
 }
 
