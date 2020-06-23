@@ -14,6 +14,7 @@ const validateRecord = (list) => {
         if (obj.value) obj.correct = true;
         break;
       case "Zip":
+        obj.correct = obj.value ? Number(zipCodeFormat(obj.value)) : true;
         break;
       default:
         obj.correct = obj.value ? alphaNumCheck(obj.value) : true;

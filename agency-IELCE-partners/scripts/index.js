@@ -242,24 +242,10 @@ const saveMods = (dataList, formId, tableName = "") => {
   const { AgencyID, AuditUserID } = sessionVariable;
   const result = { AgencyID, AuditUserID };
   $(`${formId} input`).removeClass("yellow-bg");
-  for (const field of dataList) {
-    let val = field.value;
-    let name = field.name;
-    if (name === "fullAddress") continue;
-    if (["AmountProj", "AmountAct"].includes(name))
-      val = val ? val.replace(/[$,]/gi, "").trim() : "";
-
-    // phoneFormat() <== helperFunction.js
-    if (name === "Telephone") val = val ? phoneFormat(val) : "";
-
-    // zipCodeFormat() <== helperFunction.js
-    if (name === "Zip") val = val ? zipCodeFormat(val) : "";
-    result[name] = val;
-  }
 
   // Data validation
   // validateNewRecord() <== data-check.js
-  const validatedList = validateRecord(result);
+  const validatedList = validateRecord(dataList);
 
   // Background color change for invalid field values
   const checkFlag = validatedList.some((item) => !item.correct);
@@ -270,6 +256,21 @@ const saveMods = (dataList, formId, tableName = "") => {
     }
     return;
   } else {
+    for (const field of dataList) {
+      let val = field.value;
+      let name = field.name;
+      if (name === "fullAddress") continue;
+      if (["AmountProj", "AmountAct"].includes(name))
+        val = val ? val.replace(/[$,]/gi, "").trim() : "";
+
+      // phoneFormat() <== helperFunction.js
+      if (name === "Telephone") val = val ? phoneFormat(val) : "";
+
+      // zipCodeFormat() <== helperFunction.js
+      if (name === "Zip") val = val ? zipCodeFormat(val) : "";
+      result[name] = val;
+    }
+
     const target = tableName ? tableName : "No table name";
     const resultList = [formId, target, JSON.stringify(result)];
     console.table(result);
@@ -315,8 +316,10 @@ $(document).ready(() => {
     evnt.stopPropagation();
     const formId = `#${$(this).attr("form")}`;
     // $(`${formId} input`).removeClass("yellow-bg");
-    const newSource = $(formId).serializeArray();
-    saveMods(newSource, formId, "ielcePartnersData");
+    const newRecord = $(formId).serializeArray();
+
+    console.log("newRecord :>> ", newRecord);
+    saveMods(newRecord, formId, "ielcePartnersData");
   });
 
   //* Cancel button in new entry bloc
@@ -342,7 +345,7 @@ $(document).ready(() => {
     const formId = `#${$(this).attr("form")}`;
     const dataList = $(formId).serializeArray();
     saveMods(dataList, formId, "ielcePartnersData");
-    $("#modalBloc").modal("toggle");
+    // $("#modalBloc").modal("toggle");
   });
 
   //* Cancel button in modal form
