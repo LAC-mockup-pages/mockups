@@ -168,10 +168,20 @@ const createViewBloc = () => {
   return viewBloc;
 };
 
+const getRequired = () => {
+  const list = $("#new-entry input, select").get();
+  const requiredList = list
+    .filter((item) => $(item).prop("required"))
+    .map((item) => $(item).attr("id"));
+  return requiredList;
+};
+
 const createModalForm = (formId) => {
   const tdList = $.makeArray($(`#${formId} td`).get()).filter(
     (item) => $(item).attr("data-name") !== "CountyDesc"
   );
+  const requiredList = getRequired();
+
   const result = tdList
     .map((item) => {
       const keyVal = $(item).attr("data-name");
@@ -184,12 +194,14 @@ const createModalForm = (formId) => {
       let classVal = "";
       let labelClassVal = "";
 
+      if (requiredList.includes(keyVal)) {
+        option = "required";
+        labelClassVal += "class='red-text'";
+      }
       // zipCodeFormat() elementSelectModal() elementInput()
       //    <== helperFunctions.js
       if (keyVal === "Zip") value = zipCodeFormat(value);
       if (keyVal === "County") {
-        console.log("value for County :>> ", value, typeof value);
-
         return elementSelectModal({
           hashTable: countyList,
           keyValue: keyVal,
