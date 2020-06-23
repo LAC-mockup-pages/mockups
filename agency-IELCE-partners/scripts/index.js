@@ -241,8 +241,7 @@ const createModalForm = (formId) => {
 const saveMods = (dataList, formId, tableName = "") => {
   const { AgencyID, AuditUserID } = sessionVariable;
   const result = { AgencyID, AuditUserID };
-  console.log("dataList :>> ", dataList);
-
+  $(`${formId} input`).removeClass("yellow-bg");
   for (const field of dataList) {
     let val = field.value;
     let name = field.name;
@@ -258,15 +257,32 @@ const saveMods = (dataList, formId, tableName = "") => {
     result[name] = val;
   }
 
-  const target = tableName ? tableName : "No table name";
-  const resultList = [formId, target, JSON.stringify(result)];
-  console.table(result);
-  //! =================================================
-  //! JSON Object to send back to database
-  console.log("result :", resultList);
-  //! =================================================
+  // Data validation
+  // validateNewRecord() <== data-check.js
+  const validatedList = validateRecord(result);
 
-  //ToDO Reloading/resetting with new data
+  // Background color change for invalid field values
+  const checkFlag = validatedList.some((item) => !item.correct);
+  if (checkFlag) {
+    const list = validatedList.filter((obj) => obj.correct === false);
+    for (let field of list) {
+      $(`[name=${field.name}]`).addClass("yellow-bg");
+    }
+    return;
+  } else {
+    const target = tableName ? tableName : "No table name";
+    const resultList = [formId, target, JSON.stringify(result)];
+    console.table(result);
+    //! =================================================
+    //! JSON Object to send back to database
+    console.log("result :", resultList);
+    //! =================================================
+
+    //ToDO Reloading/resetting with new data
+
+    if (formId === "#edit-form") $("#modalBloc").modal("toggle");
+    if (formId === "#new-entry") location.reload();
+  }
 };
 
 $(document).ready(() => {
@@ -298,24 +314,9 @@ $(document).ready(() => {
     evnt.preventDefault();
     evnt.stopPropagation();
     const formId = `#${$(this).attr("form")}`;
-    $(`${formId} input`).removeClass("yellow-bg");
+    // $(`${formId} input`).removeClass("yellow-bg");
     const newSource = $(formId).serializeArray();
-
-    // validateNewRecord() <== data-check.js
-    const validatedList = validateNewRecord(newSource.slice(0));
-
-    // Background color change for invalid field values
-    const checkFlag = validatedList.some((item) => !item.correct);
-    if (checkFlag) {
-      const list = validatedList.filter((obj) => obj.correct === false);
-      for (let field of list) {
-        $(`[name=${field.name}]`).addClass("yellow-bg");
-      }
-      return;
-    } else {
-      saveMods(newSource, formId, "ielcePartnersData");
-      $(formId)[0].reset();
-    }
+    saveMods(newSource, formId, "ielcePartnersData");
   });
 
   //* Cancel button in new entry bloc
@@ -338,9 +339,9 @@ $(document).ready(() => {
   $("#save-btn").bind("click", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
-    const form = `#${$(this).attr("form")}`;
-    const dataList = $(form).serializeArray();
-    saveMods(dataList, form, "ielcePartnersData");
+    const formId = `#${$(this).attr("form")}`;
+    const dataList = $(formId).serializeArray();
+    saveMods(dataList, formId, "ielcePartnersData");
     $("#modalBloc").modal("toggle");
   });
 
