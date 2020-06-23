@@ -9,6 +9,12 @@ const validateNewRecord = (list) => {
 
   for (const obj of list) {
     switch (obj.name) {
+      case "AmountProj":
+      case "AmountAct":
+        if (obj.value) obj.correct = true;
+        break;
+      case "Zip":
+        break;
       default:
         obj.correct = obj.value ? alphaNumCheck(obj.value) : true;
         break;
