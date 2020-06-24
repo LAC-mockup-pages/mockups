@@ -158,7 +158,7 @@ $(document).ready(() => {
   //* Data bloc editing
   $(document).on("click", ".hero > div", function (event) {
     event.stopPropagation();
-    $("#modalTopBloc").modal("toggle");
+    $("#modal-bloc").modal("toggle");
     $("#edit-form").empty();
     const blocId = $(this).attr("id");
     const listRows = $.makeArray($(`#${blocId} .table-row`).get());
@@ -221,6 +221,6 @@ $(document).ready(() => {
   $("#close-button").on("click", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
-    $("#modalTopBloc").modal("toggle");
+    $("#modal-bloc").modal("toggle");
   });
 });
