@@ -147,7 +147,7 @@ const saveMods = (form) => {
 
 $(document).ready(() => {
   // * sub-navbar/index.js
-  $("#sub-nav li").on("click", function (event) {
+  $("#sub-nav li").on("click", function (evnt) {
     evnt.stopPropagation();
     $("#sub-nav li").removeClass("blue-light-bg blue-text");
     $(this).toggleClass("blue-light-bg blue-text");
@@ -157,8 +157,8 @@ $(document).ready(() => {
   $(".hero").append(renderViewBloc(agencyData[0]));
 
   //* Data bloc editing
-  $(document).on("click", ".hero > div", function (event) {
-    event.stopPropagation();
+  $(document).on("click", ".hero > div", function (evnt) {
+    evnt.stopPropagation();
     $("#modal-bloc").modal("toggle");
     $("#edit-form").empty();
     const blocId = $(this).attr("id");
