@@ -4,12 +4,13 @@ body {
 
 .hero {
   background-color: white;
-  margin-top: 1%;
+  margin-top: 2%;
   padding-bottom: 1%;
   border: solid #2479b5;
-  border-width: 6px 3px;
+  border-width: 2em 0;
   border-radius: 5px;
 }
+
 .quarter-bloc {
   padding: 0 2%;
 }
@@ -31,13 +32,14 @@ body {
 .row-label {
   font-size: 1.2em;
   font-weight: 600;
-  line-height: 20px;
+  line-height: 45px;
 }
 
 .row-data {
   position: relative;
   font-size: 1.3em;
   font-weight: 900;
+  line-height: 45px;
   border-bottom: 2px solid #2479b5;
 }
 

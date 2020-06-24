@@ -1,6 +1,6 @@
 //* Actions and logic
 //! Add a <script> element in index.js pointing to data.js, then:
-let agencyData = [ag[0]]; //! That is all that's needed
+const agencyData = ag.slice(0); //! That is all that's needed
 
 // Labels used when DataObject keys need modifying
 const rowLabels = [
@@ -153,11 +153,9 @@ $(document).ready(() => {
   });
 
   // * Data viewing
-
   $(".hero").append(renderViewBloc(agencyData[0]));
 
   //* Data bloc editing
-
   $(document).on("click", ".hero > div", function (event) {
     event.stopPropagation();
     $("#modalTopBloc").modal("toggle");
