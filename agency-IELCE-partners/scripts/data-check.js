@@ -1,9 +1,10 @@
 //* Data check for new or edited record
 
 const validateRecord = (list) => {
-  // Returns true if input is only alphanumerical + underscore, not empty string
+  // Returns true if input is only alphanumerical + underscore, dash,
+  // dot, whitespace, not empty string
   const alphaNumCheck = (str) => {
-    return /\w+$/i.test(str);
+    return !/[^\s\w-.]/g.test(str);
   };
   const resultList = [];
 
@@ -13,8 +14,18 @@ const validateRecord = (list) => {
     switch (name) {
       case "AmountProj":
       case "AmountAct":
-        if (value) obj.correct = true;
+        obj.correct = value
+          ? Boolean(Number(value.replace(/[$,]/gi, "").trim()))
+          : true;
         break;
+      case "IELCEPartnerID":
+      case "PartnerName":
+      case "PartnerFSID":
+      case "PartnerFSIDDesc":
+        obj.correct = value ? alphaNumCheck(value) : false;
+        console.log("req value: ", alphaNumCheck(value));
+        break;
+
       case "Zip":
         obj.correct = value ? Boolean(Number(zipCodeFormat(value))) : true;
         break;

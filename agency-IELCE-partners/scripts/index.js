@@ -254,7 +254,9 @@ const saveMods = (fields, formName, tableName = "") => {
   if (checkFlag) {
     const list = validatedList.filter((obj) => obj.correct === false);
     for (let field of list) {
-      $(`[name=${field.name}]`).addClass("yellow-bg");
+      const fieldId =
+        formName === "#new-entry" ? `#${field.name}` : `#${field.name}-view`;
+      $(fieldId).addClass("yellow-bg");
     }
     return;
   } else {
@@ -284,8 +286,8 @@ const saveMods = (fields, formName, tableName = "") => {
 
     //ToDO Reloading/resetting with new data
 
-    // if (formId === "#edit-form") $("#modalBloc").modal("toggle");
-    // if (formId === "#new-entry") location.reload();
+    if (formName === "#edit-form") $("#modalBloc").modal("toggle");
+    if (formName === "#new-entry") $(formName)[0].reset();
   }
 };
 
