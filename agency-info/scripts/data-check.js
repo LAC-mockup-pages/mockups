@@ -1,10 +1,10 @@
 // User input data validation
 
-const validateUserInput = (dataList) => {
+const validateNewRecord = (dataList) => {
   // Returns true if input is only alphanumerical + underscore,
   // not empty string
   const alphaNumCheck = (str) => {
-    return /\w/i.test(str);
+    return !/[^\s\w-.]/g.test(str);
   };
 
   let correct = true;
@@ -20,9 +20,10 @@ const validateUserInput = (dataList) => {
         correct = field.value.length < 13 && field.value.length > 0;
         break;
       case "AgencyEmail":
+        correct = true;
         break;
       default:
-        correct = alphaNumCheck(field.value);
+        correct = field.value ? alphaNumCheck(field.value) : true;
         break;
     }
     checkedFieldList.push({ ...field, correct });

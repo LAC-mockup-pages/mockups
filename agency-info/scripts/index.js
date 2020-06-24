@@ -114,9 +114,9 @@ const saveMods = (form) => {
   const { AuditUserID, AgencyID } = sessionVariable[0];
   const result = { AgencyID, AuditUserID };
   const submittedData = $(form).serializeArray();
-  $(`#edit-form input, select`).removeClass("yellow-bg");
+  $(`${form} input, select`).removeClass("yellow-bg");
 
-  const validatedList = validateUserInput(submittedData);
+  const validatedList = validateNewRecord(submittedData);
   const checkFlag = validatedList.some((item) => !item.correct);
   if (checkFlag) {
     const list = validatedList.filter((obj) => !obj.correct);
@@ -142,6 +142,7 @@ const saveMods = (form) => {
 
   //ToDO Reloading/resetting with new data
   // location.reload();
+  $("#modal-bloc").modal("toggle");
 };
 
 $(document).ready(() => {
