@@ -267,9 +267,12 @@
       </div>
     </header>
     <!-- Hero -->
-    <div class="container hero"></div>
+    <div class="container-fluid hero">
+      <!-- Data viewing -->
+      <table class="table blue-bg" id="main-table"></table>
+    </div>
     <!-- Modal for Editing Top Bloc data -->
-    <div class="modal fade" id="modalTopBloc">
+    <div class="modal fade" id="modalBloc">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -291,7 +294,6 @@
               class="btn btn-primary"
               id="save-button"
               form="edit-form"
-              data-dismiss="modal"
             >
               Save changes
             </button>
