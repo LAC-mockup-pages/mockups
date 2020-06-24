@@ -3,25 +3,27 @@
 const validateRecord = (list) => {
   // Returns true if input is only alphanumerical + underscore, not empty string
   const alphaNumCheck = (str) => {
-    return /\w/i.test(str);
+    return /\w+$/i.test(str);
   };
-  const result = [];
+  const resultList = [];
 
-  for (const obj of list) {
-    switch (obj.name) {
+  for (const field of list) {
+    let { name, value } = field;
+    const obj = { name, value };
+    switch (name) {
       case "AmountProj":
       case "AmountAct":
-        if (obj.value) obj.correct = true;
+        if (value) obj.correct = true;
         break;
       case "Zip":
-        obj.correct = obj.value ? Number(zipCodeFormat(obj.value)) : true;
+        obj.correct = value ? Boolean(Number(zipCodeFormat(value))) : true;
         break;
       default:
-        obj.correct = obj.value ? alphaNumCheck(obj.value) : true;
+        obj.correct = value ? alphaNumCheck(value) : true;
         break;
     }
-    result.push(obj);
+    resultList.push(obj);
   }
 
-  return result;
+  return resultList;
 };

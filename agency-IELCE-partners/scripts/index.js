@@ -238,15 +238,17 @@ const createModalForm = (formId) => {
   return result;
 };
 
-const saveMods = (dataList, formId, tableName = "") => {
+const saveMods = (fields, formName, tableName = "") => {
   const { AgencyID, AuditUserID } = sessionVariable;
   const result = { AgencyID, AuditUserID };
-  $(`${formId} input`).removeClass("yellow-bg");
+  $(`${formName} input, select`).removeClass("yellow-bg");
+  console.log("fields :>> ", fields);
+  const fieldList = fields.slice(0);
 
   // Data validation
   // validateNewRecord() <== data-check.js
-  const validatedList = validateRecord(dataList);
-
+  const validatedList = validateRecord(fieldList);
+  console.log("validatedList :>> ", validatedList);
   // Background color change for invalid field values
   const checkFlag = validatedList.some((item) => !item.correct);
   if (checkFlag) {
@@ -256,7 +258,7 @@ const saveMods = (dataList, formId, tableName = "") => {
     }
     return;
   } else {
-    for (const field of dataList) {
+    for (const field of fieldList) {
       let val = field.value;
       let name = field.name;
       if (name === "fullAddress") continue;
@@ -268,11 +270,12 @@ const saveMods = (dataList, formId, tableName = "") => {
 
       // zipCodeFormat() <== helperFunction.js
       if (name === "Zip") val = val ? zipCodeFormat(val) : "";
+
       result[name] = val;
     }
 
     const target = tableName ? tableName : "No table name";
-    const resultList = [formId, target, JSON.stringify(result)];
+    const resultList = [formName, target, JSON.stringify(result)];
     console.table(result);
     //! =================================================
     //! JSON Object to send back to database
@@ -281,8 +284,8 @@ const saveMods = (dataList, formId, tableName = "") => {
 
     //ToDO Reloading/resetting with new data
 
-    if (formId === "#edit-form") $("#modalBloc").modal("toggle");
-    if (formId === "#new-entry") location.reload();
+    // if (formId === "#edit-form") $("#modalBloc").modal("toggle");
+    // if (formId === "#new-entry") location.reload();
   }
 };
 
@@ -315,7 +318,6 @@ $(document).ready(() => {
     evnt.preventDefault();
     evnt.stopPropagation();
     const formId = `#${$(this).attr("form")}`;
-    // $(`${formId} input`).removeClass("yellow-bg");
     const newRecord = $(formId).serializeArray();
 
     console.log("newRecord :>> ", newRecord);
