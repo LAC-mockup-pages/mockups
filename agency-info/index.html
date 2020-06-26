@@ -278,7 +278,9 @@
             </button>
             <h4 class="modal-title">Editing</h4>
           </div>
-          <div class="modal-body"></div>
+          <div class="modal-body">
+            <form role="form" id="edit-form"></form>
+          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
               Close
@@ -287,7 +289,7 @@
               type="button"
               class="btn btn-primary"
               id="save-button"
-              onclick="saveMods(event, document.querySelector('form'))"
+              form="edit-form"
               data-dismiss="modal"
             >
               Save changes

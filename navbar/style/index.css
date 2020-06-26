@@ -39,6 +39,10 @@
   background-color: #1d6294;
 }
 
+.yellow-bg {
+  background-color: #f7e095;
+}
+
 #main-logo:hover {
   cursor: pointer;
 }
