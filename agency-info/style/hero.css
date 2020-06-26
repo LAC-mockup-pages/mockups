@@ -20,11 +20,6 @@ body {
   color: #283838;
 }
 
-.close {
-  color: red;
-  font-size: 3em;
-}
-
 .separation {
   border-bottom: 2px solid #d3e4f0;
   margin: 3% 0;
