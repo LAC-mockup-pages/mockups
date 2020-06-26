@@ -144,10 +144,9 @@ const createFiscalYear = (str) => {
 const currencyFormat = (str) => {
   return !str
     ? ""
-    : "$ " +
-        Number(str)
-          .toFixed(0)
-          .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    : Number(str)
+        .toFixed(0)
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 };
 
 // Returns a string date formatted MM/DD/YYYY with 0 if day or month
