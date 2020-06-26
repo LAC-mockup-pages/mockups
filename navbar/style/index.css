@@ -222,3 +222,8 @@
 #btn-top:active {
   background-color: #555;
 }
+
+.close {
+  color: red;
+  font-size: 3em;
+}
