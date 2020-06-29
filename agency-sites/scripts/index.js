@@ -93,112 +93,20 @@ const createNewRecord = (labelsList) => {
   return result.join("");
 };
 
-const createBody = (dataList, labels) => {
-  let rows = "";
-  dataList = dataList.sort((a, b) => b.ID - a.ID);
-  for (const record of dataList) {
-    const identifier = `${record.ID}-${record.AgencyID}`;
-    record.SiteEmail = !record.SiteEmail ? "" : record.SiteEmail;
+const createTableHeader = (labelsObject) => {
+  const list = Object.entries(labelsObject)
+    .map((label) => label[1])
+    .filter((label) => !["ID", "Agency ID", "fullAddress"].includes(label));
 
-    // zipCodeFormat() <== helperFunctions.js
-    const zipCode = zipCodeFormat(record.Zip);
-    const fullAddress = `${record.Address}<br>${record.City}<br>
-                          ${record.State} ${zipCode}`;
-
-    // phoneFormat() <== helperFunctions.js
-    const phoneNumber = record.Telephone
-      ? phoneFormat(phoneFormat(record.Telephone))
-      : "";
-
-    const countyValue = !record.County
-      ? " "
-      : countyList.filter((obj) => obj.FIPS === record.County)[0].CountyDesc;
-
-    const fieldsArray = Object.keys(record).filter((fieldName) =>
-      labels.includes(labelObj[fieldName])
-    );
-    const row = fieldsArray
-      .map((key) => {
-        let value = "";
-        switch (key) {
-          case "Address":
-            value = fullAddress;
-            break;
-          case "Telephone":
-            value = phoneNumber;
-            break;
-          case "County":
-            value = countyValue;
-            break;
-          default:
-            value = record[key];
-            break;
-        }
-        return `<td class="cell-data ${key}">${value}</td>`;
-      })
-      .join("");
-
-    rows += `<tr id=${identifier} title="Click to edit">${row}</tr>`;
-  }
-  return `<tbody>${rows}</tbody>`;
+  // createHeaders() <== helperFunctions.js
+  return createHeaders(list);
 };
 
-const createViewBloc = (dataObj, labels) => {
-  const excludedLabels = [
-    "ID",
-    "AgencyID",
-    "City",
-    "State",
-    "Zip",
-    "CSD",
-    "CPD",
-    "CD",
-    "AD",
-    "SD",
-  ];
-  const labelList = Object.keys(labels)
-    .filter((key) => !excludedLabels.includes(key))
-    .map((key) => labels[key]);
-  const bodyLabelList = Object.keys(labels).map((key) => labels[key]);
-
-  // createHeaders() <== helperFunctions()
-  const headerLine = createHeaders(labelList);
-  const tableBody = createBody(dataObj, bodyLabelList, countyList);
-  $("#view-bloc").append(
-    `<table class="table">${headerLine}${tableBody}</table>`
-  );
-
-  // Elements hidden so they are included in the selection used to
-  // create the modal form for editing.
-  const hiddenElements = `.${excludedLabels.join(", .")}`;
-  $(hiddenElements).toggleClass("hidden");
-};
-
-const createSelect = (hashTable, keyValue, selectedValue = "", numSelected) => {
-  let firstOption = "<option disabled>Select an option</option>";
-  const [primary, secondary] = Object.keys(hashTable[0]);
-  let optionList = hashTable
-    .map((item) => {
-      const selected = item[primary] === selectedValue ? "selected" : "";
-      return `<option value="${item[primary]}" ${selected}>
-          ${item[secondary]}</option>`;
-    })
-    .join("");
-
-  if (!selectedValue) {
-    firstOption =
-      "<option selected value='' disabled>Select an option</option>";
-  }
-
-  const elementChoice = [
-    `<div class= "input-field form-group">
-  <label for="${keyValue}">${labelObj[keyValue]}</label>
-  <select id="${keyValue}" class="modal-select"  name="${keyValue}">${firstOption}${optionList}</select>
-</div>`,
-    `<select id="${keyValue}" class="modal-select form-control"  name=${keyValue}><option selected value="" disabled>Select an option</option>${optionList}</select>`,
-  ];
-
-  return elementChoice[numSelected];
+const createViewBloc = () => {
+  const tableHeader = createTableHeader(rowLabels[0]);
+  const tableBody = createTableBody(dataSites, rowLabels[0]);
+  const viewBloc = tableHeader + tableBody;
+  return viewBloc;
 };
 
 const createForm = (elmnt) => {
@@ -339,7 +247,7 @@ $(document).ready(() => {
 
   // * Data viewing
   $("#new-entry").append(createNewRecord(rowLabels));
-  // $("#main-table").append(createViewBloc(rowLabels));
+  $("#main-table").append(createViewBloc());
 
   //* Adding a new site
   $(document).on("click", "#submit-btn", function (evnt) {
