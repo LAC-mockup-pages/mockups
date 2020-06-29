@@ -17,6 +17,7 @@ const rowLabels = [
     State: "State",
     Zip: "ZIP",
     County: "County",
+    countyDesc: "County",
     Telephone: "Phone",
     SiteEmail: "Email",
     CSD: "Community School Dist.",
@@ -37,6 +38,7 @@ const createNewRecord = (labelsList) => {
         "ID",
         "AgencyID",
         "fullAddress",
+        "CountyDesc",
         "SiteEmail",
         "CSD",
         "CPD",
@@ -95,16 +97,83 @@ const createNewRecord = (labelsList) => {
 
 const createTableHeader = (labelsObject) => {
   const list = Object.entries(labelsObject)
-    .map((label) => label[1])
-    .filter((label) => !["ID", "Agency ID", "fullAddress"].includes(label));
+    .filter(
+      (label) =>
+        ![
+          "ID",
+          "AgencyID",
+          "fullAddress",
+          "City",
+          "State",
+          "Zip",
+          "SiteEmail",
+          "countyDesc",
+          "CSD",
+          "CPD",
+          "CD",
+          "AD",
+          "SD",
+        ].includes(label[0])
+    )
+    .map((label) => label[1]);
 
   // createHeaders() <== helperFunctions.js
   return createHeaders(list);
 };
 
+const createTableBody = (dataList, labelObj) => {
+  let rows = "";
+  const hiddenList = [
+    "ID",
+    "Address",
+    "State",
+    "City",
+    "Zip",
+    "SiteEmail",
+    "County",
+    "CSD",
+    "CPD",
+    "CD",
+    "AD",
+    "SD",
+  ];
+
+  const filteredLabelList = Object.keys(labelObj).filter(
+    (item) => !["AgencyID"].includes(item)
+  );
+  for (const record of dataList) {
+    const { Address, City, Zip, State, Telephone, County } = record;
+
+    // zipCodeFormat() <== helperFunction.js
+    record.fullAddress = `${Address}<br/>
+    ${City} ${State} ${zipCodeFormat(Zip)}`;
+    record.Zip = record.Zip ? zipCodeFormat(record.Zip) : "";
+
+    const countyObj = County
+      ? countyList.filter((item) => item.FIPS === County)[0]
+      : "";
+    record.countyDesc = countyObj ? countyObj.CountyDesc : countyObj;
+
+    // phoneFormat() <== helperFunction.js
+    record.Telephone = Telephone ? phoneFormat(phoneFormat(Telephone)) : "";
+
+    // createRow() <== helperFunction.js
+    rows += createRow({
+      record,
+      labelList: filteredLabelList,
+      labelObj,
+      hiddenList,
+    });
+  }
+  return `<tbody>${rows}</tbody>`;
+};
+
 const createViewBloc = () => {
   const tableHeader = createTableHeader(rowLabels[0]);
-  const tableBody = createTableBody(dataSites, rowLabels[0]);
+
+  // Ordering list of sites by descending ID
+  const list = dataSites.sort((site1, site2) => site2.ID - site1.ID);
+  const tableBody = createTableBody(list, rowLabels[0]);
   const viewBloc = tableHeader + tableBody;
   return viewBloc;
 };
