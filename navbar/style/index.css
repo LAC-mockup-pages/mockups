@@ -182,15 +182,15 @@
 #btn-save,
 #btn-cancel {
   display: block;
-  padding: 1%;
+  padding: 0.5%;
   color: #fff;
   font-size: 1.4em;
   text-align: center;
   border-radius: 4px;
-  margin: 30px;
+  margin: 0.5%;
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 1%;
+  right: 0.5%;
   transition: background-color 0.3s;
   z-index: 1000;
 }
