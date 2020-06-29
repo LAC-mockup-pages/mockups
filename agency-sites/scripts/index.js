@@ -2,59 +2,95 @@
 
 const dataSites = sitesDataServer.slice(0);
 const countyList = countyData.slice(0);
-const labelObj = {
-  ID: "ID",
-  AgencyID: "agencyId",
-  SiteID: "Site ID",
-  SiteName: "Site Name",
-  SiteManager: "Manager",
-  Address: "Address",
-  City: "City",
-  State: "State",
-  Zip: "ZIP",
-  County: "County Name",
-  Telephone: "Phone",
-  SiteEmail: "Email",
-  CSD: "Community School Dist.",
-  CPD: "Community Planning Dist.",
-  CD: "Congressional Dist.",
-  AD: "Assembly Dist.",
-  SD: "Senatorial Dist.",
-};
+const stateList = ddlStates.slice(0);
 
-const createNewRecord = (labelsObject, agencyId) => {
+const rowLabels = [
+  {
+    ID: "ID",
+    AgencyID: "agencyId",
+    SiteID: "Site ID",
+    SiteName: "Site Name",
+    SiteManager: "Manager",
+    fullAddress: "Address",
+    Address: "Address",
+    City: "City",
+    State: "State",
+    Zip: "ZIP",
+    County: "County",
+    Telephone: "Phone",
+    SiteEmail: "Email",
+    CSD: "Community School Dist.",
+    CPD: "Community Planning Dist.",
+    CD: "Congressional Dist.",
+    AD: "Assembly Dist.",
+    SD: "Senatorial Dist.",
+  },
+];
+
+const createNewRecord = (labelsList) => {
   let result = [];
-  const keyList = Object.keys(labelsObject).filter(
-    (key) => !["ID", "SiteEmail", "CSD", "CPD", "CD", "AD", "SD"].includes(key)
+  const labelObj = labelsList[0];
+  const requiredList = ["SiteName", "SiteID"];
+  const keyList = Object.keys(labelObj).filter(
+    (key) =>
+      ![
+        "ID",
+        "AgencyID",
+        "fullAddress",
+        "SiteEmail",
+        "CSD",
+        "CPD",
+        "CD",
+        "AD",
+        "SD",
+      ].includes(key)
   );
-  for (key of keyList) {
+  for (const key of keyList) {
+    let element = "";
     let option = "";
-    let classOption = "";
-    if (["SiteID", "SiteName"].includes(key)) option = " required";
-    if (["AgencyID", "County"].includes(key)) {
-      const agency = (option = key === "AgencyID" ? ` value=${agencyId}` : "");
-      classOption = " hidden";
-    }
-    let inputElement = `<input type="text" class="form-control${classOption}" id=${key} name="${key}" placeholder="${labelsObject[key]}"${option} autocomplete="new-password" spellcheck="off">`;
-
-    if (key === "County") {
-      inputElement = createSelect(countyList, key, "", 1);
-    }
+    let classOption = " input-field";
+    const placehold = labelObj[key];
     if (key === "State") {
-      inputElement = elementSelectNewRecord({
-        hashTable: ddlStates,
-        keyValue: "State",
+      // elementSelectNewRecord() <== helperFunctions()
+      element = elementSelectNewRecord({
+        hashTable: stateList,
+        keyValue: key,
+        option,
+        optionText: "a state",
+        classOption,
+      });
+    } else if (key === "County") {
+      // elementSelectNewRecord() <== helperFunctions()
+      element = elementSelectNewRecord({
+        hashTable: countyList,
+        keyValue: key,
+        option,
+        optionText: "a county",
+        classOption,
+      });
+    } else {
+      if (requiredList.includes(key)) {
+        option = " required title='Please fill this field'";
+      }
+      // inputNoLabel() <== helperFunctions()
+      element = inputNoLabel({
+        key,
+        placehold,
+        classOption,
         option,
       });
     }
-
-    result.push(inputElement);
+    result.push(element);
   }
   result.push(
-    '<button type="button" id="submit-btn" form="new-site" class="btn btn-primary">Add</button><button type="button" id="cancel-btn" form="new-site" class="btn btn-default">Cancel</button>'
+    `<button type="button" id="submit-btn" form="new-entry"
+      class="btn btn-primary">Add
+    </button>
+    <button type="button" id="cancel-btn" form="new-entry"
+      class="btn btn-default">Cancel
+    </button>`
   );
-  const formContent = result.join("");
-  $("#new-site").append(formContent);
+  return result.join("");
 };
 
 const createBody = (dataList, labels) => {
@@ -302,9 +338,8 @@ $(document).ready(() => {
   });
 
   // * Data viewing
-  createViewBloc(dataSites, labelObj);
-  createNewRecord(labelObj, dataSites[0].AgencyID);
-  $("#State-view").addClass("modal-select");
+  $("#new-entry").append(createNewRecord(rowLabels));
+  // $("#main-table").append(createViewBloc(rowLabels));
 
   //* Adding a new site
   $(document).on("click", "#submit-btn", function (evnt) {
