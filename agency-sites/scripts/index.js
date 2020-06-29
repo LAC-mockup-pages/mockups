@@ -327,7 +327,7 @@ $(document).ready(() => {
   });
 
   //* Canceling
-  $("#cancel-btn").click(function (evnt) {
+  $(document).on("click", "#cancel-btn", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
     location.reload();
@@ -350,7 +350,7 @@ $(document).ready(() => {
   });
 
   //* Saving mods after editing selected outcome
-  $("#save-btn").click(function (evnt) {
+  $(document).on("click", "#save-btn", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
     const form = `#${$(this).attr("form")}`;
