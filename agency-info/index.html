@@ -34,8 +34,17 @@
       defer
     ></script>
 
+    <!-- Links and scripts local app -->
     <link rel="stylesheet" href="style/index.css" type="text/css" />
+
     <script src="scripts/data.js" type="text/javascript" defer></script>
+
+    <script
+      src="../helpers/helperFunctions.js"
+      type="text/javascript"
+      defer
+    ></script>
+
     <script
       src="../navbar/scripts/index.js"
       type="text/javascript"
@@ -44,6 +53,7 @@
 
     <script src="scripts/index.js" type="text/javascript" defer></script>
     <link />
+
     <!-- !============================= -->
     <!-- ! File: /agency/agencyinfo.aspx -->
     <!-- !============================= -->
@@ -256,11 +266,7 @@
       </div>
     </header>
     <!-- Hero -->
-    <div class="container hero">
-      <div class="row" id="top-bloc" title="Click to Edit"></div>
-      <div class="separation"></div>
-      <div class="row" id="bottom-bloc" title="Click to Edit"></div>
-    </div>
+    <div class="container hero"></div>
     <!-- Modal for Editing Top Bloc data -->
     <div class="modal fade" id="modalTopBloc">
       <div class="modal-dialog modal-lg">
@@ -272,12 +278,22 @@
             </button>
             <h4 class="modal-title">Editing</h4>
           </div>
-          <div class="modal-body"></div>
+          <div class="modal-body">
+            <form role="form" id="edit-form"></form>
+          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
               Close
             </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="save-button"
+              form="edit-form"
+              data-dismiss="modal"
+            >
+              Save changes
+            </button>
           </div>
         </div>
         <!-- /.modal-content -->

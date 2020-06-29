@@ -39,6 +39,10 @@
   background-color: #1d6294;
 }
 
+.yellow-bg {
+  background-color: #f7e095;
+}
+
 #main-logo:hover {
   cursor: pointer;
 }
@@ -178,15 +182,15 @@
 #btn-save,
 #btn-cancel {
   display: block;
-  padding: 1%;
+  padding: 0.5%;
   color: #fff;
   font-size: 1.4em;
   text-align: center;
   border-radius: 4px;
-  margin: 30px;
+  margin: 0.5%;
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 1%;
+  right: 0.5%;
   transition: background-color 0.3s;
   z-index: 1000;
 }
@@ -217,4 +221,9 @@
 }
 #btn-top:active {
   background-color: #555;
+}
+
+.close {
+  color: red;
+  font-size: 3em;
 }

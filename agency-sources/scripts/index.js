@@ -1,132 +1,89 @@
 // Actions and logic
 
-const agencyDataFund = {
-  FundSources: {
-    ALE: {
-      FSID: "ALE - Adult Literacy Education",
-      Amount: "1000",
-      FundStart: "7/1/2019",
-      FundEnd: "6/30/2020",
-      FundNumber: "",
-      Purpose: "Some nefarious purpose"
-    },
-    AdoLitDY: {
-      FSID: "Adolescent Literacy DYCD1",
-      Amount: "100000",
-      FundStart: "7/1/2020",
-      FundEnd: "6/30/2020",
-      FundNumber: "",
-      Purpose: ""
-    },
-    CASP3DSS: {
-      FSID: "CASP 3 DSS",
-      Amount: "0",
-      FundStart: "1/1/2020",
-      FundEnd: "6/30/2020",
-      FundNumber: "",
-      Purpose: ""
-    },
-    EPE: {
-      FSID: "EPE",
-      Amount: "500000",
-      FundStart: "7/9/2019",
-      FundEnd: "6/30/2020",
-      FundNumber: "",
-      Purpose: "RS Test 12.5"
-    },
-    IELCE: {
-      FSID: "Integ Eng Lang Civics Edu",
-      Amount: "0",
-      FundStart: "10/5/2019",
-      FundEnd: "6/30/2020",
-      FundNumber: "IELCE2020/4",
-      Purpose: "ASISTS 13.1"
-    },
-    PERKINS: {
-      FSID: "Perkins",
-      Amount: "0",
-      FundStart: "7/1/2019",
-      FundEnd: "6/30/2020",
-      FundNumber: "",
-      Purpose: ""
-    },
-    UNITWAY: {
-      FSID: "United Way",
-      Amount: "0",
-      FundStart: "7/1/2019",
-      FundEnd: "6/30/2020",
-      FundNumber: "",
-      Purpose: ""
-    },
-    WIAWIOA: {
-      FSID: "WIA / WIOA",
-      Amount: "100000",
-      FundStart: "7/1/2019",
-      FundEnd: "6/30/2020",
-      FundNumber: "",
-      Purpose: "RS Test 12.5"
-    },
-    WIOAT2: {
-      FSID: "WIOA - Title II",
-      Amount: "100000",
-      FundStart: "7/1/2019",
-      FundEnd: "6/30/2020",
-      FundNumber: "",
-      Purpose: ""
-    }
-  },
-  CurrentFY: "2020"
-};
-
+const agencyData = agencyDataFund;
 let updatedAgencyDataFund = {};
 
 const headerList = [
   "Label",
-  "FS ID",
+  "Source Name",
   "Amount",
   "Begin Date",
   "End Date",
   "Contrat / Grant #",
-  "Purpose",
-  "FY"
+  "Purpose"
 ];
 
+const rowLabels = {
+  FundAbbrev: "Source Name",
+  FundStart: "Begin Date",
+  FundEnd: "End Date",
+  FundNumber: "Contrat / Grant #"
+};
+
+const createFiscalYear = str => {
+  const date = new Date(str);
+  return date.getFullYear();
+};
+
 const currencyFormat = str => {
-  return str === "0"
+  return !str
     ? ""
-    : "$" +
+    : "$ " +
         Number(str)
           .toFixed(0)
           .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 };
 
-const viewData = (sources, fiscalYear) => {
-  for (item in sources) {
-    const { FSID, Amount, FundStart, FundEnd, FundNumber, Purpose } = sources[
-      item
-    ];
-    $("tbody").append(`
-    <tr class="table-row" title="Click to Edit">
-        <td>${FSID}</td>
+const dateFormat = str => {
+  const date = new Date(str);
+  const month =
+    date.getMonth() < 9
+      ? "0" + (date.getMonth() + 1).toString()
+      : (date.getMonth() + 1).toString();
+
+  const day =
+    date.getDate() < 10
+      ? "0" + date.getDate().toString()
+      : date.getDate().toString();
+
+  return `${month}/${day}/${date.getFullYear()}`;
+};
+
+const viewData = sources => {
+  let bodyBloc = "";
+  for (let item of sources) {
+    const ID = item.ID;
+    const FSID = item.FSID;
+    const FundAbbrev = item.FundAbbrev;
+    const Amount = item.Amount;
+    const Purpose = item.Purpose;
+    const FundNumber = item.FundNumber;
+    const FundStart = dateFormat(item.FundStart);
+    const FundEnd = dateFormat(item.FundEnd);
+    const fiscalYear = createFiscalYear(FundEnd);
+
+    bodyBloc += `
+    <tr class="table-row" title="Click to Edit" data-source-id=${ID}-${FSID}>
+        <td>${FundAbbrev}</td>
         <td>${currencyFormat(Amount)}</td>
         <td class="date">${FundStart}</td>
         <td class="date">${FundEnd}</td>
         <td class="fiscalYear">${fiscalYear}</td>
         <td>${FundNumber}</td>
         <td class="purpose">${Purpose}</td>
-    </tr>`);
+    </tr>`;
   }
+  return bodyBloc;
 };
 
 const createListFields = row => {
-  const { FundSources, CurrentFY } = agencyDataFund;
-  const sourceName = Object.keys(FundSources)[row];
-  const listValues = Object.keys(FundSources[sourceName]).map(
-    key => FundSources[sourceName][key]
+  const sourceName = Object.keys(agencyDataFund)[row];
+  const listValues = Object.keys(agencyDataFund[sourceName]).map(
+    key => agencyDataFund[sourceName][key]
   );
-  listValues.push(CurrentFY);
+  // listValues.push(CurrentFY);
   listValues.unshift(sourceName);
-
+  console.log("listValues :", listValues);
   return headerList.map((item, indx) => [item, listValues[indx]]);
 };
 
@@ -138,8 +95,7 @@ $(document).ready(() => {
   });
 
   // * data viewing
-  const { FundSources, CurrentFY } = agencyDataFund;
-  viewData(FundSources, CurrentFY);
+  $("tbody").append(viewData(agencyData));
 
   //* Adding a new funding source
 
@@ -175,7 +131,6 @@ $(document).ready(() => {
   //* Deleting source
   $("#delete-btn").click(() => {
     const deleteConfirm = $(".modal-footer>h3");
-    const sourceLabel = $("input#0").val();
 
     if (deleteConfirm.length === 0) {
       $(".modal-footer").prepend(
