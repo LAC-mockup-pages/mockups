@@ -68,7 +68,7 @@ const elementSelectNewRecord = (argsObj) => {
      <select id="${
        keyValue + "-view"
      }" class="form-control${classVal}" name="${keyValue}" ${option}>
-      <option value='' selected disabled>Select ${descriptor}</option>
+      <option value=''>Select ${descriptor}</option>
       ${optionList}
      </select>`;
 
@@ -100,7 +100,7 @@ const elementSelectModal = (argsObj) => {
     })
     .join("");
   if (!selectedValue) {
-    firstOption = `<option selected disabled>Select ${descriptor}</option>`;
+    firstOption = `<option value="">Select ${descriptor}</option>`;
   }
 
   const elementSelect = `<div class= "input-field form-group">
