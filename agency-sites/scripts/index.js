@@ -189,87 +189,66 @@ const getRequired = () => {
 const createForm = (list) => {
   let formContent = "";
   const requiredList = getRequired();
-  const hiddenList = ["ID", "SiteEmail"];
-  console.log("list :>> ", list);
 
-  let labelClassVal = "";
-  let classVal = "";
-  let optionHidden = "form-group";
-  let option = "";
+  // const requiredList = ["SiteName", "SiteID"];
+  const hiddenList = ["ID", "SiteEmail"];
+
   for (const cell of list) {
     let keyVal = $(cell).attr("data-name");
     let labelVal = $(cell).attr("data-label");
-    let value = $(cell).text() ? $(cell).text() : "";
-    if (keyVal === "fullAddress") continue;
+    let value = $(cell).text() ? $(cell).text().trim() : "";
+    let labelClassVal = "";
+    let classVal = "";
+    let optionHidden = hiddenList.includes(keyVal)
+      ? "form-group hidden"
+      : "form-group";
+    let option = "";
 
-    // elementInput() <== helperFunctions.js
-    formContent += elementInput({
-      keyVal,
-      labelVal,
-      value,
-      labelClassVal,
-      classVal,
-      option,
-      optionHidden,
-    });
+    if (["fullAddress", "countyDesc"].includes(keyVal)) continue;
+    if (requiredList.includes(keyVal)) {
+      labelClassVal = "class='red-text'";
+      option = "required";
+    }
+
+    if (keyVal === "County") {
+      if (value === "null") value = "";
+
+      // elementSelectModal() <== helperFunctions.js
+      formContent += elementSelectModal({
+        hashTable: countyList,
+        keyValue: keyVal,
+        selectedValue: value,
+        labelVal: "County",
+        labelClassVal,
+        option,
+        optionText: " a county",
+      });
+    } else if (keyVal === "State") {
+      if (value === "null") value = "";
+
+      // elementSelectModal() <== helperFunctions.js
+      formContent += elementSelectModal({
+        hashTable: stateList,
+        keyValue: keyVal,
+        selectedValue: value,
+        labelVal: "State",
+        labelClassVal,
+        option,
+        optionText: " a state",
+      });
+    } else {
+      // elementInput() <== helperFunctions.js
+      formContent += elementInput({
+        keyVal,
+        labelVal,
+        value,
+        labelClassVal,
+        classVal,
+        option,
+        optionHidden,
+      });
+    }
   }
-  // formData.ID = [labelObj.ID, idArray[0]];
-  // formData.AgencyID = [labelObj.AgencyID, idArray[1]];
-
-  // const tdList = elmnt[0].cells;
-
-  // for (let item of tdList) {
-  //   const key = $(item).attr("class").split(" ")[1];
-  //   let value = $(item).text();
-  //   formData[key] = [labelObj[key], value];
-  // }
-  // const formFields = Object.keys(formData)
-  //   .map((fieldName) => {
-  //     let fieldText = "";
-  //     let option = "";
-  //     let labelClass = "";
-  //     if (fieldName === "County") {
-  //       const countyCode = formData.County[1].split(" ")[0];
-  //       return createSelect(countyList, fieldName, countyCode, 0);
-  //     }
-
-  //     if (fieldName === "State") {
-  //       const stateCode = formData.State[1];
-  //       return createSelect(ddlStates, fieldName, stateCode, 0);
-  //     }
-  //     switch (fieldName) {
-  //       case "Address":
-  //         fieldText = formData.Address[1].slice(
-  //           0,
-  //           formData.Address[1].indexOf(formData.City[1])
-  //         );
-  //         break;
-  //       case "SiteID":
-  //         fieldText = formData[fieldName][1];
-  //         break;
-  //       case "Zip":
-  //         // zipCodeFormat() <== helperFunctions()
-  //         fieldText = zipCodeFormat(formData.Zip[1]);
-  //         break;
-  //       default:
-  //         fieldText = formData[fieldName][1];
-  //         break;
-  //     }
-  //     if (["SiteID", "SiteName"].includes(fieldName)) {
-  //       labelClass = " red-text";
-  //       option += " required";
-  //     }
-  //     // createInputField() <== helperFunctions.js
-  //     return createInputField(
-  //       fieldName,
-  //       formData[fieldName][0],
-  //       fieldText,
-  //       labelClass,
-  //       "",
-  //       option
-  //     );
-  //   })
-  //   .join("");
 
   return formContent;
 };
@@ -376,10 +355,6 @@ $(document).ready(() => {
     const editForm = createForm(selectedRow);
     $("#modalBloc").modal("toggle");
     $("#modal-form").empty().append(editForm);
-
-    // Elements ID and AgencyID hidden so they are included in the
-    // serialization creating the data Object sent back to database
-    $(".input-field").slice(0, 2).toggleClass("hidden");
   });
 
   //* Saving mods after editing selected outcome
