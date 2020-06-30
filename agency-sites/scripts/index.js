@@ -254,16 +254,14 @@ const createForm = (list) => {
 };
 
 // Used for new site and edited site data set
-const saveMods = (form) => {
-  const { AuditUserID } = sessionVariable;
-  const result = { AuditUserID };
-  const submittedData = $(form).serializeArray();
-  $(`#new-site input, select`).removeClass("yellow-bg");
-
-  console.log("submittedData :>> ", submittedData);
-  // Highlights invalid fields with yellow background
+const saveMods = (fields, formName, tableName = "") => {
+  const { AgencyID, AuditUserID } = sessionVariable;
+  const result = { AgencyID, AuditUserID };
+  $(`${formName} input, select`).removeClass("yellow-bg");
+  console.log("fields :>> ", fields);
+  const fieldList = fields.slice(0); // Highlights invalid fields with yellow background
   //  validateUserInput() <== data-check.js
-  const validatedList = validateUserInput(submittedData);
+  const validatedList = validateRecord(submittedData);
   console.log("validatedList :>> ", validatedList);
   const checkFlag = validatedList.some((item) => !item.correct);
   if (checkFlag) {
@@ -292,18 +290,18 @@ const saveMods = (form) => {
     result[field.name] = field.value;
   }
 
-  const message = result.ID
-    ? "Result from Editing :>>"
-    : "Result from Adding new site :>>";
+  const target = tableName ? tableName : "No table name";
+  const resultList = [formName, target, JSON.stringify(result)];
   console.table(result);
   //! =================================================
   //! JSON Object to send back to database
-  console.log(message, JSON.stringify(result));
+  console.log("result :", resultList);
   //! =================================================
 
-  // if (form === "#new-site") location.reload();
-
   //ToDO Reloading/resetting with new data
+
+  if (formName === "#edit-form") $("#modalBloc").modal("toggle");
+  if (formName === "#new-entry") $(formName)[0].reset();
 };
 
 $(document).ready(() => {
