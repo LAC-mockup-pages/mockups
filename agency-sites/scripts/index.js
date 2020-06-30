@@ -189,12 +189,12 @@ const getRequired = () => {
 const createForm = (list) => {
   let formContent = "";
   const requiredList = getRequired();
-
+  const hiddenList = ["ID", "SiteEmail"];
   console.log("list :>> ", list);
 
   let labelClassVal = "";
   let classVal = "";
-  let optionHidden = "";
+  let optionHidden = "form-group";
   let option = "";
   for (const cell of list) {
     let keyVal = $(cell).attr("data-name");
