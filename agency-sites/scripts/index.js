@@ -271,7 +271,7 @@ const createForm = (list) => {
   //   })
   //   .join("");
 
-  return formFields;
+  return formContent;
 };
 
 // Used for new site and edited site data set
