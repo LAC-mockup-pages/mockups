@@ -171,73 +171,105 @@ const createTableBody = (dataList, labelObj) => {
 const createViewBloc = () => {
   const tableHeader = createTableHeader(rowLabels[0]);
 
-  // Ordering list of sites by descending ID
+  // Sorting list of sites by descending ID
   const list = dataSites.sort((site1, site2) => site2.ID - site1.ID);
   const tableBody = createTableBody(list, rowLabels[0]);
   const viewBloc = tableHeader + tableBody;
   return viewBloc;
 };
 
-const createForm = (elmnt) => {
-  const idArray = $(elmnt).attr("id").split("-");
-  const formData = {};
-  formData.ID = [labelObj.ID, idArray[0]];
-  formData.AgencyID = [labelObj.AgencyID, idArray[1]];
+const getRequired = () => {
+  const list = $("#new-entry input, select").get();
+  const requiredList = list
+    .filter((item) => $(item).prop("required"))
+    .map((item) => $(item).attr("id"));
+  return requiredList;
+};
 
-  const tdList = elmnt[0].cells;
+const createForm = (list) => {
+  let formContent = "";
+  const requiredList = getRequired();
 
-  for (let item of tdList) {
-    const key = $(item).attr("class").split(" ")[1];
-    let value = $(item).text();
-    formData[key] = [labelObj[key], value];
+  console.log("list :>> ", list);
+
+  let labelClassVal = "";
+  let classVal = "";
+  let optionHidden = "";
+  let option = "";
+  for (const cell of list) {
+    let keyVal = $(cell).attr("data-name");
+    let labelVal = $(cell).attr("data-label");
+    let value = $(cell).text() ? $(cell).text() : "";
+    if (keyVal === "fullAddress") continue;
+
+    // elementInput() <== helperFunctions.js
+    formContent += elementInput({
+      keyVal,
+      labelVal,
+      value,
+      labelClassVal,
+      classVal,
+      option,
+      optionHidden,
+    });
   }
-  const formFields = Object.keys(formData)
-    .map((fieldName) => {
-      let fieldText = "";
-      let option = "";
-      let labelClass = "";
-      if (fieldName === "County") {
-        const countyCode = formData.County[1].split(" ")[0];
-        return createSelect(countyList, fieldName, countyCode, 0);
-      }
+  // formData.ID = [labelObj.ID, idArray[0]];
+  // formData.AgencyID = [labelObj.AgencyID, idArray[1]];
 
-      if (fieldName === "State") {
-        const stateCode = formData.State[1];
-        return createSelect(ddlStates, fieldName, stateCode, 0);
-      }
-      switch (fieldName) {
-        case "Address":
-          fieldText = formData.Address[1].slice(
-            0,
-            formData.Address[1].indexOf(formData.City[1])
-          );
-          break;
-        case "SiteID":
-          fieldText = formData[fieldName][1];
-          break;
-        case "Zip":
-          // zipCodeFormat() <== helperFunctions()
-          fieldText = zipCodeFormat(formData.Zip[1]);
-          break;
-        default:
-          fieldText = formData[fieldName][1];
-          break;
-      }
-      if (["SiteID", "SiteName"].includes(fieldName)) {
-        labelClass = " red-text";
-        option += " required";
-      }
-      // createInputField() <== helperFunctions.js
-      return createInputField(
-        fieldName,
-        formData[fieldName][0],
-        fieldText,
-        labelClass,
-        "",
-        option
-      );
-    })
-    .join("");
+  // const tdList = elmnt[0].cells;
+
+  // for (let item of tdList) {
+  //   const key = $(item).attr("class").split(" ")[1];
+  //   let value = $(item).text();
+  //   formData[key] = [labelObj[key], value];
+  // }
+  // const formFields = Object.keys(formData)
+  //   .map((fieldName) => {
+  //     let fieldText = "";
+  //     let option = "";
+  //     let labelClass = "";
+  //     if (fieldName === "County") {
+  //       const countyCode = formData.County[1].split(" ")[0];
+  //       return createSelect(countyList, fieldName, countyCode, 0);
+  //     }
+
+  //     if (fieldName === "State") {
+  //       const stateCode = formData.State[1];
+  //       return createSelect(ddlStates, fieldName, stateCode, 0);
+  //     }
+  //     switch (fieldName) {
+  //       case "Address":
+  //         fieldText = formData.Address[1].slice(
+  //           0,
+  //           formData.Address[1].indexOf(formData.City[1])
+  //         );
+  //         break;
+  //       case "SiteID":
+  //         fieldText = formData[fieldName][1];
+  //         break;
+  //       case "Zip":
+  //         // zipCodeFormat() <== helperFunctions()
+  //         fieldText = zipCodeFormat(formData.Zip[1]);
+  //         break;
+  //       default:
+  //         fieldText = formData[fieldName][1];
+  //         break;
+  //     }
+  //     if (["SiteID", "SiteName"].includes(fieldName)) {
+  //       labelClass = " red-text";
+  //       option += " required";
+  //     }
+  //     // createInputField() <== helperFunctions.js
+  //     return createInputField(
+  //       fieldName,
+  //       formData[fieldName][0],
+  //       fieldText,
+  //       labelClass,
+  //       "",
+  //       option
+  //     );
+  //   })
+  //   .join("");
 
   return formFields;
 };
@@ -248,6 +280,7 @@ const saveMods = (form) => {
   const result = { AuditUserID };
   const submittedData = $(form).serializeArray();
   $(`#new-site input, select`).removeClass("yellow-bg");
+
   console.log("submittedData :>> ", submittedData);
   // Highlights invalid fields with yellow background
   //  validateUserInput() <== data-check.js
@@ -326,7 +359,7 @@ $(document).ready(() => {
     saveMods(formId);
   });
 
-  //* Canceling
+  //* Canceling in new entry form
   $(document).on("click", "#cancel-btn", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
@@ -339,8 +372,8 @@ $(document).ready(() => {
     evnt.stopPropagation();
 
     const rowID = "#" + $(this).attr("id");
-    const selectedElement = $(rowID).get();
-    const editForm = createForm(selectedElement);
+    const selectedRow = $(`${rowID} td`).get();
+    const editForm = createForm(selectedRow);
     $("#modalBloc").modal("toggle");
     $("#modal-form").empty().append(editForm);
 
