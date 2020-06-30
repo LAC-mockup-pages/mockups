@@ -276,15 +276,11 @@ const saveMods = (fields, formName, tableName = "") => {
     return;
   } else {
     for (const field of fieldList) {
-      if (field.name === "County") {
-        result.County = field.value;
-        countyDescValue = countyList.filter(
-          (item) => item.FIPS === field.value
-        )[0].CountyDesc;
-        field.value = countyDescValue;
-      }
       // phoneFormat <== helperFunctions()
       if (field.name === "Telephone") field.value = phoneFormat(field.value);
+      if (field.name === "SiteEmail")
+        field.value = field.value !== "undefined" ? field.value : "";
+
       result[field.name] = field.value;
     }
 
@@ -327,6 +323,13 @@ $(document).ready(() => {
   $("#new-entry").append(createNewRecord(rowLabels));
   $("#main-table").append(createViewBloc());
 
+  // Change text color from red (required) to black
+  // when a value is entered
+  $(document).on("focusin", "#SiteID, #SiteName", function (evnt) {
+    evnt.stopPropagation();
+    $(this).toggleClass("dark-text").prop("required", false);
+  });
+
   //* Adding a new site
   $(document).on("click", "#submit-btn", function (evnt) {
     evnt.preventDefault();
@@ -359,8 +362,8 @@ $(document).ready(() => {
   $(document).on("click", "#save-btn", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
-    const form = `#${$(this).attr("form")}`;
-    saveMods(form);
-    $("#modalBloc").modal("toggle");
+    const formId = `#${$(this).attr("form")}`;
+    const modifiedRecord = $(formId).serializeArray();
+    saveMods(modifiedRecord, formId, "sitesDataServer");
   });
 });
