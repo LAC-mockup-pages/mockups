@@ -38,7 +38,7 @@ const createNewRecord = (labelsList) => {
         "ID",
         "AgencyID",
         "fullAddress",
-        "CountyDesc",
+        "countyDesc",
         "SiteEmail",
         "CSD",
         "CPD",
@@ -258,50 +258,49 @@ const saveMods = (fields, formName, tableName = "") => {
   const { AgencyID, AuditUserID } = sessionVariable;
   const result = { AgencyID, AuditUserID };
   $(`${formName} input, select`).removeClass("yellow-bg");
-  console.log("fields :>> ", fields);
-  const fieldList = fields.slice(0); // Highlights invalid fields with yellow background
-  //  validateUserInput() <== data-check.js
-  const validatedList = validateRecord(submittedData);
-  console.log("validatedList :>> ", validatedList);
+
+  const fieldList = fields.slice(0);
+  // Data validation
+  // validateRecord() <== data-check.js
+  const validatedList = validateRecord(fieldList);
+
+  // Background color change for invalid field values
   const checkFlag = validatedList.some((item) => !item.correct);
   if (checkFlag) {
     const list = validatedList.filter((obj) => obj.correct === false);
     for (let field of list) {
-      console.log("State value : ", $("#State-view").val());
-      if (!$("#State-view").val()) $("#State-view").addClass("yellow-bg");
-      if (!$("#County").val()) $("#County").addClass("yellow-bg");
-      console.log("County value : ", $("#County").val());
-
-      $(`#${field.name}`).addClass("yellow-bg");
+      const fieldId =
+        formName === "#new-entry" ? `#${field.name}` : `#${field.name}-view`;
+      $(fieldId).addClass("yellow-bg");
     }
     return;
-  }
-
-  for (let field of submittedData) {
-    if (field.name === "County") {
-      result.County = field.value;
-      countyDescValue = countyList.filter(
-        (item) => item.FIPS === field.value
-      )[0].CountyDesc;
-      field.value = countyDescValue;
+  } else {
+    for (const field of fieldList) {
+      if (field.name === "County") {
+        result.County = field.value;
+        countyDescValue = countyList.filter(
+          (item) => item.FIPS === field.value
+        )[0].CountyDesc;
+        field.value = countyDescValue;
+      }
+      // phoneFormat <== helperFunctions()
+      if (field.name === "Telephone") field.value = phoneFormat(field.value);
+      result[field.name] = field.value;
     }
-    // phoneFormat <== helperFunctions()
-    if (field.name === "Telephone") field.value = phoneFormat(field.value);
-    result[field.name] = field.value;
+
+    const target = tableName ? tableName : "No table name";
+    const resultList = [formName, target, JSON.stringify(result)];
+    console.table(result);
+    //! =================================================
+    //! JSON Object to send back to database
+    console.log("result :", resultList);
+    //! =================================================
+
+    //ToDO Reloading/resetting with new data
+
+    if (formName === "#edit-form") $("#modalBloc").modal("toggle");
+    if (formName === "#new-entry") $(formName)[0].reset();
   }
-
-  const target = tableName ? tableName : "No table name";
-  const resultList = [formName, target, JSON.stringify(result)];
-  console.table(result);
-  //! =================================================
-  //! JSON Object to send back to database
-  console.log("result :", resultList);
-  //! =================================================
-
-  //ToDO Reloading/resetting with new data
-
-  if (formName === "#edit-form") $("#modalBloc").modal("toggle");
-  if (formName === "#new-entry") $(formName)[0].reset();
 };
 
 $(document).ready(() => {
@@ -333,7 +332,8 @@ $(document).ready(() => {
     evnt.preventDefault();
     evnt.stopPropagation();
     const formId = "#" + $(this).attr("form");
-    saveMods(formId);
+    const newSource = $(formId).serializeArray();
+    saveMods(newSource, formId, "sitesDataServer");
   });
 
   //* Canceling in new entry form
