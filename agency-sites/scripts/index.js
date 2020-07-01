@@ -355,7 +355,7 @@ $(document).ready(() => {
     const selectedRow = $(`${rowID} td`).get();
     const editForm = createForm(selectedRow);
     $("#modalBloc").modal("toggle");
-    $("#modal-form").empty().append(editForm);
+    $("#edit-form").empty().append(editForm);
   });
 
   //* Saving mods after editing selected outcome
