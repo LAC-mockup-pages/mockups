@@ -30,9 +30,9 @@ const elementInput = (obj) => {
 // Returns an <input .... > element with no label for new record entry bloc
 // Assign "" to keys in argsObj which are not needed.
 const inputNoLabel = (argsObj) => {
-  const { key, placehold, classOption, option } = argsObj;
-
-  return `<input type="text" class="form-control${classOption}" id=${key}
+  const { key, placehold, classOption, option, type } = argsObj;
+  const selectType = type ? type : "text";
+  return `<input type=${selectType} class="form-control${classOption}" id=${key}
             name="${key}" placeholder="${placehold}"${option}
             autocomplete="off" spellcheck="off"/>`;
 };
