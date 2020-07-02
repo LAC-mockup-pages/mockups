@@ -13,20 +13,53 @@ const rowLabels = [
   },
 ];
 
-const createNewRecord = (list) => {
-  // elementSelectNewRecord() <== helpers/helperFunctions.js
-  const selectCategory = elementSelectNewRecord({
-    hashTable: categories,
-    keyValue: "OutcomeSortOrder",
-    option: "required",
-  });
-
-  $("#new-outcome").append(
-    `${selectCategory}
-      <input type="text" id="input-new-outcome" class="form-control" name="Description" placeholder="Description" autocomplete="off" spellcheck="true" required>
-    <button type="button" id="submit-btn" form="new-outcome" class="btn btn-primary">Add</button>
-    <button type="button" id="cancel-btn" class="btn btn-default">Cancel</button>`
+const createNewRecord = (labelsList) => {
+  let result = [];
+  const labelObj = labelsList[0];
+  const requiredList = ["OutcomeSortOrder", "Description"];
+  const hiddenList = ["Category"];
+  const keyList = Object.keys(labelObj).filter(
+    (key) => !["ID", "AgencyID"].includes(key)
   );
+
+  for (key of keyList) {
+    let element = "";
+    let option = "";
+    let type = "text";
+    let classOption = " input-field";
+    const placehold = labelObj[key];
+    if (key === "OutcomeSortOrder") {
+      // elementSelectNewRecord() <== helperFunctions()
+      element = elementSelectNewRecord({
+        hashTable: categories,
+        keyValue: key,
+        option,
+        optionText: "a category",
+        classOption,
+      });
+    } else {
+      if (requiredList.includes(key)) {
+        option = " required title='Please fill this field'";
+      }
+      if (hiddenList.includes(key)) classOption += " hidden";
+
+      // inputNoLabel() <== helperFunctions()
+      element = inputNoLabel({
+        key,
+        placehold,
+        classOption,
+        option,
+        type,
+      });
+    }
+    result.push(element);
+  }
+
+  result.push(
+    `<button type="button" id="submit-btn" form="new-entry" class="btn btn-primary">Add</button>
+    <button type="button" id="cancel-btn" form="new-entry" class="btn btn-default">Cancel</button>`
+  );
+  return result.join("");
 };
 
 const createDataList = (list) => {
@@ -80,6 +113,17 @@ const createView = (list) => {
   const orderedList = list.sort((a, b) => (a.Category > b.Category ? 1 : -1));
   const tableBody = createBody(orderedList);
   return `<table class="table">${tableHead}${tableBody}</table>`;
+};
+
+const createTableHeader = (labelsObject) => {
+  const list = Object.entries(labelsObject)
+    .filter(
+      (label) => !["ID", "AgencyID", "OutcomeSortOrder"].includes(label[0])
+    )
+    .map((label) => label[1]);
+
+  // createHeaders() <== helperFunctions.js
+  return createHeaders(list);
 };
 
 const mergeArraysToObject = (keysArray, valuesArray) => {
@@ -146,9 +190,9 @@ $(document).ready(() => {
     $("html, body").animate({ scrollTop: 0 }, "600");
   });
 
-  // * Data viewing
-  createNewRecord(categories);
-  $("#view-bloc").append(createView(dataOutcomes));
+  //* Data viewing
+  $("#new-entry").append(createNewRecord(rowLabels));
+  $("#main-table").append(createViewBloc());
 
   //* Adding a new outcome
   $("#OutcomeSortOrder-view").bind("change", function (evnt) {
