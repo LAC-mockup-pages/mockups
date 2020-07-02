@@ -3,6 +3,16 @@
 const dataOutcomes = outcomesData.slice(0);
 const categories = categoryData.slice(0);
 
+const rowLabels = [
+  {
+    ID: "ID",
+    AgencyID: "agencyId",
+    OutcomeSortOrder: "Category",
+    Category: "Category",
+    Description: "Description",
+  },
+];
+
 const createNewRecord = (list) => {
   // elementSelectNewRecord() <== helpers/helperFunctions.js
   const selectCategory = elementSelectNewRecord({
