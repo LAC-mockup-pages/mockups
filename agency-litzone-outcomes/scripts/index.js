@@ -33,7 +33,7 @@ const createNewRecord = (labelsList) => {
       element = elementSelectNewRecord({
         hashTable: categories,
         keyValue: key,
-        option,
+        option: " required title='Please fill this field'",
         optionText: "a category",
         classOption,
       });
@@ -124,6 +124,18 @@ const createTableHeader = (labelsObject) => {
 
   // createHeaders() <== helperFunctions.js
   return createHeaders(list);
+};
+
+const createViewBloc = () => {
+  const tableHeader = createTableHeader(rowLabels[0]);
+
+  // Sorting data by increasing OutcomeSortOrder value
+  const list = dataOutcomes.sort(
+    (item1, item2) => item1.OutcomeSortOrder - item2.OutcomeSortOrder
+  );
+  const tableBody = createTableBody(list, rowLabels[0]);
+  const viewBloc = tableHeader + tableBody;
+  return viewBloc;
 };
 
 const mergeArraysToObject = (keysArray, valuesArray) => {
