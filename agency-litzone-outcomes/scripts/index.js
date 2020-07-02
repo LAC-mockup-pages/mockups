@@ -81,11 +81,6 @@ const createDataList = (list) => {
   return dataList;
 };
 
-const createHeader = (list) => {
-  const result = list.map((item) => `<th>${item}</th>`).join("");
-  return `<thead>${result}</thead>`;
-};
-
 const createBody = (list) => {
   const dataList = createDataList(list);
   const agId = dataOutcomes[0].AgencyID;
@@ -106,15 +101,6 @@ const createBody = (list) => {
 
   return `<tbody class="table-body" id=${agId}>${rows}</tbody>`;
 };
-
-const createView = (list) => {
-  const headerValues = Object.keys(list[0]).slice(3);
-  const tableHead = createHeader(headerValues);
-  const orderedList = list.sort((a, b) => (a.Category > b.Category ? 1 : -1));
-  const tableBody = createBody(orderedList);
-  return `<table class="table">${tableHead}${tableBody}</table>`;
-};
-
 const createTableHeader = (labelsObject) => {
   const list = Object.entries(labelsObject)
     .filter(
@@ -125,6 +111,24 @@ const createTableHeader = (labelsObject) => {
   // createHeaders() <== helperFunctions.js
   return createHeaders(list);
 };
+
+const createView = (list, labelList) => {
+  const tableHead = createTableHeader(labelList);
+  const orderedList = list.sort((a, b) => (a.Category > b.Category ? 1 : -1));
+  const tableBody = createBody(orderedList);
+  return tableHead + tableBody;
+};
+
+// const createTableBody = (dataList, labelObj) => {
+//   let rows = "";
+//   const hiddenList = ["ID", "OutcomeSortOrder"];
+
+//   const filteredLabelList = Object.keys(labelObj).filter(
+//     (item) => !["AgencyID"].includes(item)
+//   );
+
+//   return `<tbody>${rows}</tbody>`;
+// };
 
 const createViewBloc = () => {
   const tableHeader = createTableHeader(rowLabels[0]);
