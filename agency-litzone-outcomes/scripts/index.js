@@ -119,9 +119,7 @@ const displayDescriptions = (outcomeList, labelObj) => {
     if (desc) {
       const { ID, OutcomeSortOrder, Category, Description } = desc;
 
-      const dataBloc = ID
-        ? ` id=${ID} data-order=${OutcomeSortOrder} data-desc="${Description}"`
-        : ` data-order=${OutcomeSortOrder}`;
+      const dataBloc = ` id=${ID} data-order=${OutcomeSortOrder} data-cat="${Category}"`;
 
       descriptionBloc += `<div class="outcome-view" title="Click to Edit"${dataBloc}>${
         Description || ""
@@ -137,11 +135,11 @@ const createCard = (dataList, labelObj) => {
     const outcomes = dataList
       .filter((record) => record.OutcomeSortOrder === field.OutcomeSortOrder)
       .sort((item1, item2) => item2.ID - item1.ID); // Sort by desc. ID
-    if (outcomes.length < 1) outcomes.push(field);
+    if (outcomes.length < 1) continue;
     const descriptions = displayDescriptions(outcomes, labelObj);
     const card = `<div class="container-fluid card row" >
-    <div class="category-view col-md-4">${field.Category}</div>
-    <div class="description-view col-md-8">${descriptions}</div>
+    <div class="category-view col-md-5" id=${field.OutcomeSortOrder}>${field.Category}</div>
+    <div class="description-view col-md-7">${descriptions}</div>
     </div>`;
     body += card;
   }

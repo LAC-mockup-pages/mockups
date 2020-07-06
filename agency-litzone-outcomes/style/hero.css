@@ -119,10 +119,27 @@ th {
 #view-bloc {
   background-color: #fff;
   border-bottom: 1% solid #2479b5;
-  font-size: 1.4em;
+  font-size: 1.2em;
   font-weight: 700;
   border: none;
   text-indent: 4px;
-  line-height: 2.5em;
+  line-height: 2em;
   border-bottom: 1px solid #2479b5;
+}
+.card {
+  margin: 0;
+  font-size: 1.3em;
+  line-height: 2.7em;
+  border-bottom: 2px solid #ddd;
+}
+
+.outcome-view {
+  text-indent: 1em;
+
+  border-bottom: 2px solid #ddd;
+  border-left: 2px solid #ddd;
+}
+
+.outcome-view:last-child {
+  border-bottom: none;
 }
