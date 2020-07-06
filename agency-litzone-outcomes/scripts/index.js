@@ -123,7 +123,7 @@ const displayDescriptions = (outcomeList, labelObj) => {
 
       descriptionBloc += `<div class="outcome-view" id=${ID} title="Click to Edit" data-obj="[${JSON.stringify(
         desc
-      )}]">${Description}</div>`;
+      )}]">${Description || ""}</div>`;
     }
   }
   return descriptionBloc;
@@ -135,6 +135,9 @@ const createCard = (dataList, labelObj) => {
     const outcomes = dataList
       .filter((record) => record.OutcomeSortOrder === field.OutcomeSortOrder)
       .sort((item1, item2) => item2.ID - item1.ID); // Sort by desc. ID
+
+    if (outcomes.length < 1) outcomes.push(field);
+
     console.log("outcomes :>> ", outcomes);
 
     const descriptions = displayDescriptions(outcomes, labelObj);
