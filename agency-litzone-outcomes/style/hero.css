@@ -16,6 +16,11 @@ body {
   border-radius: 5px;
 }
 
+.table {
+  margin-bottom: 0;
+  border-radius: 5px;
+}
+
 .label-text {
   font-size: 1.3em;
   font-weight: 600;
@@ -50,7 +55,6 @@ body {
 
 .data-view {
   border-radius: 5px;
-  padding-bottom: 2%;
 }
 
 tbody {
