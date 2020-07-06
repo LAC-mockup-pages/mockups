@@ -62,45 +62,46 @@ const createNewRecord = (labelsList) => {
   return result.join("");
 };
 
-const createDataList = (list) => {
-  const catList = [];
-  for (const item of list) {
-    if (!catList.includes(item.OutcomeSortOrder)) {
-      catList.push(item.OutcomeSortOrder);
-    }
-  }
-  const dataList = catList.map((num) => {
-    const category = categoryData.filter(
-      (item) => item.OutcomeSortOrder === num
-    )[0].Category;
-    const outcomes = dataOutcomes
-      .filter((item) => item.OutcomeSortOrder === num)
-      .map((item) => [item.ID, item.Description]);
-    return { cat: category, catId: num, outcomes: outcomes };
-  });
-  return dataList;
-};
+// const createDataList = (list) => {
+//   const catList = [];
+//   for (const item of list) {
+//     if (!catList.includes(item.OutcomeSortOrder)) {
+//       catList.push(item.OutcomeSortOrder);
+//     }
+//   }
+//   const dataList = catList.map((num) => {
+//     const category = categoryData.filter(
+//       (item) => item.OutcomeSortOrder === num
+//     )[0].Category;
+//     const outcomes = dataOutcomes
+//       .filter((item) => item.OutcomeSortOrder === num)
+//       .map((item) => [item.ID, item.Description]);
+//     return { cat: category, catId: num, outcomes: outcomes };
+//   });
+//   return dataList;
+// };
 
-const createBody = (list) => {
-  const dataList = createDataList(list);
-  const agId = dataOutcomes[0].AgencyID;
+// const createBody = (list) => {
+//   const dataList = createDataList(list);
+//   const agId = dataOutcomes[0].AgencyID;
 
-  const rows = dataList
-    .map((item) => {
-      const values = item.outcomes
-        .map((arr) => {
-          return `<div class="inside-value" id=${arr[0]} title="Click to edit" data-catid=${item.catId}>${arr[1]}</div>`;
-        })
-        .join("");
+//   const rows = dataList
+//     .map((item) => {
+//       const values = item.outcomes
+//         .map((arr) => {
+//           return `<div class="inside-value" id=${arr[0]} title="Click to edit" data-catid=${item.catId}>${arr[1]}</div>`;
+//         })
+//         .join("");
 
-      return `<tr id=${item.catId}><td class="cell-data">${item.cat}</td>
-    <td>${values}</td>
-    </tr>`;
-    })
-    .join("");
+//       return `<tr id=${item.catId}><td class="cell-data">${item.cat}</td>
+//     <td>${values}</td>
+//     </tr>`;
+//     })
+//     .join("");
 
-  return `<tbody class="table-body" id=${agId}>${rows}</tbody>`;
-};
+//   return `<tbody class="table-body" id=${agId}>${rows}</tbody>`;
+// };
+
 const createTableHeader = (labelsObject) => {
   const list = Object.entries(labelsObject)
     .filter(
@@ -112,33 +113,50 @@ const createTableHeader = (labelsObject) => {
   return createHeaders(list);
 };
 
-const createView = (list, labelList) => {
-  const tableHead = createTableHeader(labelList);
-  const orderedList = list.sort((a, b) => (a.Category > b.Category ? 1 : -1));
-  const tableBody = createBody(orderedList);
-  return tableHead + tableBody;
+const displayDescriptions = (outcomeList, labelObj) => {
+  console.log("outcomeList :>> ", outcomeList);
+  let descriptionBloc = "";
+  for (const desc of outcomeList) {
+    // console.log("desc :>> ", desc);
+    if (desc) {
+      const { ID, Description } = desc;
+
+      descriptionBloc += `<div class="outcome-view" id=${ID} title="Click to Edit" data-obj="[${JSON.stringify(
+        desc
+      )}]">${Description}</div>`;
+    }
+  }
+  return descriptionBloc;
 };
 
-// const createTableBody = (dataList, labelObj) => {
-//   let rows = "";
-//   const hiddenList = ["ID", "OutcomeSortOrder"];
+const createCard = (dataList, labelObj) => {
+  let body = "";
+  for (const field of categories) {
+    const outcomes = dataList
+      .filter((record) => record.OutcomeSortOrder === field.OutcomeSortOrder)
+      .sort((item1, item2) => item2.ID - item1.ID); // Sort by desc. ID
+    console.log("outcomes :>> ", outcomes);
 
-//   const filteredLabelList = Object.keys(labelObj).filter(
-//     (item) => !["AgencyID"].includes(item)
-//   );
+    const descriptions = displayDescriptions(outcomes, labelObj);
 
-//   return `<tbody>${rows}</tbody>`;
-// };
+    const card = `<div class="container-fluid card row" >
+    <div class="category-view col-md-4">${field.Category}</div>
+    <div class="description-view col-md-8">${descriptions}</div>
+    </div>`;
+    body += card;
+  }
+
+  return body;
+};
 
 const createViewBloc = () => {
-  const tableHeader = createTableHeader(rowLabels[0]);
+  // const tableHeader = createTableHeader(rowLabels[0]);
 
   // Sorting data by increasing OutcomeSortOrder value
-  const list = dataOutcomes.sort(
+  const sortedList = dataOutcomes.sort(
     (item1, item2) => item1.OutcomeSortOrder - item2.OutcomeSortOrder
   );
-  const tableBody = createTableBody(list, rowLabels[0]);
-  const viewBloc = tableHeader + tableBody;
+  const viewBloc = createCard(sortedList, rowLabels[0]);
   return viewBloc;
 };
 
@@ -208,7 +226,8 @@ $(document).ready(() => {
 
   //* Data viewing
   $("#new-entry").append(createNewRecord(rowLabels));
-  $("#main-table").append(createViewBloc());
+  $("#main-table").append(createTableHeader(rowLabels[0]));
+  $("#view-bloc").append(createViewBloc());
 
   //* Adding a new outcome
   $("#OutcomeSortOrder-view").bind("change", function (evnt) {
