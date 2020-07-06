@@ -114,16 +114,18 @@ const createTableHeader = (labelsObject) => {
 };
 
 const displayDescriptions = (outcomeList, labelObj) => {
-  console.log("outcomeList :>> ", outcomeList);
   let descriptionBloc = "";
   for (const desc of outcomeList) {
-    // console.log("desc :>> ", desc);
     if (desc) {
-      const { ID, Description } = desc;
+      const { ID, OutcomeSortOrder, Category, Description } = desc;
 
-      descriptionBloc += `<div class="outcome-view" id=${ID} title="Click to Edit" data-obj="[${JSON.stringify(
-        desc
-      )}]">${Description || ""}</div>`;
+      const dataBloc = ID
+        ? ` id=${ID} data-order=${OutcomeSortOrder} data-desc="${Description}"`
+        : ` data-order=${OutcomeSortOrder}`;
+
+      descriptionBloc += `<div class="outcome-view" title="Click to Edit"${dataBloc}>${
+        Description || ""
+      }</div>`;
     }
   }
   return descriptionBloc;
@@ -135,20 +137,14 @@ const createCard = (dataList, labelObj) => {
     const outcomes = dataList
       .filter((record) => record.OutcomeSortOrder === field.OutcomeSortOrder)
       .sort((item1, item2) => item2.ID - item1.ID); // Sort by desc. ID
-
     if (outcomes.length < 1) outcomes.push(field);
-
-    console.log("outcomes :>> ", outcomes);
-
     const descriptions = displayDescriptions(outcomes, labelObj);
-
     const card = `<div class="container-fluid card row" >
     <div class="category-view col-md-4">${field.Category}</div>
     <div class="description-view col-md-8">${descriptions}</div>
     </div>`;
     body += card;
   }
-
   return body;
 };
 

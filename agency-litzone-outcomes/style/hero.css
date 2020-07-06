@@ -2,17 +2,15 @@ body {
   background-color: #f0e2d5;
 }
 
-.dark-blue-bg {
-  background-color: #1d6294;
-}
-
 .hero {
-  padding: 0 0 1% 0;
-  border-width: 6px 3px;
+  margin: 1% 6%;
+  padding: 0;
+  border-radius: 5px;
+  z-index: -500;
 }
 
 .outcome-entry {
-  margin: 1% 0 1% 0;
+  margin: 1% 0;
   padding: 0 0 2% 0;
   width: 100%;
   border-radius: 5px;
@@ -23,10 +21,6 @@ body {
   font-weight: 600;
   padding: 0 0 0.5% 0.5%;
 }
-
-/* .new-record {
-  background-color: #b3f1cc;
-} */
 
 #new-outcome > .form-control {
   font-size: 1.3em;
@@ -66,17 +60,7 @@ tbody {
   font-weight: 600;
 }
 
-.table > tbody > tr > td {
-  line-height: 40px;
-}
-
-.inside-value {
-  line-height: 40px;
-  font-size: 1.1em;
-  font-weight: 500;
-}
-
-.inside-value:hover {
+.outcome-view:hover {
   background-color: #d3e4f0;
 }
 
@@ -132,7 +116,13 @@ th {
   background-color: #d3e4f0;
 }
 
-.delete-msg {
-  width: fit-content;
-  border-bottom: 2px solid rgb(197, 65, 65);
+#view-bloc {
+  background-color: #fff;
+  border-bottom: 1% solid #2479b5;
+  font-size: 1.4em;
+  font-weight: 700;
+  border: none;
+  text-indent: 4px;
+  line-height: 2.5em;
+  border-bottom: 1px solid #2479b5;
 }
