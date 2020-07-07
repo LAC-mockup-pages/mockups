@@ -182,7 +182,7 @@ const saveMods = (fields, formName, tableName = "") => {
     //ToDO Reloading/resetting with new data
 
     // if (formName === "#edit-form") $("#modalBloc").modal("toggle");
-    // if (formName === "#new-entry") $(formName)[0].reset();
+    if (formName === "#new-entry") $(formName)[0].reset();
   }
 };
 
@@ -220,7 +220,8 @@ $(document).ready(() => {
   });
 
   //* Adding a new outcome
-  $("#OutcomeSortOrder-view").bind("change", function (evnt) {
+  $(document).on("change", "#OutcomeSortOrder-view", function (evnt) {
+    evnt.preventDefault();
     evnt.stopPropagation();
     $(this).toggleClass("dark-text").prop("required", false);
     const selectedOption = $(this).val();
