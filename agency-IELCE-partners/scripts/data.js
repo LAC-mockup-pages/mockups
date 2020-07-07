@@ -14,8 +14,19 @@ const ielcePartnersData = [
                     { "FIPS": "36017", "CountyDesc": "36017 Chenango" },
                     { "FIPS": "36013", "CountyDesc": "36013 Chautauqua" },
                     { "FIPS": "36061", "CountyDesc": "36061 NY County (Manhattan)" }, {"FIPS":"36035","CountyDesc":"Fulton"}
-        ]
+        ];
         
+        const fundingData = [
+          {"FSID":"CCF","FundAbbrev":"Community College FTE"},
+          {"FSID":"EMP","FundAbbrev":"Employer"},
+          {"FSID":"EPE","FundAbbrev":"EPE"},
+          {"FSID":"FND","FundAbbrev":"Foundation"},
+          {"FSID":"SCHL","FundAbbrev":"Scholarship"},
+          {"FSID":"SLF","FundAbbrev":"Self-Pay"},
+          {"FSID":"T1","FundAbbrev":"Title I"},
+          {"FSID":"UNI","FundAbbrev":"Union"}
+      ];
+  
         const sessionVariable = {
                 AgencyID: "PRA",
                 AuditUserID: '<%= Session["UserID"] %>',
