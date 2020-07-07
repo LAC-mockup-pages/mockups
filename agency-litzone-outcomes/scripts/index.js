@@ -62,45 +62,6 @@ const createNewRecord = (labelsList) => {
   return result.join("");
 };
 
-const createDataList = (list) => {
-  const catList = [];
-  for (const item of list) {
-    if (!catList.includes(item.OutcomeSortOrder)) {
-      catList.push(item.OutcomeSortOrder);
-    }
-  }
-  const dataList = catList.map((num) => {
-    const category = categoryData.filter(
-      (item) => item.OutcomeSortOrder === num
-    )[0].Category;
-    const outcomes = dataOutcomes
-      .filter((item) => item.OutcomeSortOrder === num)
-      .map((item) => [item.ID, item.Description]);
-    return { cat: category, catId: num, outcomes: outcomes };
-  });
-  return dataList;
-};
-
-const createBody = (list) => {
-  const dataList = createDataList(list);
-  const agId = dataOutcomes[0].AgencyID;
-
-  const rows = dataList
-    .map((item) => {
-      const values = item.outcomes
-        .map((arr) => {
-          return `<div class="inside-value" id=${arr[0]} title="Click to edit" data-catid=${item.catId}>${arr[1]}</div>`;
-        })
-        .join("");
-
-      return `<tr id=${item.catId}><td class="cell-data">${item.cat}</td>
-    <td>${values}</td>
-    </tr>`;
-    })
-    .join("");
-
-  return `<tbody class="table-body" id=${agId}>${rows}</tbody>`;
-};
 const createTableHeader = (labelsObject) => {
   const list = Object.entries(labelsObject)
     .filter(
@@ -112,78 +73,118 @@ const createTableHeader = (labelsObject) => {
   return createHeaders(list);
 };
 
-const createView = (list, labelList) => {
-  const tableHead = createTableHeader(labelList);
-  const orderedList = list.sort((a, b) => (a.Category > b.Category ? 1 : -1));
-  const tableBody = createBody(orderedList);
-  return tableHead + tableBody;
+const displayDescriptions = (outcomeList, labelObj) => {
+  let descriptionBloc = "";
+  for (const desc of outcomeList) {
+    if (desc) {
+      const { ID, OutcomeSortOrder, Category, Description } = desc;
+
+      const dataBloc = ` id=${ID} data-order=${OutcomeSortOrder} data-cat="${Category}"`;
+
+      descriptionBloc += `<div class="outcome-view" title="Click to Edit"${dataBloc}>${
+        Description || ""
+      }</div>`;
+    }
+  }
+  return descriptionBloc;
 };
 
-// const createTableBody = (dataList, labelObj) => {
-//   let rows = "";
-//   const hiddenList = ["ID", "OutcomeSortOrder"];
-
-//   const filteredLabelList = Object.keys(labelObj).filter(
-//     (item) => !["AgencyID"].includes(item)
-//   );
-
-//   return `<tbody>${rows}</tbody>`;
-// };
+const createCard = (dataList, labelObj) => {
+  let body = "";
+  for (const field of categories) {
+    const outcomes = dataList
+      .filter((record) => record.OutcomeSortOrder === field.OutcomeSortOrder)
+      .sort((item1, item2) => item2.ID - item1.ID); // Sort by desc. ID
+    if (outcomes.length < 1) continue;
+    const descriptions = displayDescriptions(outcomes, labelObj);
+    const card = `<div class="container-fluid card row" id=${field.OutcomeSortOrder}>
+    <div class="category-view col-md-5">${field.Category}</div>
+    <div class="description-view col-md-7">${descriptions}</div>
+    </div>`;
+    body += card;
+  }
+  return body;
+};
 
 const createViewBloc = () => {
-  const tableHeader = createTableHeader(rowLabels[0]);
-
   // Sorting data by increasing OutcomeSortOrder value
-  const list = dataOutcomes.sort(
+  const sortedList = dataOutcomes.sort(
     (item1, item2) => item1.OutcomeSortOrder - item2.OutcomeSortOrder
   );
-  const tableBody = createTableBody(list, rowLabels[0]);
-  const viewBloc = tableHeader + tableBody;
+  const viewBloc = createCard(sortedList, rowLabels[0]);
   return viewBloc;
 };
 
-const mergeArraysToObject = (keysArray, valuesArray) => {
-  const result = {};
-  const len = keysArray.length;
-  for (let i = 0; i < len; i++) {
-    const val = valuesArray[i] ? valuesArray[i] : "";
-    result[keysArray[i]] = val;
-  }
-  return result;
+const createForm = (fieldObj) => {
+  const { recordId, catId, descText } = fieldObj;
+  const formContent = `
+  <input type="text" class="hidden" name="ID" value=${recordId} />
+   `;
+  const selectCategory = elementSelectModal({
+    hashTable: categories,
+    keyValue: "OutcomeSortOrder",
+    selectedValue: catId,
+    labelVal: "Category",
+    labelClassVal: "class='red-text'",
+    option: "required",
+    optionText: " a category",
+  });
+
+  const inputDescription = elementInput({
+    keyVal: "Description",
+    labelVal: "Description",
+    value: descText,
+    labelClassVal: "class='red-text'",
+    classVal: "",
+    option: " required",
+    optionHidden: "form-group",
+  });
+
+  return formContent + selectCategory + inputDescription;
 };
 
-const mergeHashToObject = (hashTable, obj) => {
-  for (let record of hashTable) {
-    obj[record.name] = record.value;
-  }
-  return obj;
-};
+// Used for new site and edited site data set
+const saveMods = (fields, formName, tableName = "") => {
+  // debugger;
+  const { AgencyID, AuditUserID } = sessionVariable;
+  const result = { AgencyID, AuditUserID };
+  $(`${formName} input, select`).removeClass("yellow-bg");
 
-const saveMods = (formId) => {
-  const { AuditUserID, AgencyID } = sessionVariable;
-  const resultObj = { AuditUserID, AgencyID };
-  const submittedData = $(formId).serializeArray();
-  $(`${formId} input`).removeClass("yellow-bg");
+  const fieldList = fields.slice(0);
+  // Data validation
+  // validateRecord() <== data-check.js
+  const validatedList = validateRecord(fieldList);
 
-  const newDescription = submittedData[1].value;
-  if (!alphaNumCheck(newDescription)) {
-    $("#input-new-outcome").toggleClass("yellow-bg");
+  // Background color change for invalid field values
+  const checkFlag = validatedList.some((item) => !item.correct);
+  if (checkFlag) {
+    const list = validatedList.filter((obj) => obj.correct === false);
+    for (let field of list) {
+      const fieldId =
+        formName === "#new-entry" ? `#${field.name}` : `#${field.name}-view`;
+      $(fieldId).addClass("yellow-bg");
+    }
     return;
+  } else {
+    for (const field of fieldList) {
+      result[field.name] = field.value;
+    }
+    const target = tableName ? tableName : "No table name";
+    const resultList = [formName, target, JSON.stringify(result)];
+    console.table(result);
+    //! =================================================
+    //! JSON Object to send back to database
+    console.log("result :", resultList);
+    //! =================================================
+
+    //ToDO Reloading/resetting with new data
+
+    if (formName === "#edit-form") $("#modalBloc").modal("toggle");
+    if (formName === "#new-entry") {
+      $(formName)[0].reset();
+      location.reload();
+    }
   }
-
-  for (const field of submittedData) {
-    resultObj[field.name] = field.value;
-  }
-
-  const message = `Result from ${formId} : >> `;
-  console.table(resultObj);
-  const result = ["outcomesData", JSON.stringify(resultObj)];
-  //! =================================================
-  //! JSON Object to send back to database
-  console.log(message, result);
-  //! =================================================
-
-  //ToDO Reloading/resetting with new data
 };
 
 $(document).ready(() => {
@@ -208,71 +209,53 @@ $(document).ready(() => {
 
   //* Data viewing
   $("#new-entry").append(createNewRecord(rowLabels));
-  $("#main-table").append(createViewBloc());
+  $("#main-table").append(createTableHeader(rowLabels[0]));
+  $("#view-bloc").append(createViewBloc());
+  // Change text color from red (required) to black
+  // when a value is entered
+  $(document).on("focusin", "#OutcomeSortOrder-view, #Description", function (
+    evnt
+  ) {
+    evnt.stopPropagation();
+    $(this).toggleClass("dark-text").prop("required", false);
+  });
 
   //* Adding a new outcome
-  $("#OutcomeSortOrder-view").bind("change", function (evnt) {
+  $(document).on("focusout", "#OutcomeSortOrder-view", function (evnt) {
+    evnt.preventDefault();
     evnt.stopPropagation();
     $(this).toggleClass("dark-text").prop("required", false);
     const selectedOption = $(this).val();
-    const row = $(`#${selectedOption}`).get();
-    $(".table-body").empty().append(row);
+    const card = $(`#${selectedOption}`).get();
+    $("#view-bloc .card").remove();
+    $("#view-bloc").append(card);
   });
 
-  $("#input-new-outcome").bind("focus", function (evnt) {
+  //* New entry Cancel button
+  $(document).on("click", "#cancel-btn", function (evnt) {
     evnt.stopPropagation();
-    $(this).toggleClass("dark-text").prop("required", false);
-  });
-
-  $("#cancel-btn").click(() => {
     location.reload();
   });
 
-  $(document).on("click", "#submit-btn", function (evnt) {
+  //* Select outcome for editing
+  $(document).on("click", "#view-bloc .card .outcome-view", function (evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+    const catId = $(this).attr("data-order");
+    const catText = $(this).attr("data-cat");
+    const recordId = $(this).attr("id");
+    const descText = $(this).text();
+    const editForm = createForm({ recordId, catId, catText, descText });
+    $("#modalBloc").modal("toggle");
+    $("#edit-form").empty().append(editForm);
+  });
+
+  //* Saving after new entry or record modification in modal
+  $(document).on("click", "#save-btn, #submit-btn", function (evnt) {
+    evnt.preventDefault();
     evnt.stopPropagation();
     const formId = `#${$(this).attr("form")}`;
-    saveMods(formId);
-  });
-  //* Select outcome for editing
-  $(document).on("click", ".table tbody tr td div", function (evnt) {
-    evnt.preventDefault();
-    evnt.stopPropagation();
-
-    const catId = $(this).attr("data-catid");
-    const recordId = $(this).attr("id");
-    const descriptionText = $(this).text();
-
-    const optionList = categories
-      .map((item) => {
-        const selected = item.OutcomeSortOrder === catId ? " selected" : "";
-        return `<option value=${item.OutcomeSortOrder}${selected}>
-        ${item.Category}</option>`;
-      })
-      .join("");
-
-    const editForm = `
-    <input type="text" class="hidden" name="ID" value=${recordId} />
-    <div class="form-group input-field">
-      <label for="Category">Category</label>
-      <select id="Category" class="modal-select" name="Category">${optionList}</select>
-    </div>
-    <div class="form-group input-field">
-      <label for="Description">Description</label>
-      <input type="text" name="Description"
-          value='${descriptionText}' spellcheck="true">
-    </div>
-    `;
-
-    $("#modalBloc").modal("toggle");
-    $("#modal-form").empty().append(editForm);
-  });
-
-  //* Saving mods after editing selected outcome
-  $("#save-btn").click(function (evnt) {
-    evnt.preventDefault();
-    evnt.stopPropagation();
-    const form = `#${$(this).attr("form")}`;
-    saveMods(form);
-    $("#modalBloc").modal("toggle");
+    const modifiedRecord = $(formId).serializeArray();
+    saveMods(modifiedRecord, formId, "outcomesData");
   });
 });
