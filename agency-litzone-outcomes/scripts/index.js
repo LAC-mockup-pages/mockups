@@ -122,7 +122,7 @@ const createForm = (fieldObj) => {
    `;
   const selectCategory = elementSelectModal({
     hashTable: categories,
-    keyValue: "Category",
+    keyValue: "OutcomeSortOrder",
     selectedValue: catId,
     labelVal: "Category",
     labelClassVal: "class='red-text'",
@@ -137,37 +137,53 @@ const createForm = (fieldObj) => {
     labelClassVal: "class='red-text'",
     classVal: "",
     option: " required",
-    optionHidden: "",
+    optionHidden: "form-group",
   });
 
   return formContent + selectCategory + inputDescription;
 };
 
-const saveMods = (formId) => {
-  const { AuditUserID, AgencyID } = sessionVariable;
-  const resultObj = { AuditUserID, AgencyID };
-  const submittedData = $(formId).serializeArray();
-  $(`${formId} input`).removeClass("yellow-bg");
+// Used for new site and edited site data set
+const saveMods = (fields, formName, tableName = "") => {
+  // debugger;
+  const { AgencyID, AuditUserID } = sessionVariable;
+  const result = { AgencyID, AuditUserID };
+  $(`${formName} input, select`).removeClass("yellow-bg");
 
-  const newDescription = submittedData[1].value;
-  if (!alphaNumCheck(newDescription)) {
-    $("#input-new-outcome").toggleClass("yellow-bg");
+  const fieldList = fields.slice(0);
+  // Data validation
+  // validateRecord() <== data-check.js
+  const validatedList = validateRecord(fieldList);
+
+  // Background color change for invalid field values
+  const checkFlag = validatedList.some((item) => !item.correct);
+  if (checkFlag) {
+    const list = validatedList.filter((obj) => obj.correct === false);
+    for (let field of list) {
+      const fieldId =
+        formName === "#new-entry" ? `#${field.name}` : `#${field.name}-view`;
+      $(fieldId).addClass("yellow-bg");
+    }
     return;
+  } else {
+    for (const field of fieldList) {
+      result[field.name] = field.value;
+    }
+    console.log("fieldList :>> ", fieldList);
+
+    const target = tableName ? tableName : "No table name";
+    const resultList = [formName, target, JSON.stringify(result)];
+    console.table(result);
+    //! =================================================
+    //! JSON Object to send back to database
+    console.log("result :", resultList);
+    //! =================================================
+
+    //ToDO Reloading/resetting with new data
+
+    // if (formName === "#edit-form") $("#modalBloc").modal("toggle");
+    // if (formName === "#new-entry") $(formName)[0].reset();
   }
-
-  for (const field of submittedData) {
-    resultObj[field.name] = field.value;
-  }
-
-  const message = `Result from ${formId} : >> `;
-  console.table(resultObj);
-  const result = ["outcomesData", JSON.stringify(resultObj)];
-  //! =================================================
-  //! JSON Object to send back to database
-  console.log(message, result);
-  //! =================================================
-
-  //ToDO Reloading/resetting with new data
 };
 
 $(document).ready(() => {
@@ -194,6 +210,14 @@ $(document).ready(() => {
   $("#new-entry").append(createNewRecord(rowLabels));
   $("#main-table").append(createTableHeader(rowLabels[0]));
   $("#view-bloc").append(createViewBloc());
+  // Change text color from red (required) to black
+  // when a value is entered
+  $(document).on("focusin", "#OutcomeSortOrder-view, #Description", function (
+    evnt
+  ) {
+    evnt.stopPropagation();
+    $(this).toggleClass("dark-text").prop("required", false);
+  });
 
   //* Adding a new outcome
   $("#OutcomeSortOrder-view").bind("change", function (evnt) {
@@ -204,41 +228,28 @@ $(document).ready(() => {
     $(".table-body").empty().append(row);
   });
 
-  $("#input-new-outcome").bind("focus", function (evnt) {
-    evnt.stopPropagation();
-    $(this).toggleClass("dark-text").prop("required", false);
-  });
-
   //* New entry Cancel button
   $(document).on("click", "#cancel-btn", function (evnt) {
     evnt.stopPropagation();
     location.reload();
   });
 
-  //* Save button
-  $(document).on("click", "#submit-btn", function (evnt) {
-    evnt.stopPropagation();
-    const formId = `#${$(this).attr("form")}`;
-    saveMods(formId);
-  });
-
   //* Select outcome for editing
   $(document).on("click", "#view-bloc .card .outcome-view", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
-
     const catId = $(this).attr("data-order");
     const catText = $(this).attr("data-cat");
     const recordId = $(this).attr("id");
     const descText = $(this).text();
     const editForm = createForm({ recordId, catId, catText, descText });
-
     $("#modalBloc").modal("toggle");
     $("#edit-form").empty().append(editForm);
   });
 
-  //* Saving mods after editing selected outcome
-  $(document).on("click", "#save-btn", function (evnt) {
+  //* Saving after new entry or record modification in modal
+  $(document).on("click", "#save-btn, #submit-btn", function (evnt) {
+    evnt.preventDefault();
     evnt.stopPropagation();
     const formId = `#${$(this).attr("form")}`;
     const modifiedRecord = $(formId).serializeArray();
