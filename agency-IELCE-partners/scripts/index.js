@@ -316,7 +316,7 @@ $(document).ready(() => {
   $("#main-table").append(createViewBloc());
 
   //* Save button in new entry bloc
-  $("#submit-btn").bind("click", function (evnt) {
+  $(document).on("click", "#submit-btn", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
     const formId = `#${$(this).attr("form")}`;
@@ -327,7 +327,7 @@ $(document).ready(() => {
   });
 
   //* Cancel button in new entry bloc
-  $("#cancel-btn").bind("click", function (evnt) {
+  $(document).on("click", "#cancel-btn", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
     location.reload();
@@ -343,7 +343,7 @@ $(document).ready(() => {
   });
 
   //* Save button in modal form
-  $("#save-btn").bind("click", function (evnt) {
+  $(document).on("click", "#save-btn", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
     const formId = `#${$(this).attr("form")}`;
