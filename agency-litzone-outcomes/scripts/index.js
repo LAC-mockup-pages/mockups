@@ -223,7 +223,7 @@ $(document).ready(() => {
   });
 
   //* Select outcome for editing
-  $(document).on("click", "#view-bloc>.card>.outcome-view", function (evnt) {
+  $(document).on("click", "#view-bloc .card .outcome-view", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
 
@@ -238,11 +238,10 @@ $(document).ready(() => {
   });
 
   //* Saving mods after editing selected outcome
-  $("#save-btn").click(function (evnt) {
-    evnt.preventDefault();
+  $(document).on("click", "#save-btn", function (evnt) {
     evnt.stopPropagation();
-    const form = `#${$(this).attr("form")}`;
-    saveMods(form);
-    $("#modalBloc").modal("toggle");
+    const formId = `#${$(this).attr("form")}`;
+    const modifiedRecord = $(formId).serializeArray();
+    saveMods(modifiedRecord, formId, "outcomesData");
   });
 });
