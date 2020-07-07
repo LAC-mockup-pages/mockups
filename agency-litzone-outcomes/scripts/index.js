@@ -145,7 +145,6 @@ const createForm = (fieldObj) => {
 
 // Used for new site and edited site data set
 const saveMods = (fields, formName, tableName = "") => {
-  // debugger;
   const { AgencyID, AuditUserID } = sessionVariable;
   const result = { AgencyID, AuditUserID };
   $(`${formName} input, select`).removeClass("yellow-bg");
