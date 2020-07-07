@@ -97,8 +97,8 @@ const createCard = (dataList, labelObj) => {
       .sort((item1, item2) => item2.ID - item1.ID); // Sort by desc. ID
     if (outcomes.length < 1) continue;
     const descriptions = displayDescriptions(outcomes, labelObj);
-    const card = `<div class="container-fluid card row" >
-    <div class="category-view col-md-5" id=${field.OutcomeSortOrder}>${field.Category}</div>
+    const card = `<div class="container-fluid card row" id=${field.OutcomeSortOrder}>
+    <div class="category-view col-md-5">${field.Category}</div>
     <div class="description-view col-md-7">${descriptions}</div>
     </div>`;
     body += card;
@@ -169,8 +169,6 @@ const saveMods = (fields, formName, tableName = "") => {
     for (const field of fieldList) {
       result[field.name] = field.value;
     }
-    console.log("fieldList :>> ", fieldList);
-
     const target = tableName ? tableName : "No table name";
     const resultList = [formName, target, JSON.stringify(result)];
     console.table(result);
@@ -181,8 +179,11 @@ const saveMods = (fields, formName, tableName = "") => {
 
     //ToDO Reloading/resetting with new data
 
-    // if (formName === "#edit-form") $("#modalBloc").modal("toggle");
-    if (formName === "#new-entry") $(formName)[0].reset();
+    if (formName === "#edit-form") $("#modalBloc").modal("toggle");
+    if (formName === "#new-entry") {
+      $(formName)[0].reset();
+      location.reload();
+    }
   }
 };
 
@@ -220,13 +221,14 @@ $(document).ready(() => {
   });
 
   //* Adding a new outcome
-  $(document).on("change", "#OutcomeSortOrder-view", function (evnt) {
+  $(document).on("focusout", "#OutcomeSortOrder-view", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
     $(this).toggleClass("dark-text").prop("required", false);
     const selectedOption = $(this).val();
-    const row = $(`#${selectedOption}`).get();
-    $(".table-body").empty().append(row);
+    const card = $(`#${selectedOption}`).get();
+    $("#view-bloc .card").remove();
+    $("#view-bloc").append(card);
   });
 
   //* New entry Cancel button
