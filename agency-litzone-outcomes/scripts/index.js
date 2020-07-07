@@ -62,46 +62,6 @@ const createNewRecord = (labelsList) => {
   return result.join("");
 };
 
-// const createDataList = (list) => {
-//   const catList = [];
-//   for (const item of list) {
-//     if (!catList.includes(item.OutcomeSortOrder)) {
-//       catList.push(item.OutcomeSortOrder);
-//     }
-//   }
-//   const dataList = catList.map((num) => {
-//     const category = categoryData.filter(
-//       (item) => item.OutcomeSortOrder === num
-//     )[0].Category;
-//     const outcomes = dataOutcomes
-//       .filter((item) => item.OutcomeSortOrder === num)
-//       .map((item) => [item.ID, item.Description]);
-//     return { cat: category, catId: num, outcomes: outcomes };
-//   });
-//   return dataList;
-// };
-
-// const createBody = (list) => {
-//   const dataList = createDataList(list);
-//   const agId = dataOutcomes[0].AgencyID;
-
-//   const rows = dataList
-//     .map((item) => {
-//       const values = item.outcomes
-//         .map((arr) => {
-//           return `<div class="inside-value" id=${arr[0]} title="Click to edit" data-catid=${item.catId}>${arr[1]}</div>`;
-//         })
-//         .join("");
-
-//       return `<tr id=${item.catId}><td class="cell-data">${item.cat}</td>
-//     <td>${values}</td>
-//     </tr>`;
-//     })
-//     .join("");
-
-//   return `<tbody class="table-body" id=${agId}>${rows}</tbody>`;
-// };
-
 const createTableHeader = (labelsObject) => {
   const list = Object.entries(labelsObject)
     .filter(
@@ -147,8 +107,6 @@ const createCard = (dataList, labelObj) => {
 };
 
 const createViewBloc = () => {
-  // const tableHeader = createTableHeader(rowLabels[0]);
-
   // Sorting data by increasing OutcomeSortOrder value
   const sortedList = dataOutcomes.sort(
     (item1, item2) => item1.OutcomeSortOrder - item2.OutcomeSortOrder
@@ -157,21 +115,32 @@ const createViewBloc = () => {
   return viewBloc;
 };
 
-const mergeArraysToObject = (keysArray, valuesArray) => {
-  const result = {};
-  const len = keysArray.length;
-  for (let i = 0; i < len; i++) {
-    const val = valuesArray[i] ? valuesArray[i] : "";
-    result[keysArray[i]] = val;
-  }
-  return result;
-};
+const createForm = (fieldObj) => {
+  const { recordId, catId, catText, descText } = fieldObj;
+  const formContent = `
+  <input type="text" class="hidden" name="ID" value=${recordId} />
+   `;
+  const selectCategory = elementSelectModal({
+    hashTable: categories,
+    keyValue: "Category",
+    selectedValue: catId,
+    labelVal: "Category",
+    labelClassVal: "class='red-text'",
+    option: "required",
+    optionText: " a category",
+  });
 
-const mergeHashToObject = (hashTable, obj) => {
-  for (let record of hashTable) {
-    obj[record.name] = record.value;
-  }
-  return obj;
+  const inputDescription = elementInput({
+    keyVal: "Description",
+    labelVal: "Description",
+    value: descText,
+    labelClassVal: "class='red-text'",
+    classVal: "",
+    option: " required",
+    optionHidden: "",
+  });
+
+  return formContent + selectCategory + inputDescription;
 };
 
 const saveMods = (formId) => {
@@ -240,31 +209,37 @@ $(document).ready(() => {
     $(this).toggleClass("dark-text").prop("required", false);
   });
 
-  $("#cancel-btn").click(() => {
+  //* New entry Cancel button
+  $(document).on("click", "#cancel-btn", function (evnt) {
+    evnt.stopPropagation();
     location.reload();
   });
 
+  //* Save button
   $(document).on("click", "#submit-btn", function (evnt) {
     evnt.stopPropagation();
     const formId = `#${$(this).attr("form")}`;
     saveMods(formId);
   });
+
   //* Select outcome for editing
-  $(document).on("click", ".table tbody tr td div", function (evnt) {
+  $(document).on("click", "#view-bloc>.card>.outcome-view", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
 
-    const catId = $(this).attr("data-catid");
+    const catId = $(this).attr("data-order");
+    const catText = $(this).attr("data-cat");
     const recordId = $(this).attr("id");
-    const descriptionText = $(this).text();
+    const descText = $(this).text();
+    const formContent = createForm({ recordId, catId, catText, descText });
 
-    const optionList = categories
-      .map((item) => {
-        const selected = item.OutcomeSortOrder === catId ? " selected" : "";
-        return `<option value=${item.OutcomeSortOrder}${selected}>
-        ${item.Category}</option>`;
-      })
-      .join("");
+    // const optionList = categories
+    //   .map((item) => {
+    //     const selected = item.OutcomeSortOrder === catId ? " selected" : "";
+    //     return `<option value=${item.OutcomeSortOrder}${selected}>
+    //     ${item.Category}</option>`;
+    //   })
+    //   .join("");
 
     const editForm = `
     <input type="text" class="hidden" name="ID" value=${recordId} />
@@ -280,7 +255,7 @@ $(document).ready(() => {
     `;
 
     $("#modalBloc").modal("toggle");
-    $("#modal-form").empty().append(editForm);
+    $("#modal-form").empty().append(formContent);
   });
 
   //* Saving mods after editing selected outcome
