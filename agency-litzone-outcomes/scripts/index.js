@@ -116,7 +116,7 @@ const createViewBloc = () => {
 };
 
 const createForm = (fieldObj) => {
-  const { recordId, catId, catText, descText } = fieldObj;
+  const { recordId, catId, descText } = fieldObj;
   const formContent = `
   <input type="text" class="hidden" name="ID" value=${recordId} />
    `;
@@ -231,31 +231,10 @@ $(document).ready(() => {
     const catText = $(this).attr("data-cat");
     const recordId = $(this).attr("id");
     const descText = $(this).text();
-    const formContent = createForm({ recordId, catId, catText, descText });
-
-    // const optionList = categories
-    //   .map((item) => {
-    //     const selected = item.OutcomeSortOrder === catId ? " selected" : "";
-    //     return `<option value=${item.OutcomeSortOrder}${selected}>
-    //     ${item.Category}</option>`;
-    //   })
-    //   .join("");
-
-    const editForm = `
-    <input type="text" class="hidden" name="ID" value=${recordId} />
-    <div class="form-group input-field">
-      <label for="Category">Category</label>
-      <select id="Category" class="modal-select" name="Category">${optionList}</select>
-    </div>
-    <div class="form-group input-field">
-      <label for="Description">Description</label>
-      <input type="text" name="Description"
-          value='${descriptionText}' spellcheck="true">
-    </div>
-    `;
+    const editForm = createForm({ recordId, catId, catText, descText });
 
     $("#modalBloc").modal("toggle");
-    $("#modal-form").empty().append(formContent);
+    $("#edit-form").empty().append(editForm);
   });
 
   //* Saving mods after editing selected outcome
