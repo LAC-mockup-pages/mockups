@@ -267,7 +267,7 @@ const saveMods = (fields, formName, tableName = "") => {
   // Background color change for invalid field values
   const checkFlag = validatedList.some((item) => !item.correct);
   if (checkFlag) {
-    const list = validatedList.filter((obj) => obj.correct === false);
+    const list = validatedList.filter((obj) => !obj.correct);
     for (let field of list) {
       const fieldId =
         formName === "#new-entry" ? `#${field.name}` : `#${field.name}-view`;
@@ -328,6 +328,7 @@ $(document).ready(() => {
   $(document).on("focusin", "#SiteID, #SiteName", function (evnt) {
     evnt.stopPropagation();
     $(this).toggleClass("dark-text").prop("required", false);
+    // $(this).toggleClass("dark-text");
   });
 
   //* Adding a new site
