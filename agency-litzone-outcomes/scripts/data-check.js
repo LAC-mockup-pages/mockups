@@ -10,8 +10,8 @@ const validateRecord = (dataList) => {
   for (const field of dataList) {
     let { name, value } = field;
     const obj = { name, value };
-    if (name === "Description") {
-      obj.correct = value ? alphaNumCheck(value) : true;
+    if (["OutcomeSortOrder", "Description"].includes(name)) {
+      obj.correct = value ? alphaNumCheck(value) : false;
     } else {
       obj.correct = true;
     }
