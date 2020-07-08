@@ -3,6 +3,7 @@
 const partnersList = ielcePartnersData.slice(0);
 const stateList = ddlStates.slice(0);
 const countyList = countyData.slice(0);
+const fundingList = fundingData.slice(0);
 
 const rowLabels = [
   {
@@ -10,6 +11,9 @@ const rowLabels = [
     AgencyID: "Agency Id",
     IELCEPartnerID: "Partner ID",
     PartnerName: "Name",
+    PartnerFSID: "Fund Code",
+    PartnerFSIDDesc: "Fund Source",
+
     PartnerManager: "Manager",
     fullAddress: "Address",
     Address: "Address",
@@ -19,8 +23,6 @@ const rowLabels = [
     Telephone: "Phone",
     County: "County",
     CountyDesc: "County",
-    PartnerFSID: "Fund Code",
-    PartnerFSIDDesc: "Fund Source",
     AmountProj: "Projected $$",
     AmountAct: "Actual $$",
     PartnerTrainingType: "Training Type",
@@ -35,9 +37,9 @@ const createNewRecord = (labelList) => {
       ![
         "ID",
         "AgencyID",
-        "PartnerManager",
         "fullAddress",
         "CountyDesc",
+        "PartnerFSIDDesc",
         "AmountProj",
         "AmountAct",
         "PartnerTrainingType",
@@ -48,7 +50,7 @@ const createNewRecord = (labelList) => {
     "IELCEPartnerID",
     "PartnerName",
     "PartnerFSID",
-    "PartnerFSIDDesc",
+    // "PartnerFSIDDesc",
   ];
 
   for (const key of keyList) {
@@ -83,6 +85,17 @@ const createNewRecord = (labelList) => {
         keyValue: key,
         option,
         optionText: "a state",
+        classOption,
+      });
+    } else if (key === "PartnerFSID") {
+      classOption += " modal-select";
+
+      // elementSelectNewRecord() <== helperFunction.js
+      element = elementSelectNewRecord({
+        hashTable: fundingList,
+        keyValue: key,
+        option,
+        optionText: "a funding",
         classOption,
       });
     }
