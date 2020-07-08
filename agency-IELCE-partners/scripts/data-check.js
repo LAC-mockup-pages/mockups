@@ -21,9 +21,7 @@ const validateRecord = (list) => {
       case "IELCEPartnerID":
       case "PartnerName":
       case "PartnerFSID":
-      case "PartnerFSIDDesc":
         obj.correct = value ? alphaNumCheck(value) : false;
-        console.log("req value: ", alphaNumCheck(value));
         break;
 
       case "Zip":
