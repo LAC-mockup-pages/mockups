@@ -135,6 +135,9 @@ const createTableBody = (dataList, labels) => {
   const filteredLabelList = Object.keys(labels[0]).filter(
     (item) => !["AgencyID"].includes(item)
   );
+  const sortedDataList = dataList.sort(
+    (record1, record2) => record2.ID - record1.ID
+  );
   const hiddenList = [
     "ID",
     "Address",
@@ -144,7 +147,7 @@ const createTableBody = (dataList, labels) => {
     "County",
     "PartnerFSID",
   ];
-  for (const record of dataList) {
+  for (const record of sortedDataList) {
     const { Address, City, State, Zip, Telephone } = record;
 
     // currencyFormat() <== helperFunction.js
