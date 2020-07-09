@@ -12,7 +12,7 @@ const rowLabels = [
     IELCEPartnerID: "Partner ID",
     PartnerName: "Name",
     PartnerFSID: "Fund Code",
-    PartnerFSIDDesc: "Fund Source",
+    PartnerFSIDDesc: "Funding",
     PartnerManager: "Manager",
     fullAddress: "Address",
     Address: "Address",
@@ -45,12 +45,7 @@ const createNewRecord = (labelList) => {
         "PartnerCredential",
       ].includes(key)
   );
-  const requiredList = [
-    "IELCEPartnerID",
-    "PartnerName",
-    "PartnerFSID",
-    // "PartnerFSIDDesc",
-  ];
+  const requiredList = ["IELCEPartnerID", "PartnerName", "PartnerFSID"];
 
   for (const key of keyList) {
     let option = requiredList.includes(key) ? " required" : "";
@@ -87,7 +82,7 @@ const createNewRecord = (labelList) => {
         classOption,
       });
     } else if (key === "PartnerFSID") {
-      classOption += " modal-select";
+      classOption = "modal-select";
 
       // elementSelectNewRecord() <== helperFunction.js
       element = elementSelectNewRecord({
@@ -268,8 +263,9 @@ const saveMods = (fields, formName, tableName = "") => {
   if (checkFlag) {
     const list = validatedList.filter((obj) => obj.correct === false);
     for (let field of list) {
-      const fieldId =
+      let fieldId =
         formName === "#new-entry" ? `#${field.name}` : `#${field.name}-view`;
+      if (field.name === "PartnerFSID") fieldId += "-view";
       $(fieldId).addClass("yellow-bg");
     }
     return;
