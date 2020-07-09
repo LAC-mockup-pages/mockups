@@ -145,7 +145,6 @@ const createForm = (fieldObj) => {
 
 // Used for new site and edited site data set
 const saveMods = (fields, formName, tableName = "") => {
-  // debugger;
   const { AgencyID, AuditUserID } = sessionVariable;
   const result = { AgencyID, AuditUserID };
   $(`${formName} input, select`).removeClass("yellow-bg");
@@ -182,7 +181,6 @@ const saveMods = (fields, formName, tableName = "") => {
     if (formName === "#edit-form") $("#modalBloc").modal("toggle");
     if (formName === "#new-entry") {
       $(formName)[0].reset();
-      location.reload();
     }
   }
 };
