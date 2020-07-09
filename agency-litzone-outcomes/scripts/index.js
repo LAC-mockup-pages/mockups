@@ -181,6 +181,11 @@ const saveMods = (fields, formName, tableName = "") => {
     if (formName === "#edit-form") $("#modalBloc").modal("toggle");
     if (formName === "#new-entry") {
       $(formName)[0].reset();
+      $("#OutcomeSortOrder-view, #Description")
+        .toggleClass("dark-text")
+        .prop("required", true);
+      $("#view-bloc .card").remove();
+      $("#view-bloc").append(createViewBloc());
     }
   }
 };
