@@ -58,6 +58,7 @@ option {
 
 #main-table {
   border-radius: 5px;
+  margin-bottom: none;
   border-bottom: 1.5em solid #2479b5;
 }
 
