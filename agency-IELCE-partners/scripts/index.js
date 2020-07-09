@@ -13,7 +13,6 @@ const rowLabels = [
     PartnerName: "Name",
     PartnerFSID: "Fund Code",
     PartnerFSIDDesc: "Fund Source",
-
     PartnerManager: "Manager",
     fullAddress: "Address",
     Address: "Address",
@@ -200,7 +199,9 @@ const createModalForm = (formId) => {
       const keyVal = $(item).attr("data-name");
       const labelVal = $(item).attr("data-label");
       let value = $(item).text().trim();
-      let optionHidden = ["fullAddress", "ID"].includes(keyVal)
+      let optionHidden = ["fullAddress", "ID", "PartnerFSIDDesc"].includes(
+        keyVal
+      )
         ? "form-group hidden"
         : "form-group";
       let option = "";
