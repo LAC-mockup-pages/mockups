@@ -187,7 +187,9 @@ const createModalForm = (formId) => {
   const tdList = $.makeArray($(`#${formId} td`).get()).filter(
     (item) => $(item).attr("data-name") !== "CountyDesc"
   );
-  const requiredList = getRequired();
+  const requiredList = getRequired().map((name) => {
+    return name.endsWith("-view") ? name.replace("-view", "") : name;
+  });
 
   const result = tdList
     .map((item) => {
@@ -229,6 +231,16 @@ const createModalForm = (formId) => {
           labelClassVal,
           option,
           optionText: " a state",
+        });
+      } else if (keyVal === "PartnerFSID") {
+        return elementSelectModal({
+          hashTable: fundingList,
+          keyValue: keyVal,
+          selectedValue: value,
+          labelVal: "Funding",
+          labelClassVal,
+          option,
+          optionText: " a funding",
         });
       } else {
         return elementInput({
@@ -297,7 +309,12 @@ const saveMods = (fields, formName, tableName = "") => {
     //ToDO Reloading/resetting with new data
 
     if (formName === "#edit-form") $("#modalBloc").modal("toggle");
-    if (formName === "#new-entry") $(formName)[0].reset();
+    if (formName === "#new-entry") {
+      $(formName)[0].reset();
+      $("#IELCEPartnerID, #PartnerName, #PartnerFSID-view")
+        .toggleClass("dark-text")
+        .prop("required", true);
+    }
   }
 };
 
@@ -324,6 +341,17 @@ $(document).ready(() => {
   //* Data viewing
   $("#new-entry").append(createNewRecord(rowLabels));
   $("#main-table").append(createViewBloc());
+
+  // Change text color from red (required) to black
+  // when a value is entered
+  $(document).on(
+    "focusin",
+    "#IELCEPartnerID, #PartnerName, #PartnerFSID-view",
+    function (evnt) {
+      evnt.stopPropagation();
+      $(this).toggleClass("dark-text").prop("required", false);
+    }
+  );
 
   //* Save button in new entry bloc
   $(document).on("click", "#submit-btn", function (evnt) {
