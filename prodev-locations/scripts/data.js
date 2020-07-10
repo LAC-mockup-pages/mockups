@@ -1,18 +1,84 @@
 
-Locations =  [
+const Locations =  [
   {"ID":"1","FacilityName":"loco1","Address":"","City":"","State":"NY","Zip":"","Phone":"(___) ___-____","Email":""},{"ID":"46","FacilityName":"Utica","Address":"309 Genessee Street","City":"Utica","State":"NY","Zip":"","Phone":"","Email":""},{"ID":"812","FacilityName":"DYCD","Address":"","City":"","State":"NY","Zip":"","Phone":"","Email":""},{"ID":"1534","FacilityName":"LAC-FiDi","Address":"89 Broad Street ","City":"New York City ","State":"NY","Zip":"10003","Phone":"2125553699","Email":""},{"ID":"1591","FacilityName":"Literacy Assistance Center","Address":"85 Broad Street ","City":"New York ","State":"NY","Zip":"10004","Phone":"2125553355","Email":""}
   ]
   
+  const sessionVariable = {
+    AgencyID: "PRA",
+    AuditUserID: '<%= Session["UserID"] %>',
+    FiscalYear: ["2016", "2017"],
+    };
   
+  // States = [
+  // {"Abbrev":"AK","State":"Alaska"},
+  // {"Abbrev":"FL","State":"Florida"},
+  // {"Abbrev":"MA","State":"Massachussetts"},
+  // {"Abbrev":"MD","State":"Maryland"},
+  // {"Abbrev":"NJ","State":"New Jersey"},
+  // {"Abbrev":"NY","State":"New York"},
+  // {"Abbrev":"PA","State":"Pennsylvania"},
+  // {"Abbrev":"PR","State":"Puerto Rico"},
+  // {"Abbrev":"WY","State":"Wyoming"}
+  // ]
   
-  States = [
-  {"Abbrev":"AK","State":"Alaska"},
-  {"Abbrev":"FL","State":"Florida"},
-  {"Abbrev":"MA","State":"Massachussetts"},
-  {"Abbrev":"MD","State":"Maryland"},
-  {"Abbrev":"NJ","State":"New Jersey"},
-  {"Abbrev":"NY","State":"New York"},
-  {"Abbrev":"PA","State":"Pennsylvania"},
-  {"Abbrev":"PR","State":"Puerto Rico"},
-  {"Abbrev":"WY","State":"Wyoming"}
-  ]
+  const States = [
+    { "Abbrev": "AL", "State": "Alabama" },
+    { "Abbrev": "AS", "State": "American Samoa" },
+    { "Abbrev": "AK", "State": "Alaska" },
+    { "Abbrev": "AZ", "State": "Arizona" },
+    { "Abbrev": "AR", "State": "Arkansas" },
+    { "Abbrev": "CA", "State": "California" },
+    { "Abbrev": "CO", "State": "Colorado" },
+    { "Abbrev": "CT", "State": "Connecticut" },
+    { "Abbrev": "DE", "State": "Delaware" },
+    { "Abbrev": "DC", "State": "District Of Columbia" },
+    { "Abbrev": "FM", "State": "Federated States Of Micronesia" },
+    { "Abbrev": "FL", "State": "Florida" },
+    { "Abbrev": "GA", "State": "Georgia" },
+    { "Abbrev": "GU", "State": "Guam" },
+    { "Abbrev": "HI", "State": "Hawaii" },
+    { "Abbrev": "ID", "State": "Idaho" },
+    { "Abbrev": "IL", "State": "Illinois" },
+    { "Abbrev": "IN", "State": "Indiana" },
+    { "Abbrev": "IA", "State": "Iowa" },
+    { "Abbrev": "KS", "State": "Kansas" },
+    { "Abbrev": "KY", "State": "Kentucky" },
+    { "Abbrev": "LA", "State": "Louisiana" },
+    { "Abbrev": "ME", "State": "Maine" },
+    { "Abbrev": "MH", "State": "Marshall Islands" },
+    { "Abbrev": "MD", "State": "Maryland" },
+    { "Abbrev": "MA", "State": "Massachusetts" },
+    { "Abbrev": "MI", "State": "Michigan" },
+    { "Abbrev": "MN", "State": "Minnesota" },
+    { "Abbrev": "MS", "State": "Mississippi" },
+    { "Abbrev": "MO", "State": "Missouri" },
+    { "Abbrev": "MT", "State": "Montana" },
+    { "Abbrev": "NE", "State": "Nebraska" },
+    { "Abbrev": "NV", "State": "Nevada" },
+    { "Abbrev": "NH", "State": "New Hampshire" },
+    { "Abbrev": "NJ", "State": "New Jersey" },
+    { "Abbrev": "NM", "State": "New Mexico" },
+    { "Abbrev": "NY", "State": "New York" },
+    { "Abbrev": "NC", "State": "North Carolina" },
+    { "Abbrev": "ND", "State": "North Dakota" },
+    { "Abbrev": "MP", "State": "Northern Mariana Islands" },
+    { "Abbrev": "OH", "State": "Ohio" },
+    { "Abbrev": "OK", "State": "Oklahoma" },
+    { "Abbrev": "OR", "State": "Oregon" },
+    { "Abbrev": "PW", "State": "Palau" },
+    { "Abbrev": "PA", "State": "Pennsylvania" },
+    { "Abbrev": "PR", "State": "Puerto Rico" },
+    { "Abbrev": "RI", "State": "Rhode Island" },
+    { "Abbrev": "SC", "State": "South Carolina" },
+    { "Abbrev": "SD", "State": "South Dakota" },
+    { "Abbrev": "TN", "State": "Tennessee" },
+    { "Abbrev": "TX", "State": "Texas" },
+    { "Abbrev": "UT", "State": "Utah" },
+    { "Abbrev": "VT", "State": "Vermont" },
+    { "Abbrev": "VI", "State": "Virgin Islands" },
+    { "Abbrev": "VA", "State": "Virginia" },
+    { "Abbrev": "WA", "State": "Washington" },
+    { "Abbrev": "WV", "State": "West Virginia" },
+    { "Abbrev": "WI", "State": "Wisconsin" },
+    { "Abbrev": "WY", "State": "Wyoming" },
+      ]; 
