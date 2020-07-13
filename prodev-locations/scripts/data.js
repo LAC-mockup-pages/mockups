@@ -9,18 +9,7 @@ const Locations =  [
     FiscalYear: ["2016", "2017"],
     };
   
-  // States = [
-  // {"Abbrev":"AK","State":"Alaska"},
-  // {"Abbrev":"FL","State":"Florida"},
-  // {"Abbrev":"MA","State":"Massachussetts"},
-  // {"Abbrev":"MD","State":"Maryland"},
-  // {"Abbrev":"NJ","State":"New Jersey"},
-  // {"Abbrev":"NY","State":"New York"},
-  // {"Abbrev":"PA","State":"Pennsylvania"},
-  // {"Abbrev":"PR","State":"Puerto Rico"},
-  // {"Abbrev":"WY","State":"Wyoming"}
-  // ]
-  
+ 
   const States = [
     { "Abbrev": "AL", "State": "Alabama" },
     { "Abbrev": "AS", "State": "American Samoa" },
