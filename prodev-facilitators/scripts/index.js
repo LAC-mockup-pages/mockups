@@ -1,26 +1,29 @@
 // Actions and logic
 
 // Isolate work objects and arrays from data source.
-const dataSource = Locations.slice(0);
+const dataSource = Facilitator.slice(0);
 const stateList = States.slice(0);
 
 const rowLabels = [
   {
     ID: "ID",
-    FacilityName: "Facility Name",
+    FacFirstName: "First Name",
+    FacLastName: "Last Name",
     Address: "Address",
     City: "City",
     State: "State",
     Zip: "ZIP",
-    Phone: "Phone",
+    HomePhone: "Home Phone",
     Email: "Email",
+    CellPhone: "Cell Phone",
+    AlternatePhone: "AlternatePhone",
   },
 ];
 
 const createNewRecord = (labelsList) => {
   let result = [];
   const labelObj = labelsList[0];
-  const requiredList = ["FacilityName", "Phone", "Email"];
+  const requiredList = ["FacFirstName", "FacLastName", "HomePhone", "Email"];
   const keyList = Object.keys(labelObj).filter((key) => !["ID"].includes(key));
   for (key of keyList) {
     let element = "";
@@ -75,22 +78,27 @@ const createTableBody = (dataList, labelObj) => {
   let rows = "";
   const hiddenList = ["ID"];
 
-  const filteredLabelList = Object.keys(labelObj).filter(
-    (item) => !["AgencyID"].includes(item)
-  );
   for (const recordObj of dataList) {
     // zipCodeFormat() <== helperFunction.js
-    formattedZip = recordObj.Zip ? zipCodeFormat(recordObj.Zip) : "";
+    const formattedZip = recordObj.Zip ? zipCodeFormat(recordObj.Zip) : "";
 
     // phoneFormat() <== helperFunction.js
-    formattedPhone = phoneFormat(recordObj.Phone);
+    const formattedHomePhone = phoneFormat(recordObj.HomePhone);
+    const formattedCellPhone = phoneFormat(recordObj.CellPhone);
+    const formattedAlternatePhone = phoneFormat(recordObj.AlternatePhone);
 
-    const record = { ...recordObj, Zip: formattedZip, Phone: formattedPhone };
+    const record = {
+      ...recordObj,
+      Zip: formattedZip,
+      HomePhone: formattedHomePhone,
+      CellPhone: formattedCellPhone,
+      AlternatePhone: formattedAlternatePhone,
+    };
 
     // createRow() <== helperFunction.js
     rows += createRow({
       record,
-      labelList: filteredLabelList,
+      labelList: Object.keys(labelObj),
       labelObj,
       hiddenList,
     });
@@ -192,7 +200,8 @@ const saveMods = (fields, formName, tableName = "") => {
       let name = field.name;
 
       // phoneFormat() <== helperFunction.js
-      if (name === "Phone") val = val ? phoneFormat(val) : "";
+      if (["HomePhone", "AlternatePhone", "CellPhone"])
+        val = val ? phoneFormat(val) : "";
 
       // zipCodeFormat() <== helperFunction.js
       if (name === "Zip") val = val ? zipCodeFormat(val) : "";
@@ -213,7 +222,7 @@ const saveMods = (fields, formName, tableName = "") => {
     if (formName === "#edit-form") $("#modalBloc").modal("toggle");
     if (formName === "#new-entry") {
       $(formName)[0].reset();
-      $("#FacilityName, #Phone, #Email")
+      $("#FacFirstName, #FacLastName, #HomePhone, #Email")
         .toggleClass("dark-text")
         .prop("required", true);
     }
@@ -246,10 +255,14 @@ $(document).ready(() => {
 
   // Change text color from red (required) to black
   // when a value is entered
-  $(document).on("focusin", "#FacilityName, #Phone, #Email", function (evnt) {
-    evnt.stopPropagation();
-    $(this).toggleClass("dark-text").prop("required", false);
-  });
+  $(document).on(
+    "focusin",
+    "#FacFirstName, #FacLastName, #HomePhone, #Email",
+    function (evnt) {
+      evnt.stopPropagation();
+      $(this).toggleClass("dark-text").prop("required", false);
+    }
+  );
 
   // //* Adding a new partner
   $(document).on("click", "#submit-btn", function (evnt) {
@@ -257,7 +270,7 @@ $(document).ready(() => {
     evnt.stopPropagation();
     const formId = "#" + $(this).attr("form");
     const newSource = $(formId).serializeArray();
-    saveMods(newSource, formId, "Locations");
+    saveMods(newSource, formId, "Facilitator");
   });
 
   // //* Canceling
@@ -285,6 +298,6 @@ $(document).ready(() => {
     evnt.stopPropagation();
     const formId = "#" + $(this).attr("form");
     const newSource = $(formId).serializeArray();
-    saveMods(newSource, formId, "partnersData");
+    saveMods(newSource, formId, "Facilitator");
   });
 });
