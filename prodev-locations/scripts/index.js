@@ -116,6 +116,57 @@ const getRequired = () => {
   return requiredList;
 };
 
+const createModalForm = (tdList) => {
+  const requiredList = getRequired().map((name) => {
+    return name.endsWith("-view") ? name.replace("-view", "") : name;
+  });
+
+  const result = tdList
+    .map((item) => {
+      const keyVal = $(item).attr("data-name");
+      const labelVal = $(item).attr("data-label");
+      let value = $(item).text().trim();
+      let optionHidden = ["ID"].includes(keyVal)
+        ? "form-group hidden"
+        : "form-group";
+      let option = "";
+      let classVal = "";
+      let labelClassVal = "";
+
+      if (requiredList.includes(keyVal)) {
+        option = "required";
+        labelClassVal += "class='red-text'";
+      }
+      // zipCodeFormat() elementSelectModal() elementInput()
+      //    <== helperFunctions.js
+      if (keyVal === "Zip") value = zipCodeFormat(value);
+      if (keyVal === "State") {
+        return elementSelectModal({
+          hashTable: stateList,
+          keyValue: keyVal,
+          selectedValue: value,
+          labelVal: "State",
+          labelClassVal,
+          option,
+          optionText: " a state",
+        });
+      } else {
+        return elementInput({
+          keyVal,
+          labelVal,
+          value,
+          labelClassVal,
+          classVal,
+          option,
+          optionHidden,
+        });
+      }
+    })
+    .join("");
+
+  return result;
+};
+
 const saveMods = (fields, formName, tableName = "") => {
   const { AgencyID, AuditUserID } = sessionVariable;
   const result = { AgencyID, AuditUserID };
@@ -217,23 +268,23 @@ $(document).ready(() => {
   });
 
   // //* Select record to edit + display modal
-  // $(document).on("click", ".table tbody tr", function (evnt) {
-  //   evnt.preventDefault();
-  //   evnt.stopPropagation();
+  $(document).on("click", ".table tbody tr", function (evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
 
-  //   const rowID = "#" + $(this).attr("id");
-  //   const selectedRow = $(`${rowID} td`).get();
-  //   const editForm = createForm(selectedRow);
-  //   $("#modalBloc").modal("toggle");
-  //   $("#edit-form").empty().append(editForm);
-  // });
+    const rowID = "#" + $(this).attr("id");
+    const selectedRow = $(`${rowID} td`).get();
+    const editForm = createModalForm(selectedRow);
+    $("#modalBloc").modal("toggle");
+    $("#edit-form").empty().append(editForm);
+  });
 
   // //* Saving mods after editing selected record
-  // $(document).on("click", "#save-btn", function (evnt) {
-  //   evnt.preventDefault();
-  //   evnt.stopPropagation();
-  //   const formId = "#" + $(this).attr("form");
-  //   const newSource = $(formId).serializeArray();
-  //   saveMods(newSource, formId, "partnersData");
-  // });
+  $(document).on("click", "#save-btn", function (evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+    const formId = "#" + $(this).attr("form");
+    const newSource = $(formId).serializeArray();
+    saveMods(newSource, formId, "partnersData");
+  });
 });
