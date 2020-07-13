@@ -11,14 +11,13 @@ const validateRecord = (dataList) => {
     let { name, value } = field;
     const obj = { name, value };
     switch (name) {
-      case "ReferralSiteID":
-      case "ReferralSiteName":
+      case "ProviderName":
+      case "Phone":
         obj.correct = value ? alphaNumCheck(value) : false;
         break;
-      case "ReferralSiteEmail":
-        obj.correct = true;
+      case "Email":
+        obj.correct = value ? true : false;
         break;
-
       default:
         obj.correct = value ? alphaNumCheck(value) : true;
         break;
