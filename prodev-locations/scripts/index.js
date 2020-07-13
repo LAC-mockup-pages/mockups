@@ -285,6 +285,6 @@ $(document).ready(() => {
     evnt.stopPropagation();
     const formId = "#" + $(this).attr("form");
     const newSource = $(formId).serializeArray();
-    saveMods(newSource, formId, "partnersData");
+    saveMods(newSource, formId, "Locations");
   });
 });
