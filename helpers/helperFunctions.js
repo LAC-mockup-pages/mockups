@@ -116,12 +116,14 @@ const elementSelectModal = (argsObj) => {
 // Converts 0000000000 to 000-000-0000 and vice-versa
 const phoneFormat = (str) => {
   if (!str) return "";
-  if (str.match(/\D/)) {
-    return str.replace(/\D/gi, "");
-  } else {
-    return `${str.slice(0, 3)}-${str.slice(3, 6)}-${str.slice(6)}`;
+  if (/\D/.test(str)) {
+    str.replace(/\D/gi, "");
   }
+  return str.length === 10
+    ? `${str.slice(0, 3)}-${str.slice(3, 6)}-${str.slice(6)}`
+    : str;
 };
+
 
 // dataObj: JSON object
 // labelObj: JS Object with key from dataObj, value = label
