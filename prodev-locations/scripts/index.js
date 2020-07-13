@@ -78,21 +78,14 @@ const createTableBody = (dataList, labelObj) => {
   const filteredLabelList = Object.keys(labelObj).filter(
     (item) => !["AgencyID"].includes(item)
   );
-  for (const record of dataList) {
-    const { Address, City, Zip, State, Telephone, County } = record;
-
+  for (const recordObj of dataList) {
     // zipCodeFormat() <== helperFunction.js
-    record.fullAddress = `${Address}<br/>
-    ${City} ${State} ${zipCodeFormat(Zip)}`;
-    record.Zip = record.Zip ? zipCodeFormat(record.Zip) : "";
-
-    const countyObj = County
-      ? countyList.filter((item) => item.FIPS === County)[0]
-      : "";
-    record.countyDesc = countyObj ? countyObj.CountyDesc : countyObj;
+    formattedZip = recordObj.Zip ? zipCodeFormat(recordObj.Zip) : "";
 
     // phoneFormat() <== helperFunction.js
-    record.Telephone = Telephone ? phoneFormat(phoneFormat(Telephone)) : "";
+    formattedPhone = phoneFormat(recordObj.Phone);
+
+    const record = { ...recordObj, Zip: formattedZip, Phone: formattedPhone };
 
     // createRow() <== helperFunction.js
     rows += createRow({
@@ -123,6 +116,59 @@ const getRequired = () => {
   return requiredList;
 };
 
+const saveMods = (fields, formName, tableName = "") => {
+  const { AgencyID, AuditUserID } = sessionVariable;
+  const result = { AgencyID, AuditUserID };
+  $(`${formName} input, select`).removeClass("yellow-bg");
+  const fieldList = fields.slice(0);
+
+  // Data validation
+  // validateNewRecord() <== data-check.js
+  const validatedList = validateRecord(fieldList);
+  // Background color change for invalid field values
+  const checkFlag = validatedList.some((item) => !item.correct);
+  if (checkFlag) {
+    const list = validatedList.filter((obj) => obj.correct === false);
+    for (let field of list) {
+      let fieldId =
+        formName === "#new-entry" ? `#${field.name}` : `#${field.name}-view`;
+      $(fieldId).addClass("yellow-bg");
+    }
+    return;
+  } else {
+    for (const field of fieldList) {
+      let val = field.value;
+      let name = field.name;
+
+      // phoneFormat() <== helperFunction.js
+      if (name === "Phone") val = val ? phoneFormat(val) : "";
+
+      // zipCodeFormat() <== helperFunction.js
+      if (name === "Zip") val = val ? zipCodeFormat(val) : "";
+
+      result[name] = val;
+    }
+
+    const target = tableName ? tableName : "No table name";
+    const resultList = [formName, target, JSON.stringify(result)];
+    console.table(result);
+    //! =================================================
+    //! JSON Object to send back to database
+    console.log("result :", resultList);
+    //! =================================================
+
+    //ToDO Reloading/resetting with new data
+
+    if (formName === "#edit-form") $("#modalBloc").modal("toggle");
+    if (formName === "#new-entry") {
+      $(formName)[0].reset();
+      $("#IELCEPartnerID, #PartnerName, #PartnerFSID-view")
+        .toggleClass("dark-text")
+        .prop("required", true);
+    }
+  }
+};
+
 $(document).ready(() => {
   // * sub-navbar/index.js
   $("#sub-nav li").click(function () {
@@ -149,21 +195,19 @@ $(document).ready(() => {
 
   // Change text color from red (required) to black
   // when a value is entered
-  $(document).on("focusin", "#ReferralSiteID, #ReferralSiteName", function (
-    evnt
-  ) {
+  $(document).on("focusin", "#FacilityName, #Phone, #Email", function (evnt) {
     evnt.stopPropagation();
     $(this).toggleClass("dark-text").prop("required", false);
   });
 
   // //* Adding a new partner
-  // $(document).on("click", "#submit-btn", function (evnt) {
-  //   evnt.preventDefault();
-  //   evnt.stopPropagation();
-  //   const formId = "#" + $(this).attr("form");
-  //   const newSource = $(formId).serializeArray();
-  //   saveMods(newSource, formId, "partnersData");
-  // });
+  $(document).on("click", "#submit-btn", function (evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+    const formId = "#" + $(this).attr("form");
+    const newSource = $(formId).serializeArray();
+    saveMods(newSource, formId, "Locations");
+  });
 
   // //* Canceling
   $(document).on("click", "#cancel-btn", function (evnt) {
