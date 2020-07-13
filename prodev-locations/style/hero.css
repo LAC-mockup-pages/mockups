@@ -8,7 +8,7 @@ body {
   z-index: -500;
 }
 
-.partner-entry {
+.record-entry {
   margin: 1% 0 1% 0;
   padding: 0 0 2% 0;
   width: 100%;
@@ -44,10 +44,10 @@ option {
 }
 
 .col-width-small,
-#ReferralSiteID,
+#ID,
 #Zip,
-#Telephone,
-#ReferralSiteEmail {
+#Phone,
+#Email {
   max-width: 11%;
 }
 
@@ -55,7 +55,8 @@ option {
   max-width: 25%;
 }
 
-.col-width-medium {
+.col-width-medium,
+#City {
   max-width: 15%;
 }
 
