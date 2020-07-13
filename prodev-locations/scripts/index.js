@@ -145,7 +145,7 @@ $(document).ready(() => {
 
   //* Data viewing
   $("#new-entry").append(createNewRecord(rowLabels));
-  // $("#main-table").append(createViewBloc());
+  $("#main-table").append(createViewBloc());
 
   // Change text color from red (required) to black
   // when a value is entered
@@ -166,11 +166,11 @@ $(document).ready(() => {
   // });
 
   // //* Canceling
-  // $(document).on("click", "#cancel-btn", function (evnt) {
-  //   evnt.preventDefault();
-  //   evnt.stopPropagation();
-  //   location.reload();
-  // });
+  $(document).on("click", "#cancel-btn", function (evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+    location.reload();
+  });
 
   // //* Select record to edit + display modal
   // $(document).on("click", ".table tbody tr", function (evnt) {
