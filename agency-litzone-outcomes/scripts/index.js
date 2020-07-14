@@ -1,147 +1,198 @@
 // Actions and logic
 
-const outcomesData = [
+const dataOutcomes = outcomesData.slice(0);
+const categories = categoryData.slice(0);
+
+const rowLabels = [
   {
-    id: 1,
-    CategoryName: "Social Services",
-    Descriptions: [
-      { Text: "Operative tertiary application" },
-      { Text: "Organic foreground task-force" },
-      { Text: "User-friendly optimal orchestration" },
-      { Text: "Switchable 24 hour Graphic Interface" }
-    ]
+    ID: "ID",
+    AgencyID: "agencyId",
+    OutcomeSortOrder: "Category",
+    Category: "Category",
+    Description: "Description",
   },
-  {
-    id: 2,
-    CategoryName: "Functional Literacy",
-    Descriptions: [{ Text: "Reactive real-time pricing structure" }]
-  },
-  {
-    id: 3,
-    CategoryName: "Community Outcomes",
-    Descriptions: [
-      { Text: "Enhanced encompassing toolset" },
-      { Text: "Synchronised reciprocal approach" }
-    ]
-  },
-  {
-    id: 4,
-    CategoryName: "School Relations",
-    Descriptions: [
-      { Text: "Vision-oriented radical help-desk" },
-      { Text: "Optional well-modulated help-desk" },
-      { Text: "Distributed asymmetric data-warehouse" },
-      { Text: "Monitored regional productivity" }
-    ]
-  },
-  {
-    id: 5,
-    CategoryName: "Health Literacy",
-    Descriptions: [
-      { Text: "Enterprise-wide foreground strategy" },
-      { Text: "Networked next generation capacity" },
-      { Text: "Streamlined 5th generation installation" }
-    ]
-  },
-  {
-    id: 6,
-    CategoryName: "Workforce Readiness",
-    Descriptions: [
-      { Text: "Self-enabling next generation open architecture" },
-      { Text: "Diverse even-keeled leverage" },
-      { Text: "Assimilated composite info-mediaries" },
-      { Text: "Fully-configurable exuding synergy" }
-    ]
-  },
-  {
-    id: 7,
-    CategoryName: "Financial Literacy",
-    Descriptions: [
-      { Text: "Fundamental even-keeled database" },
-      { Text: "Upgradable heuristic middleware" },
-      { Text: "Distributed multi-state internet solution" },
-      { Text: "Assimilated high-level application" }
-    ]
-  },
-  {
-    id: 8,
-    CategoryName: "Legal Services",
-    Descriptions: [
-      { Text: "Decentralized empowering flexibility" },
-      { Text: "Reverse-engineered cohesive challenge" },
-      { Text: "Down-sized upward-trending superstructure" },
-      { Text: "De-engineered uniform architecture" }
-    ]
-  },
-  {
-    id: 9,
-    CategoryName: "Citizenship",
-    Descriptions: [
-      { Text: "Advanced value-added intranet" },
-      { Text: "Public-key zero administration implementation" },
-      { Text: "Right-sized context-sensitive intranet" }
-    ]
-  }
 ];
 
-const placeholderList = ["id", "Category", "Description"];
-
-const headerList = ["id", "Category", "Description"];
-
-const labelList = ["id", "Category", "Description"];
-
-const categoryList = outcomesData
-  .sort((a, b) => (a.CategoryName > b.CategoryName ? 1 : -1))
-  .map(item => [item.id, item.CategoryName]);
-
-const createNewRecord = () => {
-  let optionList =
-    "<option class='red-text' disabled selected>Select a Category</option>";
-  for (let category of categoryList) {
-    optionList += `<option class="blue-text" value='${category[0]}'>${category[1]}</option>`;
-  }
-
-  $("#new-outcome").append(
-    `   <select id="new-select" form="new-outcome" class="form-control red-text">${optionList}</select>
-        <input type="text" id="input-new-outcome" class="form-control blue-text" placeholder="Description" spellcheck="true" required>
-    <button type="submit" id="submit-btn" class="btn btn-primary">Add</button>
-    <button type="button" id="cancel-btn" class="btn btn-default">Cancel</button>`
+const createNewRecord = (labelsList) => {
+  let result = [];
+  const labelObj = labelsList[0];
+  const requiredList = ["OutcomeSortOrder", "Description"];
+  const hiddenList = ["Category"];
+  const keyList = Object.keys(labelObj).filter(
+    (key) => !["ID", "AgencyID"].includes(key)
   );
-};
 
-const viewHeaders = () => {
-  for (let i = 1; i < headerList.length; i++) {
-    $(".table thead").append(`<th>${headerList[i]}</th>`);
+  for (key of keyList) {
+    let element = "";
+    let option = "";
+    let type = "text";
+    let classOption = " input-field";
+    const placehold = labelObj[key];
+    if (key === "OutcomeSortOrder") {
+      // elementSelectNewRecord() <== helperFunctions()
+      element = elementSelectNewRecord({
+        hashTable: categories,
+        keyValue: key,
+        option: " required title='Please fill this field'",
+        optionText: "a category",
+        classOption,
+      });
+    } else {
+      if (requiredList.includes(key)) {
+        option = " required title='Please fill this field'";
+      }
+      if (hiddenList.includes(key)) classOption += " hidden";
+
+      // inputNoLabel() <== helperFunctions()
+      element = inputNoLabel({
+        key,
+        placehold,
+        classOption,
+        option,
+        type,
+      });
+    }
+    result.push(element);
   }
+
+  result.push(
+    `<button type="button" id="submit-btn" form="new-entry" class="btn btn-primary">Add</button>
+    <button type="button" id="cancel-btn" form="new-entry" class="btn btn-default">Cancel</button>`
+  );
+  return result.join("");
 };
 
-const createDataRow = (numID, arrText) => {
-  let insideRow = "";
-  const arrTextIndexed = arrText.map((line, indx) => [indx, line.Text]);
+const createTableHeader = (labelsObject) => {
+  const list = Object.entries(labelsObject)
+    .filter(
+      (label) => !["ID", "AgencyID", "OutcomeSortOrder"].includes(label[0])
+    )
+    .map((label) => label[1]);
 
-  for (let textLine of arrTextIndexed.sort((a, b) => (a[1] > b[1] ? 1 : -1))) {
-    insideRow += `<tr class="inside-row" id=${numID +
-      "-" +
-      textLine[0]} title="click to Edit"><td>${textLine[1]}</td></tr>`;
+  // createHeaders() <== helperFunctions.js
+  return createHeaders(list);
+};
+
+const displayDescriptions = (outcomeList, labelObj) => {
+  let descriptionBloc = "";
+  for (const desc of outcomeList) {
+    if (desc) {
+      const { ID, OutcomeSortOrder, Category, Description } = desc;
+
+      const dataBloc = ` id=${ID} data-order=${OutcomeSortOrder} data-cat="${Category}"`;
+
+      descriptionBloc += `<div class="outcome-view" title="Click to Edit"${dataBloc}>${
+        Description || ""
+      }</div>`;
+    }
   }
-  return insideRow;
+  return descriptionBloc;
 };
 
-const viewData = arr => {
-  for (record of arr.sort((a, b) =>
-    a.CategoryName > b.CategoryName ? 1 : -1
-  )) {
-    const { id, CategoryName, Descriptions } = record;
-    const row = createDataRow(id, Descriptions);
-    $(".table-body").append(
-      `<tr id=${id}><td class="cell-data">${CategoryName}</td><td><table>${row}</table></td></tr>`
-    );
+const createCard = (dataList, labelObj) => {
+  let body = "";
+  for (const field of categories) {
+    const outcomes = dataList
+      .filter((record) => record.OutcomeSortOrder === field.OutcomeSortOrder)
+      .sort((item1, item2) => item2.ID - item1.ID); // Sort by desc. ID
+    if (outcomes.length < 1) continue;
+    const descriptions = displayDescriptions(outcomes, labelObj);
+    const card = `<div class="container-fluid card row" id=${field.OutcomeSortOrder}>
+    <div class="category-view col-md-5">${field.Category}</div>
+    <div class="description-view col-md-7">${descriptions}</div>
+    </div>`;
+    body += card;
+  }
+  return body;
+};
+
+const createViewBloc = () => {
+  // Sorting data by increasing OutcomeSortOrder value
+  const sortedList = dataOutcomes.sort(
+    (item1, item2) => item1.OutcomeSortOrder - item2.OutcomeSortOrder
+  );
+  const viewBloc = createCard(sortedList, rowLabels[0]);
+  return viewBloc;
+};
+
+const createForm = (fieldObj) => {
+  const { recordId, catId, descText } = fieldObj;
+  const formContent = `
+  <input type="text" class="hidden" name="ID" value=${recordId} />
+   `;
+  const selectCategory = elementSelectModal({
+    hashTable: categories,
+    keyValue: "OutcomeSortOrder",
+    selectedValue: catId,
+    labelVal: "Category",
+    labelClassVal: "class='red-text'",
+    option: "required",
+    optionText: " a category",
+  });
+
+  const inputDescription = elementInput({
+    keyVal: "Description",
+    labelVal: "Description",
+    value: descText,
+    labelClassVal: "class='red-text'",
+    classVal: "",
+    option: " required",
+    optionHidden: "form-group",
+  });
+
+  return formContent + selectCategory + inputDescription;
+};
+
+// Used for new site and edited site data set
+const saveMods = (fields, formName, tableName = "") => {
+  const { AgencyID, AuditUserID } = sessionVariable;
+  const result = { AgencyID, AuditUserID };
+  $(`${formName} input, select`).removeClass("yellow-bg");
+
+  const fieldList = fields.slice(0);
+  // Data validation
+  // validateRecord() <== data-check.js
+  const validatedList = validateRecord(fieldList);
+
+  // Background color change for invalid field values
+  const checkFlag = validatedList.some((item) => !item.correct);
+  if (checkFlag) {
+    const list = validatedList.filter((obj) => obj.correct === false);
+    for (let field of list) {
+      const fieldId =
+        formName === "#new-entry" ? `#${field.name}` : `#${field.name}-view`;
+      $(fieldId).addClass("yellow-bg");
+    }
+    return;
+  } else {
+    for (const field of fieldList) {
+      result[field.name] = field.value;
+    }
+    const target = tableName ? tableName : "No table name";
+    const resultList = [formName, target, JSON.stringify(result)];
+    console.table(result);
+    //! =================================================
+    //! JSON Object to send back to database
+    console.log("result :", resultList);
+    //! =================================================
+
+    //ToDO Reloading/resetting with new data
+
+    if (formName === "#edit-form") $("#modalBloc").modal("toggle");
+    if (formName === "#new-entry") {
+      $(formName)[0].reset();
+      $("#OutcomeSortOrder-view, #Description")
+        .toggleClass("dark-text")
+        .prop("required", true);
+      $("#view-bloc .card").remove();
+      $("#view-bloc").append(createViewBloc());
+    }
   }
 };
 
 $(document).ready(() => {
   // * sub-navbar/index.js
-  $("#sub-nav li").click(function() {
+  $("#sub-nav li").click(function () {
     $("#sub-nav li").removeClass("blue-light-bg blue-text");
     $(this).toggleClass("blue-light-bg blue-text");
   });
@@ -154,56 +205,60 @@ $(document).ready(() => {
         ? "inline-block"
         : "none";
   });
-  btnToTop.click(e => {
+  btnToTop.click((e) => {
     e.preventDefault();
     $("html, body").animate({ scrollTop: 0 }, "600");
   });
 
-  // * data viewing
-  createNewRecord();
-  viewHeaders();
-  viewData(outcomesData);
-
-  //* Adding a new outcome
-  $("#new-select").change(function() {
-    const selectedOption = Number($(this).val());
-    const selectedObj = outcomesData.filter(obj => obj.id === selectedOption);
-    $(".table-body").empty();
-    viewData(selectedObj);
-
-    $("#cancel-btn").click(() => {
-      location.reload();
-    });
+  //* Data viewing
+  $("#new-entry").append(createNewRecord(rowLabels));
+  $("#main-table").append(createTableHeader(rowLabels[0]));
+  $("#view-bloc").append(createViewBloc());
+  // Change text color from red (required) to black
+  // when a value is entered
+  $(document).on("focusin", "#OutcomeSortOrder-view, #Description", function (
+    evnt
+  ) {
+    evnt.stopPropagation();
+    $(this).toggleClass("dark-text").prop("required", false);
   });
 
-  //* Select outcome
-  $("[title^='click']").click(function() {
-    const rowID = $(this)
-      .attr("id")
-      .split("-")
-      .map(item => Number(item));
+  //* Adding a new outcome
+  $(document).on("focusout", "#OutcomeSortOrder-view", function (evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+    $(this).toggleClass("dark-text").prop("required", false);
+    const selectedOption = $(this).val();
+    const card = $(`#${selectedOption}`).get();
+    $("#view-bloc .card").remove();
+    $("#view-bloc").append(card);
+  });
+
+  //* New entry Cancel button
+  $(document).on("click", "#cancel-btn", function (evnt) {
+    evnt.stopPropagation();
+    location.reload();
+  });
+
+  //* Select outcome for editing
+  $(document).on("click", "#view-bloc .card .outcome-view", function (evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+    const catId = $(this).attr("data-order");
+    const catText = $(this).attr("data-cat");
+    const recordId = $(this).attr("id");
+    const descText = $(this).text();
+    const editForm = createForm({ recordId, catId, catText, descText });
     $("#modalBloc").modal("toggle");
-    $(".modal-body form").remove();
-    $(".modal-body").append("<form id='modal-form'></form>");
+    $("#edit-form").empty().append(editForm);
+  });
 
-    const textValue = outcomesData.filter(obj => obj.id === rowID[0])[0]
-      .Descriptions[rowID[1]].Text;
-    let optionList = "";
-
-    for (let category of categoryList) {
-      const attrOption = category[0] === rowID[0] ? "selected" : "";
-      optionList += `<option id=${category[0]} value='${category[1]}' ${attrOption}>${category[1]}</option>`;
-    }
-
-    $("#modal-form").append(
-      `<div class="input-field">
-          <label for="modal-select">Category</label>
-          <select id="modal-select" form="modal-form">${optionList}</select>
-      </div>
-      <div class="input-field">
-        <label for=${rowID.join("-")}>Description</label>
-        <input type="text" id=${rowID.join("-")} value='${textValue}'>
-      </div>`
-    );
+  //* Saving after new entry or record modification in modal
+  $(document).on("click", "#save-btn, #submit-btn", function (evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+    const formId = `#${$(this).attr("form")}`;
+    const modifiedRecord = $(formId).serializeArray();
+    saveMods(modifiedRecord, formId, "outcomesData");
   });
 });

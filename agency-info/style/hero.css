@@ -4,12 +4,13 @@ body {
 
 .hero {
   background-color: white;
-  margin-top: 5px;
+  margin-top: 2%;
   padding-bottom: 1%;
   border: solid #2479b5;
-  border-width: 6px 3px;
+  border-width: 2em 0;
   border-radius: 5px;
 }
+
 .quarter-bloc {
   padding: 0 2%;
 }
@@ -19,11 +20,6 @@ body {
   color: #283838;
 }
 
-.close {
-  color: red;
-  font-size: 3em;
-}
-
 .separation {
   border-bottom: 2px solid #d3e4f0;
   margin: 3% 0;
@@ -31,13 +27,14 @@ body {
 .row-label {
   font-size: 1.2em;
   font-weight: 600;
-  line-height: 20px;
+  line-height: 45px;
 }
 
 .row-data {
   position: relative;
   font-size: 1.3em;
   font-weight: 900;
+  line-height: 45px;
   border-bottom: 2px solid #2479b5;
 }
 
@@ -64,6 +61,14 @@ input {
   border-bottom: 1px solid #2479b5;
 }
 
+.modal-select {
+  font-size: 1.3em;
+  line-height: 50px;
+  font-weight: 700;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid #2479b5;
+}
 .modal-header,
 .modal-footer {
   background-color: #d3e4f0;
