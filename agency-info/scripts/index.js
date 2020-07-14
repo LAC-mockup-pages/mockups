@@ -1,124 +1,166 @@
 //* Actions and logic
-
 //! Add a <script> element in index.js pointing to data.js, then:
-let agencyData = ag[0]; //! That is all that's needed
-let newAgencyData = {};
+const agencyData = ag.slice(0); //! That is all that's needed
 
-//! NB: Objects rowLabels and blocItems will need to be
-//! modified if the Data fields from server are modified
 // Labels used when DataObject keys need modifying
-const rowLabels = {
-  SEDID: "SED ID",
-  AgencyName: "Agency Name",
-  ProgramManager: "Program Manager",
-  Zip: "ZIP",
-  CSD: "Community School Dist.",
-  EPERate: "EPE Rate",
-  CPD: "Community Planning Dist.",
-  CD: "Congressional Dist.",
-  AD: "Assembly Dist.",
-  SD: "Senatorial Dist.",
-  PrepCode: "Prep Code",
-  AgencyEmail: "Email",
-};
+const rowLabels = [
+  {
+    ID: "ID",
+    AgencyID: "Agency ID",
+    AgencyName: "Agency Name",
+    SEDID: "SED ID",
+    Division: "Division",
+    ProgramManager: "Program Manager",
+    Address: "Address",
+    City: "City",
+    State: "State",
+    Zip: "ZIP",
+    Telephone: "Phone",
+    CSD: "Community School Dist.",
+    EPERate: "EPE Rate",
+    CPD: "Community Planning Dist.",
+    CD: "Congressional Dist.",
+    AD: "Assembly Dist.",
+    SD: "Senatorial Dist.",
+    PrepCode: "Prep Code",
+    AgencyEmail: "Email",
+  },
+];
 
-// Indexes needed for each bloc, in order
-const blocItems = {
-  topLeft: [2, 3, 4, 5, 12, 17],
-  topRight: [6, 7, 8, 9, 10, 18],
-  bottomLeft: [11, 13, 14],
-  bottomRight: [15, 16],
-};
+// list = [key,label,value] from createBloc()
+const createOneRow = (list) => {
+  const [key, label, value] = list;
 
-const createRow = (arr) => {
   // phoneFormat() <== helpers.js
-  const text = arr[0] === "Telephone" ? phoneFormat(arr[2]) : arr[2];
-  const row = `<tr class="table-row" id=${arr[0]}>
-      <td class="row-label col-md-2">${arr[1]}</td>
+  const text = key === "Telephone" ? phoneFormat(value) : value;
+  const optionHidden = ["ID", "AgencyID"].includes(key) ? " hidden" : "";
+  const row = `<tr class="table-row${optionHidden}" id=${key}>
+      <td class="row-label col-md-2">${label}</td>
       <td class="row-data col-md-3">${text}</td>
     </tr>`;
 
   return row;
 };
 
-const createBloc = (blocName, listIndex, listFields) => {
+// Args from renderViewBloc()
+// blocName type: string
+// dataObj type: JS object, fields selected to appear in this blocName
+const createBloc = (blocName, dataObj) => {
   let blocRows = "";
-  for (let indx of listIndex) {
-    blocRows += createRow(listFields[indx]);
+  const labels = rowLabels[0];
+  for (const key in dataObj) {
+    blocRows += createOneRow([key, labels[key], dataObj[key]]);
   }
   return `<div class="quarter-bloc col-md-6">
-      <table class="table-responsive" id="${blocName}">
-        ${blocRows}
-      </table>
-    </div>`;
+            <table class="table-responsive" id="${blocName}">
+              <tbody>
+                ${blocRows}
+              </tbody>
+            </table>
+          </div>`;
 };
 
-const renderViewBloc = (obj) => {
-  // createFieldList() <== helpers.js
-  const listFields = createFieldList(obj, rowLabels);
-  const identifier = `${obj.ID}-${obj.AgencyID}`;
-  let topBloc = "";
-  let bottomBloc = "";
-
-  for (const key in blocItems) {
-    if (key.startsWith("top")) {
-      topBloc += createBloc(key, blocItems[key], listFields);
-    } else {
-      bottomBloc += createBloc(key, blocItems[key], listFields);
-    }
-  }
-
+const renderViewBloc = (dataObj) => {
+  let {
+    ID,
+    AgencyName,
+    SEDID,
+    Division,
+    ProgramManager,
+    EPERate,
+    PrepCode,
+    Address,
+    City,
+    State,
+    Zip,
+    Telephone,
+    AgencyEmail,
+    CSD,
+    CPD,
+    CD,
+    AD,
+    SD,
+  } = dataObj;
+  const topLeft = createBloc("topLeft", {
+    ID,
+    AgencyName,
+    SEDID,
+    Division,
+    ProgramManager,
+    EPERate,
+    PrepCode,
+  });
+  const topRight = createBloc("topRight", {
+    Address,
+    City,
+    State,
+    Zip,
+    Telephone,
+    AgencyEmail,
+  });
+  const bottomLeft = createBloc("bottomLeft", { ID, CSD, CPD, CD });
+  const bottomRight = createBloc("bottomRight", { AD, SD });
   return `
-    <div class="container row" id="top-bloc" title="Click to Edit" data-id="${identifier}">
-      ${topBloc}
+    <div class="container row" id="top-bloc" title="Click to Edit">
+      ${topLeft}${topRight}
     </div>
     <div class="separation"></div>
-    <div class="container row" id="bottom-bloc" title="Click to Edit" data-id="${identifier}">
-      ${bottomBloc}
+    <div class="container row" id="bottom-bloc" title="Click to Edit">
+      ${bottomLeft}${bottomRight}
     </div>`;
 };
 
-const saveMods = (elmnt) => {
-  const idList = elmnt.split("-");
-  let result = { ID: idList[0], AgencyID: idList[1] };
-  const list = $(`#${elmnt} input`).get();
-  for (let row of list) {
-    const key = $(row).attr("id");
-    // phoneFormat() <== helpers.js
-    const val = key === "Telephone" ? phoneFormat($(row).val()) : $(row).val();
-    result[key] = val;
+const saveMods = (form) => {
+  const { AuditUserID, AgencyID } = sessionVariable[0];
+  const result = { AgencyID, AuditUserID };
+  const submittedData = $(form).serializeArray();
+  $(`${form} input, select`).removeClass("yellow-bg");
+
+  const validatedList = validateNewRecord(submittedData);
+  const checkFlag = validatedList.some((item) => !item.correct);
+  if (checkFlag) {
+    const list = validatedList.filter((obj) => !obj.correct);
+    for (let field of list) {
+      $(`#${field.name}-view`).addClass("yellow-bg");
+    }
+    return;
   }
 
-  // updateDataObject() <== helpers.js
-  const updatedData = updateDataObject(result, agencyData);
+  for (const field of submittedData) {
+    // phoneFormat <== helperFunctions()
+    if (field.name === "Telephone") field.value = phoneFormat(field.value);
+    result[field.name] = field.value;
+  }
 
-  //! Data object to send back to Database
-  console.log("JSON Object :", JSON.stringify(updatedData));
+  const message = `Result from ${form} :>>`;
+  console.table(result);
+  const resultList = ["ag", JSON.stringify(result)];
+  //! =================================================
+  //! JSON Object to send back to database
+  console.log(message, resultList);
+  //! =================================================
 
-  $("#modalTopBloc").modal("toggle");
-
-  //TODO Update page with response from Database update
+  //ToDO Reloading/resetting with new data
+  // location.reload();
+  $("#modal-bloc").modal("toggle");
 };
 
 $(document).ready(() => {
   // * sub-navbar/index.js
-  $("#sub-nav li").click(function () {
+  $("#sub-nav li").on("click", function (evnt) {
+    evnt.stopPropagation();
     $("#sub-nav li").removeClass("blue-light-bg blue-text");
     $(this).toggleClass("blue-light-bg blue-text");
   });
 
-  // * data viewing
-
-  $(".hero").append(renderViewBloc(agencyData));
+  // * Data viewing
+  $(".hero").append(renderViewBloc(agencyData[0]));
 
   //* Data bloc editing
-
-  $("[title^='Click']").click(function (event) {
-    event.stopPropagation();
-    $("#modalTopBloc").modal("toggle");
+  $(document).on("click", ".hero > div", function (evnt) {
+    evnt.stopPropagation();
+    $("#modal-bloc").modal("toggle");
     $("#edit-form").empty();
-
-    const blocDataId = $(this).attr("data-id");
     const blocId = $(this).attr("id");
     const listRows = $.makeArray($(`#${blocId} .table-row`).get());
     let i = 0;
@@ -137,17 +179,49 @@ $(document).ready(() => {
       i += 3;
     }
     for (let item of nestedListValues) {
-      // createInputField() <== helpers.js
-      modalBloc += createInputField(item[0], item[1], item[2]);
+      const [keyVal, labelVal, value] = item;
+      const optionHidden = keyVal === "ID" ? "hidden" : "";
+
+      if (keyVal === "State") {
+        // elementSelectModal() <== helpers.js
+        modalBloc += elementSelectModal({
+          hashTable: ddlStates,
+          keyValue: keyVal,
+          selectedValue: value,
+          labelVal,
+          labelClassVal: "",
+          option: "",
+          optionText: "a State",
+        });
+      } else {
+        // elementInput() <== helpers.js
+        modalBloc += elementInput({
+          keyVal,
+          labelVal,
+          value,
+          labelClassVal: "",
+          classVal: "",
+          option: "",
+          optionHidden,
+        });
+      }
     }
-    $("#edit-form").append(modalBloc).attr("data-bloc-id", blocDataId);
+    $("#edit-form").append(modalBloc);
+    $("#AgencyEmail-view").attr("type", "email");
   });
 
-  $("#save-button").click(function (evnt) {
+  // Save button in modal form
+  $("#save-button").on("click", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
     const formID = $(this).attr("form");
-    const id = $(`#${formID}`).attr("data-bloc-id");
-    saveMods(id);
+    saveMods(`#${formID}`);
+  });
+
+  // Close button in modal form
+  $("#close-button").on("click", function (evnt) {
+    evnt.preventDefault();
+    evnt.stopPropagation();
+    $("#modal-bloc").modal("toggle");
   });
 });
