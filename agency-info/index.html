@@ -51,8 +51,9 @@
       defer
     ></script>
 
+    <script src="scripts/data-check.js" type="text/javascript" defer></script>
+
     <script src="scripts/index.js" type="text/javascript" defer></script>
-    <link />
 
     <!-- !============================= -->
     <!-- ! File: /agency/agencyinfo.aspx -->
@@ -266,9 +267,11 @@
       </div>
     </header>
     <!-- Hero -->
-    <div class="container hero"></div>
+    <div class="container hero">
+      <!-- Data viewing -->
+    </div>
     <!-- Modal for Editing Top Bloc data -->
-    <div class="modal fade" id="modalTopBloc">
+    <div class="modal fade" id="modal-bloc">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -290,7 +293,6 @@
               class="btn btn-primary"
               id="save-button"
               form="edit-form"
-              data-dismiss="modal"
             >
               Save changes
             </button>
