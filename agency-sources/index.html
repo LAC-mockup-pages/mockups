@@ -34,8 +34,21 @@
       defer
     ></script>
 
+    <!-- Moment.js library CDN-->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
+      type="text/javascript"
+    ></script>
+
+    <!-- Links and scripts for local app -->
     <link rel="stylesheet" href="style/index.css" type="text/css" />
     <script src="scripts/data.js" type="text/javascript" defer></script>
+    <script
+      src="../helpers/helperFunctions.js"
+      type="text/javascript"
+      defer
+    ></script>
+    <script src="./scripts/data-check.js" type="text/javascript" defer></script>
     <script
       src="../navbar/scripts/index.js"
       type="text/javascript"
@@ -44,9 +57,9 @@
 
     <script src="scripts/index.js" type="text/javascript" defer></script>
 
-    <!-- !============================= -->
-    <!-- ! File: /agency/agencysourcesinfo.aspx -->
-    <!-- !============================= -->
+    <!-- !====================================== -->
+    <!-- ! File: /agency/agencysourcesinfo.aspx  -->
+    <!-- !====================================== -->
 
     <title>Mock-up Agency Funding Sources</title>
   </head>
@@ -256,74 +269,17 @@
       </div>
     </header>
     <!-- Hero -->
-    <div class="container hero">
+    <div class="container-fluid hero">
       <!-- New source entry-->
       <div class="container-fluid source-entry blue-bg">
         <div class="label-text blue-light-text">
           New Funding Source (Elements in red are required):
         </div>
-        <form class="form-inline blue-bg" role="form" id="new-source">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Funding Source ID"
-            required
-          />
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Amount"
-            id="amount"
-          />
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Begin Date"
-            id="start"
-            required
-          />
-          <input
-            type="text"
-            class="form-control"
-            placeholder="End Date"
-            id="end"
-            required
-          />
-          <input
-            type="text"
-            class="form-control"
-            placeholder="FY"
-            id="fiscal-year"
-          />
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Contract or Grant Num#"
-            id="ctr-grt-num"
-          />
-          <input type="text" class="form-control" placeholder="Purpose" />
-
-          <button type="submit" id="submit-btn" class="btn btn-primary">
-            Add
-          </button>
-        </form>
+        <form class="form-inline blue-bg" role="form" id="new-entry"></form>
       </div>
       <!-- Data viewing -->
-      <div class="view-sources blue-bg">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Agency Name</th>
-              <th>Amount</th>
-              <th>Begin Date</th>
-              <th>End Date</th>
-              <th>FY</th>
-              <th>Contract / Grant #</th>
-              <th>Purpose</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+      <div class="container-fluid blue-bg view-bloc">
+        <table class="table blue-bg" id="main-table"></table>
       </div>
     </div>
     <!-- Modal for Editing Top Bloc data -->
@@ -337,20 +293,32 @@
             </button>
             <h4 class="modal-title">Editing or Deleting a Funding Source</h4>
           </div>
-          <div class="modal-body"></div>
+          <div class="modal-body">
+            <form role="form" id="edit-form"></form>
+          </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
+            <button
+              type="button"
+              id="close-btn"
+              class="btn btn-default"
+              data-dismiss="modal"
+            >
               Close
             </button>
             <button
               type="button"
               class="btn btn-primary"
-              data-dismiss="modal"
               id="save-btn"
+              form="edit-form"
             >
               Save changes
             </button>
-            <button type="button" class="btn btn-danger" id="delete-btn">
+            <button
+              type="button"
+              class="btn btn-danger"
+              form="edit-form"
+              id="delete-btn"
+            >
               Delete Source
             </button>
           </div>
