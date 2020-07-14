@@ -1,8 +1,12 @@
+//* Fetching data from .NET / SQL Server back-end 
+//* Sending updated data to back-end
+    
+    
     const agencyDataFund =   [
-                    {"ID":"10481","AgencyID":"PRA","FSID":"DYADL","FundAbbrev":"Adolescent Literacy DYCD","Amount":"","Purpose":"","FundNumber":"","FundStart":"7/1/2019 12:00:00 AM","FundEnd":"6/30/2020 12:00:00 AM"},
-                    {"ID":"10498","AgencyID":"PRA","FSID":"L","FundAbbrev":"ALE - Adult Literacy Edu","Amount":"1000.00","Purpose":"NYC DYCD","FundNumber":"a34-347857","FundStart":"7/1/2019 12:00:00 AM","FundEnd":"6/30/2020 12:00:00 AM"},
-                    {"ID":"10482","AgencyID":"PRA","FSID":"E","FundAbbrev":"EPE","Amount":"","Purpose":"RS  Test","FundNumber":"","FundStart":"7/1/2019 12:00:00 AM","FundEnd":"6/30/2020 12:00:00 AM"},
-                    {"ID":"10499","AgencyID":"PRA","FSID":"Y","FundAbbrev":"WIA/WIOA","Amount":"500000.00","Purpose":"","FundNumber":"","FundStart":"7/1/2019 12:00:00 AM","FundEnd":"6/30/2020 12:00:00 AM"}
+                    {"ID":"10481","AgencyID":"PRA","FSID":"DYADL","FY":"2020","FundAbbrev":"Adolescent Literacy DYCD","Amount":"","Purpose":"Some nefarious purpose","FundNumber":"","FundStart":"7/1/2019 12:00:00 AM","FundEnd":"6/30/2020 12:00:00 AM"},
+                    {"ID":"10498","AgencyID":"PRA","FSID":"L","FY":"2020","FundAbbrev":"ALE - Adult Literacy Edu","Amount":"1000.00","Purpose":"NYC DYCD","FundNumber":"a34-347857","FundStart":"7/1/2019 12:00:00 AM","FundEnd":"6/30/2020 12:00:00 AM"},
+                    {"ID":"10482","AgencyID":"PRA","FSID":"E","FY":"2020","FundAbbrev":"EPE","Amount":"","Purpose":"RS  Test","FundNumber":"","FundStart":"7/1/2019 12:00:00 AM","FundEnd":"6/30/2020 12:00:00 AM"},
+                    {"ID":"10499","AgencyID":"PRA","FSID":"Y","FY":"2020","FundAbbrev":"WIA/WIOA","Amount":"500000.00","Purpose":"","FundNumber":"","FundStart":"7/1/2019 12:00:00 AM","FundEnd":"6/30/2020 12:00:00 AM"}
     ];
     
     const fundingData = [
@@ -51,3 +55,9 @@
         {"FSID":"DSN","FundAbbrev":"DYSON"},
         {"FSID":"YB","FundAbbrev":"Youth Build"}
     ];
+    
+    const sessionVariable = {
+        AgencyID: "PRA",
+        AuditUserID: '<%= Session["UserID"] %>',
+        FiscalYear: ["2016", "2017"],
+    };

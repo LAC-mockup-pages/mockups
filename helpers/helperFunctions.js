@@ -44,6 +44,7 @@ const inputNoLabel = (argsObj) => {
 //     .delete-msg {
 //      color: rgb(197, 65, 65);
 //      font-weight: 700;
+
 //      text-align: left;
 // }
 //! Needs this event trigger for font color
