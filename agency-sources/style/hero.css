@@ -2,22 +2,21 @@ body {
   background-color: #f0e2d5;
 }
 
-.dark-blue-bg {
-  background-color: #1d6294;
-}
-
 .hero {
-  margin-top: 5px;
-  padding: 0 0 1% 0;
-  border-width: 6px 3px;
+  margin: 1% 6%;
+  padding: 0;
+  border-radius: 5px;
 }
 
 .source-entry {
-  margin: 1% 0 2% 0;
+  margin: 1% 0;
   padding: 0 0 2% 0;
   width: 100%;
   border-radius: 5px;
-  /* border-bottom: 8px solid #f0e2d5; */
+}
+.view-bloc {
+  padding: 0 0 1% 0;
+  border-radius: 5px;
 }
 
 .label-text {
@@ -26,36 +25,59 @@ body {
   padding: 0 0 0.5% 0.5%;
 }
 
-#new-source > .form-control {
-  color: #2479b5;
-  font-size: 1.2em;
+#new-entry > .form-control {
+  font-size: 1.1em;
   padding: 0.5%;
+  font-weight: 600;
+  margin-right: 0.3%;
+  height: 2.5em;
 }
 
-#new-source {
-  margin-left: 3%;
+option {
+  color: #333;
 }
 
-#fiscal-year {
-  width: 60px;
+#new-entry {
+  margin-left: 1%;
 }
 
-#amount,
-#start,
-#end {
-  width: 100px;
+.col-width-small,
+#FundEnd,
+#FundStart,
+#Amount,
+#FundNumber {
+  max-width: 11%;
+}
+
+.col-width-large {
+  max-width: 25%;
+}
+
+.col-width-medium,
+#Purpose {
+  max-width: 15%;
+}
+
+#submit-btn {
+  margin: 0 0.5% 0 2%;
+}
+.table {
+  margin: 0;
+}
+
+#main-table {
+  border-bottom: 1.5em solid #2479b5;
+  border-radius: 5px;
 }
 
 :required::placeholder,
+.form-control:required,
 .delete-msg {
   color: rgb(197, 65, 65);
+  font-weight: 600;
   text-align: left;
 }
 
-.view-sources {
-  padding-bottom: 2%;
-  border-radius: 5px;
-}
 tbody {
   background-color: #fff;
   color: #283838;
@@ -65,6 +87,15 @@ tbody {
 
 .table > tbody > tr > td {
   line-height: 40px;
+}
+
+td {
+  text-align: center;
+}
+
+[data-name="FundAbbrev"],
+td:last-child {
+  text-align: left;
 }
 
 tbody > tr:hover {
@@ -79,22 +110,6 @@ th {
   color: #fff;
 }
 
-.purpose {
-  max-width: 200px;
-}
-
-.date {
-  max-width: 80px;
-  text-align: center;
-  font-size: 14px;
-}
-
-.fiscalYear {
-  max-width: 60px;
-  text-align: center;
-  font-size: 14px;
-}
-
 .input-field {
   line-height: 30px;
 }
@@ -104,12 +119,23 @@ th {
   font-size: 1.2em;
 }
 
-.input-field > input {
+.input-field > input,
+.input-field > select {
   font-size: 1.3em;
   font-weight: 700;
   border: none;
   text-indent: 4px;
   width: 60%;
+  border-bottom: 1px solid #2479b5;
+}
+
+.modal-select {
+  margin-top: 0.5%;
+  font-size: 1.3em;
+  line-height: 50px;
+  font-weight: 700;
+  padding: 5px;
+  border: none;
   border-bottom: 1px solid #2479b5;
 }
 

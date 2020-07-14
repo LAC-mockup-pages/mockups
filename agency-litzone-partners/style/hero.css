@@ -2,14 +2,10 @@ body {
   background-color: #f0e2d5;
 }
 
-.dark-blue-bg {
-  background-color: #1d6294;
-}
-
 .hero {
-  margin-top: 5px;
-  padding: 0 0 1% 0;
-  border-width: 6px 3px;
+  margin: 1% 6%;
+  padding: 0;
+  z-index: -500;
 }
 
 .partner-entry {
@@ -19,39 +15,69 @@ body {
   border-radius: 5px;
 }
 
+#view-bloc {
+  padding: 0 0 1% 0;
+  border-radius: 5px;
+}
+
 .label-text {
   font-size: 1.3em;
   font-weight: 600;
   padding: 0 0 0.5% 0.5%;
 }
 
-.new-record {
-  background-color: #b3f1cc;
-}
-
-#new-partner > .form-control {
-  color: #2479b5;
-  font-size: 1.2em;
+#new-entry > .form-control {
+  font-size: 1.1em;
   padding: 0.5%;
+  font-weight: 600;
+  margin-right: 0.3%;
+  margin-top: 0.3%;
+  height: 2.5em;
 }
 
-#new-partner {
-  margin-left: 3%;
+option {
+  color: #333;
+}
+
+#new-entry {
+  margin-left: 1%;
+}
+
+.col-width-small,
+#ReferralSiteID,
+#Zip,
+#Telephone,
+#ReferralSiteEmail {
+  max-width: 11%;
+}
+
+.col-width-large {
+  max-width: 25%;
+}
+
+.col-width-medium {
+  max-width: 15%;
+}
+
+#submit-btn,
+#cancel-btn {
+  margin: 0 0.5% 0 2%;
+}
+
+.table {
+  margin: 0;
+}
+
+#main-table {
+  border-bottom: 1.5em solid #2479b5;
+  border-radius: 5px;
 }
 
 :required::placeholder,
-.delete-msg {
+.form-control:required {
   color: rgb(197, 65, 65);
+  font-weight: 700;
   text-align: left;
-}
-
-#submit-btn {
-  margin-left: 2%;
-}
-
-.data-view {
-  border-radius: 5px;
-  padding-bottom: 2%;
 }
 
 tbody {
@@ -59,6 +85,12 @@ tbody {
   color: #283838;
   font-size: 1.2em;
   font-weight: 600;
+}
+
+option {
+  color: #283838;
+  font-size: 1em;
+  font-weight: 500;
 }
 
 .table > tbody > tr > td {
@@ -77,34 +109,6 @@ th {
   color: #fff;
 }
 
-.table > tbody > tr > .cell-data {
-  line-height: 25px;
-}
-
-.county {
-  max-width: 80px;
-  text-align: center;
-  font-size: 14px;
-}
-
-.small-cell {
-  max-width: 80px;
-}
-.phone,
-.partner-id {
-  width: 110px;
-  text-align: center;
-  font-size: 14px;
-}
-
-.email {
-  width: 80px;
-}
-
-.partner-manager {
-  width: 100px;
-}
-
 .input-field {
   line-height: 30px;
 }
@@ -114,7 +118,8 @@ th {
   font-size: 1.2em;
 }
 
-.input-field > input {
+.input-field > input,
+.modal-select {
   font-size: 1.3em;
   font-weight: 700;
   border: none;
@@ -123,12 +128,11 @@ th {
   border-bottom: 1px solid #2479b5;
 }
 
+.modal-select {
+  width: fit-content;
+}
+
 .modal-header,
 .modal-footer {
   background-color: #d3e4f0;
-}
-
-.delete-msg {
-  width: fit-content;
-  border-bottom: 2px solid rgb(197, 65, 65);
 }
