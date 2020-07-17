@@ -136,3 +136,13 @@ th {
 .modal-footer {
   background-color: #d3e4f0;
 }
+
+.tooltip > .tooltip-inner {
+  background-color: #f7e095;
+  opacity: 0.8;
+  color: #283838;
+  border: 1px solid #faa61f;
+  padding: 10px;
+  font-size: 1.3em;
+  font-weight: 600;
+}
