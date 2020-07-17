@@ -39,7 +39,8 @@ const createNewRecord = (labelsList) => {
       });
     } else {
       if (requiredList.includes(key)) {
-        option = " required title='Please fill this field'";
+        option =
+          " required data-toggle='tooltip' title='Please fill this field'";
       }
       // if (hiddenList.includes(key)) classOption += " hidden";
       if (key === "Email") type = "email";
@@ -134,7 +135,7 @@ const createModalForm = (tdList) => {
       let labelClassVal = "";
 
       if (requiredList.includes(keyVal)) {
-        option = "required";
+        option = "required data-toggle='tooltip'";
         labelClassVal += "class='red-text'";
       }
       // zipCodeFormat() elementSelectModal() elementInput()
@@ -249,6 +250,9 @@ $(document).ready(() => {
   $(document).on("focusin", "#FacilityName, #Phone, #Email", function (evnt) {
     evnt.stopPropagation();
     $(this).toggleClass("dark-text").prop("required", false);
+
+    // Enables customized tooltips
+    $("[data-toggle='tooltip']").tooltip();
   });
 
   // //* Adding a new partner
@@ -277,6 +281,9 @@ $(document).ready(() => {
     const editForm = createModalForm(selectedRow);
     $("#modalBloc").modal("toggle");
     $("#edit-form").empty().append(editForm);
+
+    // Enables customized tooltips
+    $("[data-toggle='tooltip']").tooltip();
   });
 
   // //* Saving mods after editing selected record
