@@ -246,6 +246,8 @@ $(document).ready(() => {
   $(document).on("focusin", "#ProviderName, #Phone, #Email", function (evnt) {
     evnt.stopPropagation();
     $(this).toggleClass("dark-text").prop("required", false);
+    // Enables customized tooltips
+    $("[data-toggle='tooltip']").tooltip();
   });
 
   // //* Adding a new partner
@@ -274,6 +276,9 @@ $(document).ready(() => {
     const editForm = createModalForm(selectedRow);
     $("#modalBloc").modal("toggle");
     $("#edit-form").empty().append(editForm);
+
+    // Enables customized tooltips
+    $("[data-toggle='tooltip']").tooltip();
   });
 
   // //* Saving mods after editing selected record
