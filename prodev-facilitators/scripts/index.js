@@ -43,7 +43,7 @@ const createNewRecord = (labelsList) => {
     } else {
       if (requiredList.includes(key)) {
         option =
-          " required data-toggle='tooltip' title='Please fill this field'";
+          " required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'";
       }
       // if (hiddenList.includes(key)) classOption += " hidden";
       if (key === "Email") type = "email";
@@ -144,7 +144,7 @@ const createModalForm = (tdList) => {
 
       if (requiredList.includes(keyVal)) {
         option =
-          "required data-toggle='tooltip' title='Please fill out this field'";
+          "required data-toggle='tooltip' data-placement='bottom' title='Please fill out this field'";
         labelClassVal += "class='red-text'";
       }
       // zipCodeFormat() elementSelectModal() elementInput()
