@@ -59,10 +59,15 @@ const createNewRecord = (labelsList) => {
     }
     result.push(element);
   }
-  result.push(
-    `<button type="button" id="submit-btn" form="new-entry" class="btn btn-primary">Add</button>
-    <button type="button" id="cancel-btn" form="new-entry" class="btn btn-default">Cancel</button>`
-  );
+  // result.push(
+  // `<div class="container-fluid row buttons-bloc-new">
+  // <div class="col-md-8"> </div>
+  //   <button type="button" id="submit-btn" form="new-entry"
+  //     class="btn btn-primary col-md-2">Add</button>
+  //   <button type="button" id="cancel-btn" form="new-entry"
+  //     class="btn btn-default col-md-2">Cancel</button>
+  // </div>`
+  // );
   return result.join("");
 };
 
@@ -253,6 +258,12 @@ $(document).ready(() => {
 
   //* Data viewing
   $("#new-entry").append(createNewRecord(rowLabels));
+  $(".record-entry").append(`<div class="container-fluid buttons-bloc-new">
+    <button type="button" id="cancel-btn" form="new-entry"
+      class="btn btn-default pull-right">Cancel</button>
+    <button type="button" id="submit-btn" form="new-entry"
+      class="btn dark-blue-text blue-light-bg pull-right">Add</button>
+  </div>`);
   $("#main-table").append(createViewBloc());
 
   // Change text color from red (required) to black
