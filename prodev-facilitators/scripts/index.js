@@ -59,15 +59,6 @@ const createNewRecord = (labelsList) => {
     }
     result.push(element);
   }
-  // result.push(
-  // `<div class="container-fluid row buttons-bloc-new">
-  // <div class="col-md-8"> </div>
-  //   <button type="button" id="submit-btn" form="new-entry"
-  //     class="btn btn-primary col-md-2">Add</button>
-  //   <button type="button" id="cancel-btn" form="new-entry"
-  //     class="btn btn-default col-md-2">Cancel</button>
-  // </div>`
-  // );
   return result.join("");
 };
 
@@ -83,7 +74,6 @@ const createTableHeader = (labelsObject) => {
 const createTableBody = (dataList, labelObj) => {
   let rows = "";
   const hiddenList = ["ID"];
-
   for (const recordObj of dataList) {
     // zipCodeFormat() <== helperFunction.js
     const formattedZip = recordObj.Zip ? zipCodeFormat(recordObj.Zip) : "";
@@ -116,7 +106,9 @@ const createViewBloc = () => {
   const tableHeader = createTableHeader(rowLabels[0]);
 
   // Sorting list of sites by descending ID
-  const list = dataSource.sort((site1, site2) => site2.ID - site1.ID);
+  const list = dataSource.sort(
+    (site1, site2) => site1.FacLastName - site2.FacLastName
+  );
   const tableBody = createTableBody(list, rowLabels[0]);
   const viewBloc = tableHeader + tableBody;
   return viewBloc;
