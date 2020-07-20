@@ -43,11 +43,13 @@ option {
   margin-left: 1%;
 }
 
-.col-width-small,
-#ID,
-#Zip,
-#Phone,
-#Email {
+#new-entry > .form-control:focus,
+#submit-btn:hover,
+#cancel-btn:hover {
+  box-shadow: 0 0 0 3px #d3e4f0;
+}
+
+.col-width-small {
   max-width: 11%;
 }
 
@@ -59,9 +61,16 @@ option {
   max-width: 15%;
 }
 
+.buttons-bloc-new {
+  margin-top: 0.7%;
+}
+
 #submit-btn,
 #cancel-btn {
-  margin: 0.5% 0.5% 0 2%;
+  margin: 0 0.5% 0 2%;
+  width: 5em;
+  font-size: 1.2em;
+  font-weight: 500;
 }
 
 .table {
@@ -101,9 +110,23 @@ tbody > tr:hover {
   background-color: #d3e4f0;
 }
 
+/* Alternating background on tables for higher comfort */
+tbody > tr:nth-child(odd) {
+  background-color: #f0f0f5;
+}
+
+tbody > tr:nth-child(even) {
+  background-color: #e0e0eb;
+}
+
+.modal-body,
+.modal-body input,
+select {
+  background-color: #f0f0f5;
+}
+
 thead,
 th {
-  text-align: center;
   font-size: 1.1em;
   font-weight: 600;
   color: #fff;
