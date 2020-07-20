@@ -49,7 +49,7 @@ const createNewRecord = (labelList) => {
 
   for (const key of keyList) {
     let option = requiredList.includes(key) ? " required" : "";
-    let classOption = " input-field";
+    let classOption = "";
 
     // inputNoLabel() <== helperFunction.js
     let element = inputNoLabel({
