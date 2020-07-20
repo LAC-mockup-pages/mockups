@@ -30,10 +30,17 @@ body {
   font-size: 1.1em;
   padding: 0.5%;
   font-weight: 600;
-  margin-right: 0.3%;
-  margin-top: 0.3%;
+  /* margin-right: 0.3%;
+  margin-top: 0.3%; */
+  margin: 0.2% 0.2%;
   height: 2.5em;
+  width: 18%;
 }
+
+/* #State-view {
+  margin-left: -5px;
+  border-color: red;
+} */
 
 option {
   color: #333;
@@ -43,13 +50,13 @@ option {
   margin-left: 1%;
 }
 
-.col-width-small,
+/* .col-width-small,
 #ID,
 #Zip,
 #Phone,
 #Email {
   max-width: 11%;
-}
+} */
 
 .col-width-large {
   max-width: 25%;
@@ -97,13 +104,28 @@ option {
   line-height: 40px;
 }
 
+/* Alternating background on tables for higher comfort */
+tbody > tr:nth-child(odd) {
+  background-color: #f0f0f5;
+}
+
+tbody > tr:nth-child(even) {
+  background-color: #e0e0eb;
+}
+
+.modal-body,
+.modal-body input,
+select {
+  background-color: #f0f0f5;
+}
+
 tbody > tr:hover {
   background-color: #d3e4f0;
 }
 
 thead,
 th {
-  text-align: center;
+  /* text-align: center; */
   font-size: 1.1em;
   font-weight: 600;
   color: #fff;
