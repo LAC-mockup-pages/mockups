@@ -26,7 +26,7 @@ const createNewRecord = (labelsList) => {
     let element = "";
     let option = "";
     let type = "text";
-    let classOption = " input-field";
+    let classOption = "";
     const placehold = labelObj[key];
     if (key === "State") {
       // elementSelectNewRecord() <== helperFunctions()
@@ -40,7 +40,7 @@ const createNewRecord = (labelsList) => {
     } else {
       if (requiredList.includes(key)) {
         option =
-          " required data-toggle='tooltip' title='Please fill this field'";
+          " required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'";
       }
       // if (hiddenList.includes(key)) classOption += " hidden";
       if (key === "Email") type = "email";
@@ -56,10 +56,6 @@ const createNewRecord = (labelsList) => {
     }
     result.push(element);
   }
-  result.push(
-    `<button type="button" id="submit-btn" form="new-entry" class="btn btn-primary">Add</button>
-    <button type="button" id="cancel-btn" form="new-entry" class="btn btn-default">Cancel</button>`
-  );
   return result.join("");
 };
 
@@ -102,8 +98,10 @@ const createTableBody = (dataList, labelObj) => {
 const createViewBloc = () => {
   const tableHeader = createTableHeader(rowLabels[0]);
 
-  // Sorting list of sites by descending ID
-  const list = dataSource.sort((site1, site2) => site2.ID - site1.ID);
+  // Sorting list of records by descending ID
+  const list = dataSource.sort(
+    (record1, record2) => record1.FacilityName - record2.FacilityName
+  );
   const tableBody = createTableBody(list, rowLabels[0]);
   const viewBloc = tableHeader + tableBody;
   return viewBloc;
@@ -135,7 +133,7 @@ const createModalForm = (tdList) => {
       let labelClassVal = "";
 
       if (requiredList.includes(keyVal)) {
-        option = "required data-toggle='tooltip'";
+        option = "required data-toggle='tooltip' data-placement='bottom'";
         labelClassVal += "class='red-text'";
       }
       // zipCodeFormat() elementSelectModal() elementInput()
@@ -243,6 +241,12 @@ $(document).ready(() => {
 
   //* Data viewing
   $("#new-entry").append(createNewRecord(rowLabels));
+  $(".record-entry").append(`<div class="container-fluid buttons-bloc-new">
+  <button type="button" id="cancel-btn" form="new-entry"
+    class="btn btn-default pull-right">Cancel</button>
+  <button type="button" id="submit-btn" form="new-entry"
+    class="btn dark-blue-text blue-light-bg pull-right">Add</button>
+</div>`);
   $("#main-table").append(createViewBloc());
 
   // Change text color from red (required) to black
@@ -255,7 +259,7 @@ $(document).ready(() => {
     $("[data-toggle='tooltip']").tooltip();
   });
 
-  // //* Adding a new partner
+  // //* Adding a new record
   $(document).on("click", "#submit-btn", function (evnt) {
     evnt.preventDefault();
     evnt.stopPropagation();
