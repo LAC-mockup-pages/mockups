@@ -36,7 +36,7 @@ const createNewRecord = (labelsList) => {
     let element = "";
     let option = "";
     let type = "text";
-    let classOption = " input-field";
+    let classOption = "";
     const placehold = labelObj[key];
     if (key === "State") {
       // elementSelectNewRecord() <== helperFunctions()
