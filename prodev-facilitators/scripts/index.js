@@ -105,9 +105,10 @@ const createTableBody = (dataList, labelObj) => {
 const createViewBloc = () => {
   const tableHeader = createTableHeader(rowLabels[0]);
 
-  // Sorting list of sites by descending ID
+  // Sorting list of facilitators by descending ID
   const list = dataSource.sort(
-    (site1, site2) => site1.FacLastName - site2.FacLastName
+    (facilitator1, facilitator2) =>
+      facilitator1.FacLastName - facilitator2.FacLastName
   );
   const tableBody = createTableBody(list, rowLabels[0]);
   const viewBloc = tableHeader + tableBody;
