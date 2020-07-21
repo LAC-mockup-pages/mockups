@@ -215,7 +215,8 @@ const createRow = (argsObj) => {
                   </td>`;
     tdList.push(cell);
   }
-  return `<tr id=${record.ID} title="Click to edit">
+  return `<tr id=${record.ID} data-toggle='tooltip' data-placement='bottom'
+            title="Click to edit">
             ${tdList.join("")}
           </tr>`;
 };
