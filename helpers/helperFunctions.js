@@ -195,9 +195,8 @@ const createHeaders = (labels) => {
 const createTableRow = (idValue, recordObj) => {
   let dataElement = "";
   for (const property in recordObj) {
-    dataElement += `<td class="cell-data" title="Click to edit" data-name=${property}>
-        ${recordObj[property]}
-      </td>`;
+    dataElement += `<td class="cell-data" title="Click to edit"
+                      data-name=${property}>${recordObj[property]}</td>`;
   }
   return `<tr id=${idValue}>${dataElement}</tr>`;
 };
@@ -208,15 +207,10 @@ const createRow = (argsObj) => {
   let tdList = [];
   for (const key of labelList) {
     const option = hiddenList.includes(key) ? " hidden" : "";
-    const cell = `<td class="cell-data${option}"
-                    data-name=${key}
-                    data-label="${labelObj[key]}">
-                      ${record[key]}
-                  </td>`;
+    const cell = `<td class="cell-data${option}" data-name=${key}
+                    data-label="${labelObj[key]}">${record[key]}</td>`;
     tdList.push(cell);
   }
   return `<tr id=${record.ID} data-toggle='tooltip' data-placement='bottom'
-            title="Click to edit">
-            ${tdList.join("")}
-          </tr>`;
+            title="Click to edit">${tdList.join("")}</tr>`;
 };
