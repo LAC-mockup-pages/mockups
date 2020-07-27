@@ -10,13 +10,20 @@ import {
   facilitatorList,
 } from "./../main.js";
 
-const createViewBloc = (fieldList, selectObj) => {
+const createViewBloc = (fieldList, selectObj, requiredList) => {
   let bloc = "";
   const selectList = Object.keys(selectObj);
   for (const field of fieldList) {
     let keyVal = $(field).attr("data-name"),
       labelVal = $(field).attr("data-label"),
-      value = $(field).text();
+      value = $(field).text(),
+      labelClassVal = "",
+      option = "";
+
+    if (requiredList.includes(keyVal)) {
+      labelClassVal = "class='red-text'";
+      option = "required";
+    }
     if (selectList.includes(keyVal)) {
       const { hashTable, optionText } = selectObj[keyVal];
       bloc += elementSelectModal({
@@ -24,9 +31,9 @@ const createViewBloc = (fieldList, selectObj) => {
         keyValue: keyVal,
         selectedValue: value,
         labelVal,
-        labelClassVal: "",
-        option: "",
-        optionText,
+        labelClassVal,
+        option,
+       optionText,
       });
     } else {
       let optionHidden = " form-group";
@@ -35,9 +42,9 @@ const createViewBloc = (fieldList, selectObj) => {
         keyVal,
         labelVal,
         value,
-        labelClassVal: "",
+        labelClassVal,
         classVal: "",
-        option: "",
+        option,
         optionHidden,
       });
     }
@@ -45,7 +52,7 @@ const createViewBloc = (fieldList, selectObj) => {
   return bloc;
 };
 
-export const createEventView = (tdList) => {
+export const createEventView = (tdList, requiredList) => {
   const filteredList = tdList.reduce((accumulator, item) => {
     const fieldName = $(item).attr("data-name");
     if (!fieldName.startsWith("profdev")) accumulator.push(item);
@@ -82,11 +89,13 @@ export const createEventView = (tdList) => {
 
   const leftBloc = createViewBloc(
     filteredList.slice(0, halfLength),
-    selectElementObj
+    selectElementObj,
+    requiredList
   );
   const rightBloc = createViewBloc(
     filteredList.slice(halfLength),
-    selectElementObj
+    selectElementObj,
+    requiredList
   );
 
   const eventView = `${rosterBloc}

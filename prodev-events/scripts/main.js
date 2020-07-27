@@ -370,7 +370,8 @@ $(document).ready(() => {
 
     const rowID = "#" + $(this).attr("id");
     const selectedRow = $(`${rowID} td`).get();
-    const eventView = createEventView(selectedRow, rowLabels);
+    const requiredList = getRequired();
+    const eventView = createEventView(selectedRow, requiredList);
     // Cleaning up
     $(".record-entry").toggleClass("hidden");
     $("#view-bloc").empty().append(eventView);
