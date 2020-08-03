@@ -110,11 +110,11 @@ option {
 
 /* Alternating background on tables for higher comfort */
 tbody > tr:nth-child(odd) {
-  background-color: #f0f0f5;
+  background-color: rgb(245, 245, 245);
 }
 
 tbody > tr:nth-child(even) {
-  background-color: #e0e0eb;
+  background-color: rgb(235, 235, 235);
 }
 
 .modal-body,
