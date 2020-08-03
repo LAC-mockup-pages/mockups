@@ -16,7 +16,7 @@ const rowLabels = [
     HomePhone: "Home Phone",
     Email: "Email",
     CellPhone: "Cell Phone",
-    AlternatePhone: "AlternatePhone",
+    AlternatePhone: "Alt. Phone",
   },
 ];
 
@@ -200,7 +200,7 @@ const saveMods = (fields, formName, tableName = "") => {
       let name = field.name;
 
       // phoneFormat() <== helperFunction.js
-      if (["HomePhone", "AlternatePhone", "CellPhone"])
+      if (["HomePhone", "AlternatePhone", "CellPhone"].includes(name))
         val = val ? phoneFormat(val) : "";
 
       // zipCodeFormat() <== helperFunction.js
