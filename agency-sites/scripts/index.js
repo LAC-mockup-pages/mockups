@@ -50,7 +50,7 @@ const createNewRecord = (labelsList) => {
   for (const key of keyList) {
     let element = "";
     let option = "";
-    let classOption = " input-field";
+    let classOption = "";
     const placehold = labelObj[key];
     if (key === "State") {
       // elementSelectNewRecord() <== helperFunctions()

@@ -32,7 +32,7 @@ const elementInput = (obj) => {
 const inputNoLabel = (argsObj) => {
   const { key, placehold, classOption, option, type } = argsObj;
   const selectType = type ? type : "text";
-  return `<input type=${selectType} class="form-control${classOption}" id=${key}
+  return `<input type=${selectType} class="form-control input-field${classOption}" id=${key}
             name="${key}" placeholder="${placehold}"${option}
             autocomplete="off" spellcheck="off"/>`;
 };
@@ -65,13 +65,10 @@ const elementSelectNewRecord = (argsObj) => {
     .join("");
   const descriptor = optionText ? optionText : "an option";
   const classVal = classOption ? ` ${classOption.trim()}` : "";
-  const elementSelect = `
-     <select id="${
-       keyValue + "-view"
-     }" class="form-control${classVal}" name="${keyValue}" ${option}>
-      <option value=''>Select ${descriptor}</option>
-      ${optionList}
-     </select>`;
+  const elementSelect = `<select id=${keyValue}
+    class="form-control input-field${classVal}" name=${keyValue} ${option}>
+    <option value=''>Select ${descriptor}</option>${optionList}
+  </select>`;
 
   return elementSelect;
 };
@@ -89,7 +86,7 @@ const elementSelectModal = (argsObj) => {
     optionText,
   } = argsObj;
   const descriptor = optionText ? optionText : "an option";
-  let firstOption = `<option disabled>Select ${descriptor}</option>`;
+  let firstOption = `<option>Select ${descriptor}</option>`;
 
   const [primary, secondary] = Object.keys(hashTable[0]);
   let optionList = hashTable
@@ -124,7 +121,6 @@ const phoneFormat = (str) => {
     ? `${str.slice(0, 3)}-${str.slice(3, 6)}-${str.slice(6)}`
     : str;
 };
-
 
 // dataObj: JSON object
 // labelObj: JS Object with key from dataObj, value = label
@@ -199,9 +195,8 @@ const createHeaders = (labels) => {
 const createTableRow = (idValue, recordObj) => {
   let dataElement = "";
   for (const property in recordObj) {
-    dataElement += `<td class="cell-data" title="Click to edit" data-name=${property}>
-        ${recordObj[property]}
-      </td>`;
+    dataElement += `<td class="cell-data" title="Click to edit"
+                      data-name=${property}>${recordObj[property]}</td>`;
   }
   return `<tr id=${idValue}>${dataElement}</tr>`;
 };
@@ -212,14 +207,10 @@ const createRow = (argsObj) => {
   let tdList = [];
   for (const key of labelList) {
     const option = hiddenList.includes(key) ? " hidden" : "";
-    const cell = `<td class="cell-data${option}"
-                    data-name=${key}
-                    data-label="${labelObj[key]}">
-                      ${record[key]}
-                  </td>`;
+    const cell = `<td class="cell-data${option}" data-name=${key}
+                    data-label="${labelObj[key]}">${record[key]}</td>`;
     tdList.push(cell);
   }
-  return `<tr id=${record.ID} title="Click to edit">
-            ${tdList.join("")}
-          </tr>`;
+  return `<tr id=${record.ID} data-toggle='tooltip' data-placement='bottom'
+            title="Click to edit">${tdList.join("")}</tr>`;
 };
