@@ -86,7 +86,7 @@ const elementSelectModal = (argsObj) => {
     optionText,
   } = argsObj;
   const descriptor = optionText ? optionText : "an option";
-  let firstOption = `<option disabled>Select ${descriptor}</option>`;
+  let firstOption = `<option>Select ${descriptor}</option>`;
 
   const [primary, secondary] = Object.keys(hashTable[0]);
   let optionList = hashTable
