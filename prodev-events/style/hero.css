@@ -30,6 +30,16 @@ body {
   background-color: #fff;
 }
 
+#sorting-bloc {
+  padding: 0.5% 0%;
+  height: 5%;
+  margin-bottom: 2%;
+}
+
+.sort-select {
+  /* height: 8%; */
+}
+
 #roster-table > tbody {
   width: 95%;
   margin: auto;
