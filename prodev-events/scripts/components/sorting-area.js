@@ -1,22 +1,38 @@
 // Block for sorting events in main-table
-const createSortZone = () => {
-  let bloc = "";
+export const createSortZone = () => {
   const selectList = [
     {
       ProfDevActivityName: "Name",
       ProfDevDate: "Date",
-      ProfDevDescription: "Session",
       ProfDevProviderID: "Provider",
       ProfDevLocationID: "Location",
       ProfDevCategoryID: "Category",
       ProfDevSubjectID: "Subject",
-      ProfDevFacilitator1: "Facilitator1",
-      profdevFac1: "Facilitator1",
-      ProfDevFacilitator2: "Facilitator2",
-      profdevFac2: "Facilitator2",
-      ProfDevFacilitator3: "Facilitator3",
-      profdevFac3: "Facilitator3"
+      ProfDevFacilitator: "Facilitator"
     }
   ];
-  return bloc;
+
+  const primaryList = Object.keys(selectList[0]).map((key) => {
+    const value = selectList[0][key];
+    return { key, value };
+  });
+  console.log("primaryList :>> ", primaryList);
+
+  const primarySelect = elementSelectModal({
+    hashTable: primaryList,
+    keyValue: "primary-sort",
+    selectedValue: "",
+    labelVal: "Select first",
+    labelClassVal: "class='blue-light-text'",
+    option: "",
+    optionText: ""
+  });
+
+  let sortingBloc = ` <div container-fluid row class="sort-select">
+    <div class="col-md-4">${primarySelect}</div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">Select second</div>
+  </div>`;
+
+  return sortingBloc;
 };

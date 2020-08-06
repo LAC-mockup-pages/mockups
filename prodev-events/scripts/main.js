@@ -5,6 +5,7 @@ import {
   staffList,
   createModalRosterEdit
 } from "./components/roster-view.js";
+import { createSortZone } from "./components/sorting-area.js";
 
 // Isolate work objects and arrays from data source.
 const dataSource = ProfDevEventsInfo.slice(0);
@@ -274,9 +275,10 @@ const createTableBody = (dataList, labelObj) => {
       (item) => item.CATEGORYID === +ProfDevCategoryID
     ).Category;
 
-    const profdevSubject = subjectList.find(
-      (item) => item.SubjectID === +ProfDevSubjectID
-    ).SubjectDesc;
+    const profdevSubject = ProfDevSubjectID
+      ? subjectList.find((item) => item.SubjectID === +ProfDevSubjectID)
+          .SubjectDesc
+      : "";
 
     const record = {
       ...recordObj,
@@ -402,6 +404,8 @@ $(document).ready(() => {
 <button type="button" id="cancel-btn" form="new-entry"
       class="btn btn-default">Cancel</button></div>
   </div>`);
+
+  $("#sorting-bloc").append(createSortZone());
   $("#main-table").append(createViewBloc());
 
   // Change text color from red (required) to black
