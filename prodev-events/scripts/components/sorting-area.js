@@ -23,16 +23,22 @@ export const createSortZone = () => {
     hashTable: primaryList,
     keyValue: "primary-sort",
     selectedValue: "",
-    labelVal: "Select first",
+    labelVal: "Select first:",
     labelClassVal: "class='blue-light-text'",
     option: "",
     optionText: ""
   });
 
-  let sortingBloc = ` <div container-fluid row class="sort-select">
-    <div class="col-md-4">${primarySelect}</div>
-    <div class="col-md-4"></div>
-    <div class="col-md-4">Select second</div>
+  let sortingBloc = ` <div  class="sort-select container-fluid row">
+    <div class="col-md-5">${primarySelect}</div>
+    <div class="col-md-2"></div>
+    <div class="col-md-5" id="secondary-select">
+      <div class="input-field form-group">
+        <label for="secondary" class="blue-light-text">Select second:</label>
+        <select class="modal-select" name="secondary" disabled>
+        <option>Select an option</option></select>
+      </div>
+    </div>
   </div>`;
 
   return sortingBloc;
