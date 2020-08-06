@@ -1,4 +1,5 @@
 // Block for sorting events in main-table
+
 export const createSortZone = () => {
   const selectList = [
     {
