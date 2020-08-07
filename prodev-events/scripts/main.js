@@ -5,7 +5,7 @@ import {
   staffList,
   createModalRosterEdit
 } from "./components/roster-view.js";
-import { createSortZone } from "./components/sorting-area.js";
+import { createFilterBloc } from "./components/sorting-area.js";
 
 // Isolate work objects and arrays from data source.
 const dataSource = ProfDevEventsInfo.slice(0);
@@ -405,7 +405,7 @@ $(document).ready(() => {
       class="btn btn-default">Cancel</button></div>
   </div>`);
 
-  $("#sorting-bloc").append(createSortZone());
+  $("#filter-bloc").append(createFilterBloc());
   $("#main-table").append(createViewBloc());
 
   // Change text color from red (required) to black

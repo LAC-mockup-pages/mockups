@@ -1,10 +1,11 @@
 // Block for sorting events in main-table
 
-export const createSortZone = () => {
+export const createFilterBloc = () => {
   const selectList = [
     {
       ProfDevActivityName: "Name",
       ProfDevDate: "Date",
+      ProfDevFY: "Fiscal Year",
       ProfDevProviderID: "Provider",
       ProfDevLocationID: "Location",
       ProfDevCategoryID: "Category",
@@ -21,7 +22,7 @@ export const createSortZone = () => {
 
   const primarySelect = elementSelectModal({
     hashTable: primaryList,
-    keyValue: "primary-sort",
+    keyValue: "primary-filter",
     selectedValue: "",
     labelVal: "Select first:",
     labelClassVal: "class='blue-light-text'",
