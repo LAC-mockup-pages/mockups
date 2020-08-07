@@ -18,7 +18,7 @@ export const createFilterBloc = () => {
     const value = selectList[0][key];
     return { key, value };
   });
-  console.log("primaryList :>> ", primaryList);
+  // console.log("primaryList :>> ", primaryList);
 
   const primarySelect = elementSelectModal({
     hashTable: primaryList,
@@ -43,4 +43,10 @@ export const createFilterBloc = () => {
   </div>`;
 
   return sortingBloc;
+};
+
+export const createSecondarySelect = () => {
+  let secondary =
+    "<div class='col-md-5' id='new-secondary-select'><h3>Secondary select</h3></div>";
+  return secondary;
 };

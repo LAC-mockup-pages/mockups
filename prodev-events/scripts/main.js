@@ -5,7 +5,10 @@ import {
   staffList,
   createModalRosterEdit
 } from "./components/roster-view.js";
-import { createFilterBloc } from "./components/sorting-area.js";
+import {
+  createFilterBloc,
+  createSecondarySelect
+} from "./components/filter-bloc.js";
 
 // Isolate work objects and arrays from data source.
 const dataSource = ProfDevEventsInfo.slice(0);
@@ -300,7 +303,10 @@ const createTableBody = (dataList, labelObj) => {
 const createViewBloc = () => {
   const tableHeader = createTableHeader(rowLabels[0]);
 
-  // Sorting list of records alphabetically by descending date
+  //TODO Filter dataSource for the 2 most recent fiscal years
+  //TODO + next Fiscal Year
+
+  // Sorting list of records  by descending date
   const list = dataSource.sort(
     (record1, record2) =>
       new Date(record2.ProfDevDate) - new Date(record1.ProfDevDate)
@@ -407,6 +413,13 @@ $(document).ready(() => {
 
   $("#filter-bloc").append(createFilterBloc());
   $("#main-table").append(createViewBloc());
+
+  // Change event in primary select
+  $(document).on("change", "#primary-filter-view", function (evnt) {
+    evnt.stopPropagation();
+    const newSecondarySelect = createSecondarySelect();
+    $("#secondary-select").replaceWith(newSecondarySelect);
+  });
 
   // Change text color from red (required) to black
   // when a value is entered
