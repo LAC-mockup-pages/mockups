@@ -45,7 +45,7 @@ export const createFilterBloc = () => {
   return sortingBloc;
 };
 
-export const createSecondarySelect = () => {
+export const createSecondarySelect = (fieldName) => {
   let secondary =
     "<div class='col-md-5' id='new-secondary-select'><h3>Secondary select</h3></div>";
   return secondary;

@@ -417,7 +417,8 @@ $(document).ready(() => {
   // Change event in primary select
   $(document).on("change", "#primary-filter-view", function (evnt) {
     evnt.stopPropagation();
-    const newSecondarySelect = createSecondarySelect();
+    const selectedField = $(this).val();
+    const newSecondarySelect = createSecondarySelect(selectedField);
     $("#secondary-select").replaceWith(newSecondarySelect);
   });
 
