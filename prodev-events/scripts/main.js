@@ -17,6 +17,7 @@ export const providerList = Providers.slice(0);
 export const locationList = Locations.slice(0);
 export const categoryList = Categories.slice(0);
 export const subjectList = Subjects.slice(0);
+export const fiscalYearList = FiscalYear.slice(0);
 const agencyList = Agency.slice(0);
 
 const rowLabels = [
@@ -414,7 +415,7 @@ $(document).ready(() => {
   $("#filter-bloc").append(createFilterBloc());
   $("#main-table").append(createViewBloc());
 
-  // Change event in primary select
+  // Change events in filter bloc
   $(document).on("change", "#primary-filter-view", function (evnt) {
     evnt.stopPropagation();
     const selectedField = $(this).val();

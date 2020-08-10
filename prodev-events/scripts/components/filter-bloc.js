@@ -1,4 +1,12 @@
 // Block for sorting events in main-table
+import {
+  facilitatorList,
+  providerList,
+  locationList,
+  categoryList,
+  subjectList,
+  fiscalYearList
+} from "./../main.js";
 
 export const createFilterBloc = () => {
   const selectList = [
@@ -14,10 +22,18 @@ export const createFilterBloc = () => {
     }
   ];
 
-  const primaryList = Object.keys(selectList[0]).map((key) => {
-    const value = selectList[0][key];
-    return { key, value };
-  });
+  const primaryList = Object.keys(selectList[0])
+    .map((key) => {
+      const value = selectList[0][key];
+      return { key, value };
+    })
+    .sort((record1, record2) => {
+      return record1.value < record2.value
+        ? -1
+        : record1.value > record2.value
+        ? 1
+        : 0;
+    });
   // console.log("primaryList :>> ", primaryList);
 
   const primarySelect = elementSelectModal({
@@ -46,7 +62,40 @@ export const createFilterBloc = () => {
 };
 
 export const createSecondarySelect = (fieldName) => {
+  console.log("fieldName :>> ", fieldName);
   let secondary =
     "<div class='col-md-5' id='new-secondary-select'><h3>Secondary select</h3></div>";
-  return secondary;
+  // const tdList = $(`[data-name=${fieldName}]`).get();
+  const tdList = $("[data-label='Subject']").get();
+
+  console.log("tdList :>> ", tdList);
+  const len = tdList.length;
+  const secondaryList = [];
+  for (let i = 0; i < len; i += 2) {
+    const key = $(tdList[i]).text();
+    const value = $(tdList[i + 1]).text();
+    if (value) {
+      if (!secondaryList.find((obj) => obj.key === key)) {
+        secondaryList.push({ key, value });
+      }
+    }
+  }
+
+  const hashTable = secondaryList.sort((rec1, rec2) => {
+    return rec1.value < rec2.value ? -1 : rec1.value > rec2.value ? 1 : 0;
+  });
+  console.log("secondaryList :>> ", secondaryList);
+  console.log("hashTable :>> ", hashTable);
+
+  const secondarySelect = elementSelectModal({
+    hashTable,
+    keyValue: "secondary-filter",
+    selectedValue: "",
+    labelVal: "Select second:",
+    labelClassVal: "class='blue-light-text'",
+    option: `data-field=${fieldName}`,
+    optionText: ""
+  });
+
+  return `<div class="col-md-5" id="secondary-select">${secondarySelect}</div>`;
 };
