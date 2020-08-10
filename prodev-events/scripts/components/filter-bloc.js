@@ -99,3 +99,9 @@ export const createSecondarySelect = (fieldName) => {
 
   return `<div class="col-md-5" id="secondary-select">${secondarySelect}</div>`;
 };
+
+export const createShortList = (selectedVal) => {
+  const content = $("tbody>tr").get();
+  console.log("content :>> ", content);
+  console.log(selectedVal, typeof selectedVal);
+};

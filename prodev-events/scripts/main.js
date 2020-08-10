@@ -7,7 +7,8 @@ import {
 } from "./components/roster-view.js";
 import {
   createFilterBloc,
-  createSecondarySelect
+  createSecondarySelect,
+  createShortList
 } from "./components/filter-bloc.js";
 
 // Isolate work objects and arrays from data source.
@@ -301,14 +302,14 @@ const createTableBody = (dataList, labelObj) => {
   }
   return `<tbody>${rows}</tbody>`;
 };
-const createViewBloc = () => {
+const createViewBloc = (dataList) => {
   const tableHeader = createTableHeader(rowLabels[0]);
 
   //TODO Filter dataSource for the 2 most recent fiscal years
   //TODO + next Fiscal Year
 
   // Sorting list of records  by descending date
-  const list = dataSource.sort(
+  const list = dataList.sort(
     (record1, record2) =>
       new Date(record2.ProfDevDate) - new Date(record1.ProfDevDate)
   );
@@ -413,14 +414,21 @@ $(document).ready(() => {
   </div>`);
 
   $("#filter-bloc").append(createFilterBloc());
-  $("#main-table").append(createViewBloc());
+  $("#main-table").append(createViewBloc(dataSource));
 
-  // Change events in filter bloc
+  //* Change events in filter bloc
   $(document).on("change", "#primary-filter-view", function (evnt) {
     evnt.stopPropagation();
     const selectedField = $(this).val();
     const newSecondarySelect = createSecondarySelect(selectedField);
     $("#secondary-select").replaceWith(newSecondarySelect);
+  });
+
+  $(document).on("change", "#secondary-filter-view", function (evnt) {
+    evnt.stopPropagation();
+    const selectedVal = $(this).val();
+    const shortList = createShortList(selectedVal);
+    // $("#main-table").empty().append(shortList)
   });
 
   // Change text color from red (required) to black
