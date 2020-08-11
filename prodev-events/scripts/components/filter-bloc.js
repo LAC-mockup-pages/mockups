@@ -5,7 +5,9 @@ import {
   locationList,
   categoryList,
   subjectList,
-  fiscalYearList
+  fiscalYearList,
+  dataSource,
+  createViewBloc
 } from "./../main.js";
 
 export const createFilterBloc = () => {
@@ -80,13 +82,9 @@ export const createSecondarySelect = (fieldName) => {
       }
     }
   }
-
   const hashTable = secondaryList.sort((rec1, rec2) => {
     return rec1.value < rec2.value ? -1 : rec1.value > rec2.value ? 1 : 0;
   });
-  console.log("secondaryList :>> ", secondaryList);
-  console.log("hashTable :>> ", hashTable);
-
   const secondarySelect = elementSelectModal({
     hashTable,
     keyValue: "secondary-filter",
@@ -100,8 +98,9 @@ export const createSecondarySelect = (fieldName) => {
   return `<div class="col-md-5" id="secondary-select">${secondarySelect}</div>`;
 };
 
-export const createShortList = (selectedVal) => {
-  const content = $("tbody>tr").get();
-  console.log("content :>> ", content);
-  console.log(selectedVal, typeof selectedVal);
+export const createShortList = (selectedVal, selectedField) => {
+  const shortList = dataSource.filter(
+    (record) => record[selectedField] === selectedVal
+  );
+  return shortList;
 };

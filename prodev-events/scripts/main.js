@@ -12,7 +12,7 @@ import {
 } from "./components/filter-bloc.js";
 
 // Isolate work objects and arrays from data source.
-const dataSource = ProfDevEventsInfo.slice(0);
+export const dataSource = ProfDevEventsInfo.slice(0);
 export const facilitatorList = Facilitator.slice(0);
 export const providerList = Providers.slice(0);
 export const locationList = Locations.slice(0);
@@ -302,7 +302,7 @@ const createTableBody = (dataList, labelObj) => {
   }
   return `<tbody>${rows}</tbody>`;
 };
-const createViewBloc = (dataList) => {
+export const createViewBloc = (dataList) => {
   const tableHeader = createTableHeader(rowLabels[0]);
 
   //TODO Filter dataSource for the 2 most recent fiscal years
@@ -427,8 +427,9 @@ $(document).ready(() => {
   $(document).on("change", "#secondary-filter-view", function (evnt) {
     evnt.stopPropagation();
     const selectedVal = $(this).val();
-    const shortList = createShortList(selectedVal);
-    // $("#main-table").empty().append(shortList)
+    const selectedField = $(this).attr("data-field");
+    const shortList = createShortList(selectedVal, selectedField);
+    $("#main-table").empty().append(shortList);
   });
 
   // Change text color from red (required) to black
