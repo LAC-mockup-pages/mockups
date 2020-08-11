@@ -7,8 +7,7 @@ import {
 } from "./components/roster-view.js";
 import {
   createFilterBloc,
-  createSecondarySelect,
-  createShortList
+  createSecondarySelect
 } from "./components/filter-bloc.js";
 
 // Isolate work objects and arrays from data source.
@@ -428,8 +427,10 @@ $(document).ready(() => {
     evnt.stopPropagation();
     const selectedVal = $(this).val();
     const selectedField = $(this).attr("data-field");
-    const shortList = createShortList(selectedVal, selectedField);
-    $("#main-table").empty().append(shortList);
+    const shortList = dataSource.filter(
+      (record) => record[selectedField] === selectedVal
+    );
+    $("#main-table").empty().append(createViewBloc(shortList));
   });
 
   // Change text color from red (required) to black

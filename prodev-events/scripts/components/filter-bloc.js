@@ -1,29 +1,18 @@
 // Block for sorting events in main-table
-import {
-  facilitatorList,
-  providerList,
-  locationList,
-  categoryList,
-  subjectList,
-  fiscalYearList,
-  dataSource,
-  createViewBloc
-} from "./../main.js";
+const selectList = [
+  {
+    ProfDevActivityName: "Name",
+    ProfDevDate: "Date",
+    ProfDevFY: "Fiscal Year",
+    ProfDevProviderID: "Provider",
+    ProfDevLocationID: "Location",
+    ProfDevCategoryID: "Category",
+    ProfDevSubjectID: "Subject",
+    ProfDevFacilitator: "Facilitator"
+  }
+];
 
 export const createFilterBloc = () => {
-  const selectList = [
-    {
-      ProfDevActivityName: "Name",
-      ProfDevDate: "Date",
-      ProfDevFY: "Fiscal Year",
-      ProfDevProviderID: "Provider",
-      ProfDevLocationID: "Location",
-      ProfDevCategoryID: "Category",
-      ProfDevSubjectID: "Subject",
-      ProfDevFacilitator: "Facilitator"
-    }
-  ];
-
   const primaryList = Object.keys(selectList[0])
     .map((key) => {
       const value = selectList[0][key];
@@ -36,8 +25,6 @@ export const createFilterBloc = () => {
         ? 1
         : 0;
     });
-  // console.log("primaryList :>> ", primaryList);
-
   const primarySelect = elementSelectModal({
     hashTable: primaryList,
     keyValue: "primary-filter",
@@ -64,13 +51,9 @@ export const createFilterBloc = () => {
 };
 
 export const createSecondarySelect = (fieldName) => {
-  console.log("fieldName :>> ", fieldName);
-  let secondary =
-    "<div class='col-md-5' id='new-secondary-select'><h3>Secondary select</h3></div>";
-  // const tdList = $(`[data-name=${fieldName}]`).get();
-  const tdList = $("[data-label='Subject']").get();
+  const label = selectList[0][fieldName];
+  const tdList = $(`[data-label=${label}]`).get();
 
-  console.log("tdList :>> ", tdList);
   const len = tdList.length;
   const secondaryList = [];
   for (let i = 0; i < len; i += 2) {
@@ -98,9 +81,9 @@ export const createSecondarySelect = (fieldName) => {
   return `<div class="col-md-5" id="secondary-select">${secondarySelect}</div>`;
 };
 
-export const createShortList = (selectedVal, selectedField) => {
-  const shortList = dataSource.filter(
-    (record) => record[selectedField] === selectedVal
-  );
-  return shortList;
-};
+// export const createShortList = (selectedVal, selectedField) => {
+//   const recordList = dataSource.filter(
+//     (record) => record[selectedField] === selectedVal
+//   );
+//   return recordList;
+// };
