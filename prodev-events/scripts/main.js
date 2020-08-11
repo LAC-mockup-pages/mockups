@@ -7,7 +7,8 @@ import {
 } from "./components/roster-view.js";
 import {
   createFilterBloc,
-  createSecondarySelect
+  createSecondarySelect,
+  createShortList
 } from "./components/filter-bloc.js";
 
 // Isolate work objects and arrays from data source.
@@ -427,9 +428,7 @@ $(document).ready(() => {
     evnt.stopPropagation();
     const selectedVal = $(this).val();
     const selectedField = $(this).attr("data-field");
-    const shortList = dataSource.filter(
-      (record) => record[selectedField] === selectedVal
-    );
+    const shortList = createShortList(selectedVal, selectedField);
     $("#main-table").empty().append(createViewBloc(shortList));
   });
 
@@ -475,16 +474,18 @@ $(document).ready(() => {
   });
 
   //* Canceling
-  $(document).on("click", "#cancel-btn, #event-view-cancel-btn", function (
-    evnt
-  ) {
-    evnt.preventDefault();
-    evnt.stopPropagation();
-    const formId = "#" + $(this).attr("form");
-    location.reload();
-    // if (formId === "#new-entry") location.reload();
-    // if (formId === "#event-view-form") $(formId)[0].reset();
-  });
+  $(document).on(
+    "click",
+    "#cancel-btn, #event-view-cancel-btn, #filter-cancel-btn",
+    function (evnt) {
+      evnt.preventDefault();
+      evnt.stopPropagation();
+      // const formId = "#" + $(this).attr("form");
+      location.reload();
+      // if (formId === "#new-entry") location.reload();
+      // if (formId === "#event-view-form") $(formId)[0].reset();
+    }
+  );
 
   //* Select event record to edit + display selected event & roster
   $(document).on("click", "#main-table tbody tr", function (evnt) {

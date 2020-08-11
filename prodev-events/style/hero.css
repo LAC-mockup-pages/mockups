@@ -37,7 +37,8 @@ body {
 }
 
 .sort-select {
-  /* height: 8%; */
+  height: 8%;
+  margin-bottom: 1%;
 }
 
 #roster-table > tbody {
@@ -52,7 +53,8 @@ body {
   padding: 0 0 0.5% 0.5%;
 }
 
-#new-entry > .form-control {
+#new-entry > .form-control,
+#primary-select > .form-control {
   font-size: 1.1em;
   padding: 0.5%;
   font-weight: 600;
@@ -73,6 +75,7 @@ option {
 #new-entry > .form-control:focus,
 #submit-btn:hover,
 #cancel-btn:hover,
+#filter-cancel-btn:hover,
 #event-view-submit-btn:hover,
 #event-view-cancel-btn:hover {
   box-shadow: 0 0 0 3px #d3e4f0;
@@ -104,6 +107,7 @@ option {
   font-weight: 500;
 }
 
+#filter-cancel-btn,
 #event-view-cancel-btn {
   margin: 0 12% 0 5%;
   width: fit-content;
