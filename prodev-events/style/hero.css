@@ -19,7 +19,6 @@ body {
   border-radius: 5px;
 }
 
-/* Temporary Styling */
 .event-view {
   border-top: 1.5em solid #2479b5;
   border-top-left-radius: 5px;
@@ -30,15 +29,18 @@ body {
   background-color: #fff;
 }
 
-#sorting-bloc {
-  padding: 0.5% 0%;
-  height: 5%;
-  margin-bottom: 2%;
+#filter-bloc {
+  padding: 1.5% 0 0.5% 0;
+  margin-bottom: 0.5%;
+  border-radius: 5px;
 }
 
-.sort-select {
-  height: 8%;
-  margin-bottom: 1%;
+#primary-select select,
+#secondary-select select {
+  margin-top: 0.3%;
+  font-size: 1.2em;
+  font-weight: 400;
+  width: 50%;
 }
 
 #roster-table > tbody {
