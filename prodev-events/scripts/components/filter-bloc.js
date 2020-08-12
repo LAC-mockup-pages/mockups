@@ -1,10 +1,7 @@
 // Block for sorting events in main-table
 import { dataSource } from "./../main.js";
-
 const selectList = [
   {
-    ProfDevActivityName: "Name",
-    ProfDevDate: "Date",
     ProfDevFY: "Fiscal Year",
     ProfDevProviderID: "Provider",
     ProfDevLocationID: "Location",
@@ -54,23 +51,30 @@ export const createFilterBloc = () => {
 };
 
 export const createSecondarySelect = (fieldName) => {
-  const label = selectList[0][fieldName];
-  const tdList = $(`[data-label=${label}]`).get();
-
-  const len = tdList.length;
-  const secondaryList = [];
-  for (let i = 0; i < len; i += 2) {
-    const key = $(tdList[i]).text();
-    const value = $(tdList[i + 1]).text();
-    if (value) {
-      if (!secondaryList.find((obj) => obj.key === key)) {
-        secondaryList.push({ key, value });
+  let hashTable = [];
+  if (fieldName === "ProfDevFY") {
+    hashTable = FiscalYear.map((yearObj) => {
+      return { FYID: yearObj.FiscalYear, FYValue: yearObj.FiscalYear };
+    });
+  } else {
+    const label = selectList[0][fieldName];
+    const tdList = $(`[data-label=${label}]`).get();
+    const len = tdList.length;
+    const secondaryList = [];
+    for (let i = 0; i < len; i += 2) {
+      const key = $(tdList[i]).text();
+      const value = $(tdList[i + 1]).text();
+      if (value) {
+        if (!secondaryList.find((obj) => obj.key === key)) {
+          secondaryList.push({ key, value });
+        }
       }
     }
+    hashTable = secondaryList.sort((rec1, rec2) => {
+      return rec1.value < rec2.value ? -1 : rec1.value > rec2.value ? 1 : 0;
+    });
   }
-  let hashTable = secondaryList.sort((rec1, rec2) => {
-    return rec1.value < rec2.value ? -1 : rec1.value > rec2.value ? 1 : 0;
-  });
+
   const secondarySelect = elementSelectModal({
     hashTable,
     keyValue: "secondary-filter",
@@ -85,7 +89,16 @@ export const createSecondarySelect = (fieldName) => {
 };
 
 export const createShortList = (selectedVal, selectedField) => {
-  const recordList = dataSource.filter(
+  let selectedData = dataSource;
+  //! =================================================
+  //! if (selectedField === "ProfDevFY"){
+  //!   selectedData = newRequest()
+  //!   <make new request to server for data object with>
+  //!   <selectedVal and selectedField parameters>
+  //! }
+  //! =================================================
+
+  const recordList = selectedData.filter(
     (record) => record[selectedField] === selectedVal
   );
   return recordList;
