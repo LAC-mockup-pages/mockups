@@ -184,6 +184,23 @@ Core CSS rules for all pages
   background-color: #bfd3e2;
 }
 
+/* Sub-Navbar */
+#sub-nav {
+  overflow: visible;
+  font-size: 1.3em;
+  text-align: center;
+}
+
+.sub-navbar {
+  line-height: 3em;
+  margin: 4px;
+  border-radius: 5px;
+}
+
+.sub-navbar li:hover {
+  cursor: pointer;
+}
+
 /* Main buttons */
 /* Back to Top Button */
 
