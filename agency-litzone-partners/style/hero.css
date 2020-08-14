@@ -1,62 +1,8 @@
-body {
-  background-color: #f0e2d5;
-}
-
-.hero {
-  margin: 1% 6%;
-  padding: 0;
-  z-index: -500;
-}
-
 .partner-entry {
   margin: 1% 0 1% 0;
   padding: 0 0 2% 0;
   width: 100%;
   border-radius: 5px;
-}
-
-#view-bloc {
-  padding: 0 0 1% 0;
-  border-radius: 5px;
-}
-
-.label-text {
-  font-size: 1.3em;
-  font-weight: 600;
-  padding: 0 0 0.5% 0.5%;
-}
-
-#new-entry > .form-control {
-  font-size: 1.1em;
-  padding: 0.5%;
-  font-weight: 600;
-  margin-right: 0.3%;
-  margin-top: 0.3%;
-  height: 2.5em;
-}
-
-option {
-  color: #333;
-}
-
-#new-entry {
-  margin-left: 1%;
-}
-
-.col-width-small,
-#ReferralSiteID,
-#Zip,
-#Telephone,
-#ReferralSiteEmail {
-  max-width: 11%;
-}
-
-.col-width-large {
-  max-width: 25%;
-}
-
-.col-width-medium {
-  max-width: 15%;
 }
 
 #submit-btn,
@@ -73,24 +19,11 @@ option {
   border-radius: 5px;
 }
 
-:required::placeholder,
-.form-control:required {
-  color: rgb(197, 65, 65);
-  font-weight: 700;
-  text-align: left;
-}
-
 tbody {
   background-color: #fff;
   color: #283838;
   font-size: 1.2em;
   font-weight: 600;
-}
-
-option {
-  color: #283838;
-  font-size: 1em;
-  font-weight: 500;
 }
 
 .table > tbody > tr > td {

@@ -1,61 +1,8 @@
-body {
-  background-color: #f0e2d5;
-}
-
-.hero {
-  margin: 1% 6%;
-  padding: 0;
-  border-radius: 5px;
-  z-index: -500;
-}
-
 .site-entry {
   margin: 1% 0;
   padding: 0 0 2% 0;
   width: 100%;
   border-radius: 5px;
-}
-
-.view-bloc {
-  padding: 0 0 1% 0;
-  border-radius: 5px;
-}
-
-.label-text {
-  font-size: 1.3em;
-  font-weight: 600;
-  padding: 0 0 0.5% 0.5%;
-}
-
-#new-entry > .form-control {
-  font-size: 1.1em;
-  padding: 0.5%;
-  font-weight: 600;
-  margin-right: 0.3%;
-  margin-top: 0.3%;
-  height: 2.5em;
-}
-
-option {
-  color: #333;
-}
-
-#new-entry {
-  margin-left: 1%;
-}
-
-.col-width-small,
-#Zip,
-#Telephone {
-  max-width: 11%;
-}
-
-.col-width-large {
-  max-width: 25%;
-}
-
-.col-width-medium {
-  max-width: 15%;
 }
 
 #submit-btn,
@@ -70,14 +17,6 @@ option {
 #main-table {
   border-bottom: 1.5em solid #2479b5;
   border-radius: 5px;
-}
-
-:required::placeholder,
-.form-control:required,
-.delete-msg {
-  color: rgb(197, 65, 65);
-  text-align: left;
-  font-weight: 700;
 }
 
 tbody {
