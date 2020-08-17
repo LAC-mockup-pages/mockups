@@ -9,14 +9,10 @@
   width: 60%;
 }
 
-#submit-btn,
-#cancel-btn {
-  margin: 0 0.5% 0 2%;
-}
-
 #main-table {
   border-radius: 5px;
 }
+
 .data-view {
   border-radius: 5px;
 }

@@ -104,6 +104,15 @@ option {
   text-align: left;
 }
 
+#submit-btn,
+#cancel-btn {
+  margin: 0 0.5% 0 2%;
+}
+
+.table {
+  margin: 0;
+}
+
 /* Navbar */
 #main-logo:hover {
   cursor: pointer;
