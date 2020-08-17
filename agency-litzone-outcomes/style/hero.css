@@ -17,13 +17,6 @@
   border-radius: 5px;
 }
 
-/* tbody {
-  background-color: #fff;
-  color: #283838;
-  font-size: 1.2em;
-  font-weight: 600;
-} */
-
 .outcome-view:hover {
   background-color: #d3e4f0;
 }
