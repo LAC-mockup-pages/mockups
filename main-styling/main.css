@@ -113,6 +113,21 @@ option {
   margin: 0;
 }
 
+#main-table {
+  border-bottom: 1.5em solid #2479b5;
+  border-radius: 5px;
+}
+
+tbody {
+  background-color: #f5f5f5;
+  color: #333;
+  font-size: 1.4em;
+  font-weight: 400;
+}
+tbody > tr:nth-child(even) {
+  background-color: #e0e0eb;
+}
+
 /* Navbar */
 #main-logo:hover {
   cursor: pointer;
