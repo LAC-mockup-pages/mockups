@@ -61,15 +61,3 @@ label {
 .form-group {
   margin-bottom: 0;
 }
-
-.modal-select {
-  /* font-size: 1.4em;
-  line-height: 50px;
-  font-weight: 400;
-  border: none;
-  border-bottom: 1px solid #2479b5; */
-}
-.modal-header,
-.modal-footer {
-  background-color: #d3e4f0;
-}
