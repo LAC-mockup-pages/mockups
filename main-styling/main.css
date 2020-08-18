@@ -10,7 +10,9 @@ Core CSS rules for all pages
     sans-serif;
 }
 
-/* Colors */
+/* Colors
+============================
+*/
 
 .blue-light-text {
   color: #d3e4f0;
@@ -54,7 +56,10 @@ Core CSS rules for all pages
   background-color: #f7e095;
 }
 
-/* Pages */
+/* Pages
+============================
+*/
+
 body {
   background-color: #f0e2d5;
 }
@@ -124,6 +129,7 @@ tbody {
   font-size: 1.4em;
   font-weight: 400;
 }
+
 tbody > tr:nth-child(even) {
   background-color: #e0e0eb;
 }
@@ -173,7 +179,10 @@ th {
   border-bottom: 1px solid #2479b5;
 }
 
-/* Navbar */
+/* Navbar
+============================
+*/
+
 #main-logo:hover {
   cursor: pointer;
 }
@@ -307,7 +316,10 @@ th {
   background-color: #bfd3e2;
 }
 
-/* Sub-Navbar */
+/* Sub-Navbar
+============================
+*/
+
 #sub-nav {
   overflow: visible;
   font-size: 1.3em;
@@ -324,8 +336,10 @@ th {
   cursor: pointer;
 }
 
-/* Main buttons */
-/* Back to Top Button */
+/* Main buttons
+Back to Top Button
+============================
+*/
 
 #btn-top,
 #btn-save,
@@ -372,13 +386,19 @@ th {
   background-color: #555;
 }
 
-/* Close icon */
+/* Close icon
+============================
+*/
+
 .close {
   color: red;
   font-size: 3em;
 }
 
-/* Tooltips */
+/* Tooltips
+============================
+*/
+
 .tooltip > .tooltip-inner {
   background-color: #f7e095;
   opacity: 0.8;

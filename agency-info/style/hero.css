@@ -1,14 +1,9 @@
-body {
-  background-color: #f0e2d5;
-}
-
 .hero {
   background-color: #f0f0f5;
-  margin-top: 2%;
+  margin: 2% auto;
   padding-bottom: 1%;
   border: solid #2479b5;
   border-width: 2em 0;
-  border-radius: 5px;
 }
 
 .quarter-bloc {
@@ -17,7 +12,11 @@ body {
 
 .table-row {
   line-height: 45px;
-  color: #283838;
+  color: #333;
+}
+
+tbody > tr:nth-child(even) {
+  background-color: #f5f5f5;
 }
 
 .separation {
@@ -25,13 +24,13 @@ body {
   margin: 3% 0;
 }
 .row-label {
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: 600;
   line-height: 45px;
 }
 
 .row-data {
-  font-size: 1.4em;
+  font-size: 1.1em;
   font-weight: 400;
   line-height: 45px;
   border-bottom: 1px solid #2479b5;
