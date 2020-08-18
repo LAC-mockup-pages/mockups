@@ -8,15 +8,17 @@
 
 .quarter-bloc {
   padding: 0 2%;
+  background-color: #f0f0f5;
 }
 
 .table-row {
   line-height: 45px;
   color: #333;
+  background-color: #f0f0f5;
 }
 
 tbody > tr:nth-child(even) {
-  background-color: #f5f5f5;
+  background-color: #f0f0f5;
 }
 
 .separation {

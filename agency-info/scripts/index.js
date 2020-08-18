@@ -23,8 +23,8 @@ const rowLabels = [
     AD: "Assembly Dist.",
     SD: "Senatorial Dist.",
     PrepCode: "Prep Code",
-    AgencyEmail: "Email",
-  },
+    AgencyEmail: "Email"
+  }
 ];
 
 // list = [key,label,value] from createBloc()
@@ -79,7 +79,7 @@ const renderViewBloc = (dataObj) => {
     CPD,
     CD,
     AD,
-    SD,
+    SD
   } = dataObj;
   const topLeft = createBloc("topLeft", {
     ID,
@@ -88,7 +88,7 @@ const renderViewBloc = (dataObj) => {
     Division,
     ProgramManager,
     EPERate,
-    PrepCode,
+    PrepCode
   });
   const topRight = createBloc("topRight", {
     Address,
@@ -96,16 +96,16 @@ const renderViewBloc = (dataObj) => {
     State,
     Zip,
     Telephone,
-    AgencyEmail,
+    AgencyEmail
   });
   const bottomLeft = createBloc("bottomLeft", { ID, CSD, CPD, CD });
   const bottomRight = createBloc("bottomRight", { AD, SD });
   return `
-    <div class="container row" id="top-bloc" title="Click to Edit">
+    <div class="container row" id="top-bloc" data-toggle='tooltip' data-placement='left' title="Click to Edit">
       ${topLeft}${topRight}
     </div>
     <div class="separation"></div>
-    <div class="container row" id="bottom-bloc" title="Click to Edit">
+    <div class="container row" id="bottom-bloc" data-toggle='tooltip' data-placement='left' title="Click to Edit">
       ${bottomLeft}${bottomRight}
     </div>`;
 };
@@ -145,6 +145,10 @@ const saveMods = (form) => {
   $("#modal-bloc").modal("toggle");
 };
 
+//* =================================================
+//* jQuery section
+//* =================================================
+
 $(document).ready(() => {
   // * sub-navbar/index.js
   $("#sub-nav li").on("click", function (evnt) {
@@ -155,6 +159,8 @@ $(document).ready(() => {
 
   // * Data viewing
   $(".hero").append(renderViewBloc(agencyData[0]));
+  // Enables customized tooltips
+  $("[data-toggle='tooltip']").tooltip();
 
   //* Data bloc editing
   $(document).on("click", ".hero > div", function (evnt) {
@@ -191,7 +197,7 @@ $(document).ready(() => {
           labelVal,
           labelClassVal: "",
           option: "",
-          optionText: "a State",
+          optionText: "a State"
         });
       } else {
         // elementInput() <== helpers.js
@@ -202,7 +208,7 @@ $(document).ready(() => {
           labelClassVal: "",
           classVal: "",
           option: "",
-          optionHidden,
+          optionHidden
         });
       }
     }
