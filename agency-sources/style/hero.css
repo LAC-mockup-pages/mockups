@@ -5,62 +5,7 @@
   border-radius: 5px;
 }
 
-.table > tbody > tr > td {
-  line-height: 40px;
-}
-
 [data-name="FundAbbrev"],
 td:last-child {
   text-align: left;
-}
-
-tbody > tr:hover {
-  background-color: #d3e4f0;
-}
-
-thead,
-th {
-  text-align: center;
-  font-size: 1.1em;
-  font-weight: 600;
-  color: #fff;
-}
-
-.input-field {
-  line-height: 30px;
-}
-
-.input-field > label {
-  width: 25%;
-  font-size: 1.2em;
-}
-
-.input-field > input,
-.input-field > select {
-  font-size: 1.3em;
-  font-weight: 700;
-  border: none;
-  text-indent: 4px;
-  width: 60%;
-  border-bottom: 1px solid #2479b5;
-}
-
-.modal-select {
-  margin-top: 0.5%;
-  font-size: 1.3em;
-  line-height: 50px;
-  font-weight: 700;
-  padding: 5px;
-  border: none;
-  border-bottom: 1px solid #2479b5;
-}
-
-.modal-header,
-.modal-footer {
-  background-color: #d3e4f0;
-}
-
-.delete-msg {
-  width: fit-content;
-  border-bottom: 2px solid rgb(197, 65, 65);
 }

@@ -128,6 +128,51 @@ tbody > tr:nth-child(even) {
   background-color: #e0e0eb;
 }
 
+.table > tbody > tr > td {
+  line-height: 40px;
+}
+
+tbody > tr:hover {
+  background-color: #d3e4f0;
+}
+
+thead,
+th {
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #fff;
+}
+
+.input-field {
+  line-height: 2.5em;
+}
+
+.input-field > label {
+  width: 25%;
+  font-size: 1.2em;
+}
+
+.delete-msg {
+  width: fit-content;
+  border-bottom: 2px solid#dd5814;
+}
+
+.modal-header,
+.modal-footer {
+  background-color: #d3e4f0;
+}
+
+.input-field > input,
+.modal-select {
+  font-size: 1.4em;
+  font-weight: 400;
+  border: none;
+  text-indent: 4px;
+  width: 60%;
+  border-bottom: 1px solid #2479b5;
+}
+
 /* Navbar */
 #main-logo:hover {
   cursor: pointer;
