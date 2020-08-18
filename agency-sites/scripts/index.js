@@ -24,8 +24,8 @@ const rowLabels = [
     CPD: "Community Planning Dist.",
     CD: "Congressional Dist.",
     AD: "Assembly Dist.",
-    SD: "Senatorial Dist.",
-  },
+    SD: "Senatorial Dist."
+  }
 ];
 
 const createNewRecord = (labelsList) => {
@@ -44,7 +44,7 @@ const createNewRecord = (labelsList) => {
         "CPD",
         "CD",
         "AD",
-        "SD",
+        "SD"
       ].includes(key)
   );
   for (const key of keyList) {
@@ -59,7 +59,7 @@ const createNewRecord = (labelsList) => {
         keyValue: key,
         option,
         optionText: "a state",
-        classOption,
+        classOption
       });
     } else if (key === "County") {
       // elementSelectNewRecord() <== helperFunctions()
@@ -68,18 +68,19 @@ const createNewRecord = (labelsList) => {
         keyValue: key,
         option,
         optionText: "a county",
-        classOption,
+        classOption
       });
     } else {
       if (requiredList.includes(key)) {
-        option = " required title='Please fill this field'";
+        option =
+          " required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'";
       }
       // inputNoLabel() <== helperFunctions()
       element = inputNoLabel({
         key,
         placehold,
         classOption,
-        option,
+        option
       });
     }
     result.push(element);
@@ -112,7 +113,7 @@ const createTableHeader = (labelsObject) => {
           "CPD",
           "CD",
           "AD",
-          "SD",
+          "SD"
         ].includes(label[0])
     )
     .map((label) => label[1]);
@@ -135,7 +136,7 @@ const createTableBody = (dataList, labelObj) => {
     "CPD",
     "CD",
     "AD",
-    "SD",
+    "SD"
   ];
 
   const filteredLabelList = Object.keys(labelObj).filter(
@@ -162,7 +163,7 @@ const createTableBody = (dataList, labelObj) => {
       record,
       labelList: filteredLabelList,
       labelObj,
-      hiddenList,
+      hiddenList
     });
   }
   return `<tbody>${rows}</tbody>`;
@@ -221,7 +222,7 @@ const createForm = (list) => {
         labelVal: "County",
         labelClassVal,
         option,
-        optionText: " a county",
+        optionText: " a county"
       });
     } else if (keyVal === "State") {
       if (value === "null") value = "";
@@ -234,7 +235,7 @@ const createForm = (list) => {
         labelVal: "State",
         labelClassVal,
         option,
-        optionText: " a state",
+        optionText: " a state"
       });
     } else {
       // elementInput() <== helperFunctions.js
@@ -245,7 +246,7 @@ const createForm = (list) => {
         labelClassVal,
         classVal,
         option,
-        optionHidden,
+        optionHidden
       });
     }
   }
@@ -322,6 +323,8 @@ $(document).ready(() => {
   // * Data viewing
   $("#new-entry").append(createNewRecord(rowLabels));
   $("#main-table").append(createViewBloc());
+  // Enables customized tooltips
+  $("[data-toggle='tooltip']").tooltip();
 
   // Change text color from red (required) to black
   // when a value is entered
