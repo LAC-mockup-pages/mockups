@@ -200,7 +200,8 @@ const createForm = (list) => {
     if (["fullAddress", "countyDesc"].includes(keyVal)) continue;
     if (requiredList.includes(keyVal)) {
       labelClassVal = "class='red-text'";
-      option = "required";
+      option =
+        "required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'";
     }
 
     if (keyVal === "County") {
