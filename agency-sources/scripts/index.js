@@ -44,7 +44,8 @@ const createNewRecord = (labelsList) => {
       element = elementSelectNewRecord({
         hashTable: sourcesData,
         keyValue: key,
-        option: "required",
+        option:
+          " required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'",
         optionText: "a funding source",
         classOption
       });
@@ -169,6 +170,14 @@ $(document).ready(() => {
   // * Agency funding sources viewing
   $("#new-entry").append(createNewRecord(rowLabels));
   $("#main-table").append(createViewBloc(rowLabels));
+  $(".source-entry").append(`<div class="container-fluid buttons-bloc-new">
+  <button type="button" id="cancel-btn" form="new-entry"
+    class="btn btn-default pull-right">Cancel</button>
+  <button type="button" id="submit-btn" form="new-entry"
+    class="btn dark-blue-text blue-light-bg pull-right">Add</button>
+</div>`);
+  // Enables customized tooltips
+  $("[data-toggle='tooltip']").tooltip();
 
   // Change text color from red (required) to black
   // when a value other than default is selected
