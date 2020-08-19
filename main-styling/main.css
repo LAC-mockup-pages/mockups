@@ -96,10 +96,14 @@ body {
   margin-left: 1%;
 }
 
+#new-entry > .form-control:focus {
+  box-shadow: 0 0 0 3px #d3e4f0;
+}
+
 option {
   color: #333;
   font-size: 1em;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 :required::placeholder,
@@ -109,10 +113,10 @@ option {
   text-align: left;
 }
 
-#submit-btn,
+/* #submit-btn,
 #cancel-btn {
   margin: 0 0.5% 0 2%;
-}
+} */
 
 .table {
   margin: 0;
@@ -160,6 +164,12 @@ th {
 .input-field > label {
   width: 25%;
   font-size: 1.2em;
+}
+
+.modal-body,
+.modal-body input,
+select {
+  background-color: #f0f0f5;
 }
 
 .delete-msg {
@@ -359,6 +369,23 @@ Back to Top button
   right: 0.5%;
   transition: background-color 0.3s;
   z-index: 1000;
+}
+
+.buttons-bloc-new {
+  margin-top: 0.7%;
+}
+
+#submit-btn,
+#cancel-btn {
+  margin: 0 0.5% 0 2%;
+  width: 5.5em;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+#submit-btn:hover,
+#cancel-btn:hover {
+  box-shadow: 0 0 0 3px #d3e4f0;
 }
 
 #btn-top {

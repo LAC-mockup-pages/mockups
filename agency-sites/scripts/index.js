@@ -85,14 +85,6 @@ const createNewRecord = (labelsList) => {
     }
     result.push(element);
   }
-  result.push(
-    `<button type="button" id="submit-btn" form="new-entry"
-      class="btn btn-primary">Add
-    </button>
-    <button type="button" id="cancel-btn" form="new-entry"
-      class="btn btn-default">Cancel
-    </button>`
-  );
   return result.join("");
 };
 
@@ -323,6 +315,12 @@ $(document).ready(() => {
   // * Data viewing
   $("#new-entry").append(createNewRecord(rowLabels));
   $("#main-table").append(createViewBloc());
+  $(".site-entry").append(`<div class="container-fluid buttons-bloc-new">
+    <button type="button" id="cancel-btn" form="new-entry"
+      class="btn btn-default pull-right">Cancel</button>
+    <button type="button" id="submit-btn" form="new-entry"
+      class="btn dark-blue-text blue-light-bg pull-right">Add</button>
+  </div>`);
   // Enables customized tooltips
   $("[data-toggle='tooltip']").tooltip();
 
