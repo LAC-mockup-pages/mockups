@@ -331,7 +331,6 @@ $(document).ready(() => {
   $(document).on("focusin", "#SiteID, #SiteName", function (evnt) {
     evnt.stopPropagation();
     $(this).toggleClass("dark-text").prop("required", false);
-    // $(this).toggleClass("dark-text");
   });
 
   //* Adding a new site

@@ -340,7 +340,7 @@ th {
 }
 
 /* Main buttons
-Back to Top Button
+Back to Top button
 ============================
 */
 
@@ -362,7 +362,8 @@ Back to Top Button
 }
 
 #btn-top {
-  background-color: #ff9800;
+  border-bottom: solid 2px #555;
+  color: #555;
 }
 
 #btn-save {
@@ -377,7 +378,8 @@ Back to Top Button
 
 #btn-top:hover {
   cursor: pointer;
-  background-color: #333;
+  background-color: #555;
+  color: #fff;
 }
 
 #btn-save:hover,
