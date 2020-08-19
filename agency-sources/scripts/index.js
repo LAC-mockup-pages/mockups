@@ -9,13 +9,13 @@ const rowLabels = [
     AgencyID: "Agency ID",
     FSID: "Source ID",
     FundAbbrev: "Source Name",
-    FundStart: "Begin Date",
-    FundEnd: "End Date",
+    FundStart: "Begin Date (MM/DD/YYYY)",
+    FundEnd: "End Date (MM/DD/YYYY)",
     FY: "Fiscal Year",
     FundNumber: "Contract / Grant #",
     Amount: "Amount",
-    Purpose: "Purpose",
-  },
+    Purpose: "Purpose"
+  }
 ];
 
 const setFiscalYear = (start, end) => {
@@ -46,12 +46,13 @@ const createNewRecord = (labelsList) => {
         keyValue: key,
         option: "required",
         optionText: "a funding source",
-        classOption,
+        classOption
       });
     } else {
       let placehold = labelObj[key];
       if (["FundStart", "FundEnd"].includes(key)) {
-        option = " required title='Please fill this field\n(MM/DD/YYYY)'";
+        option =
+          " required data-toggle='tooltip' data-placement='bottom' title='Please fill this field\n(MM/DD/YYYY)'";
       }
       if (key === "FY") {
         classOption += " hidden";
@@ -61,19 +62,11 @@ const createNewRecord = (labelsList) => {
         key,
         placehold,
         classOption,
-        option,
+        option
       });
     }
     result.push(element);
   }
-  result.push(
-    `<button type="button" id="submit-btn" form="new-entry"
-      class="btn btn-primary">Add
-    </button>
-    <button type="button" id="cancel-btn" form="new-entry"
-      class="btn btn-default">Cancel
-    </button>`
-  );
   return result.join("");
 };
 
@@ -105,7 +98,7 @@ const createTableBody = (dataList, labelList) => {
       record,
       labelList: filteredLabelList,
       labelObj: rowLabels[0],
-      hiddenList,
+      hiddenList
     });
   }
   return `<tbody>${rows}</tbody>`;
@@ -161,6 +154,10 @@ const saveMods = (fields, formName, tableName = "") => {
     if (formName === "#new-entry") $(formName)[0].reset();
   }
 };
+
+//*=================================================
+//* jQuery section
+//*=================================================
 
 $(document).ready(() => {
   // * sub-navbar/index.js
@@ -238,7 +235,7 @@ $(document).ready(() => {
             labelVal: "Source Name",
             labelClassVal: "class='red-text'",
             option: "required",
-            optionText: " a source",
+            optionText: " a source"
           });
         } else {
           let option = "";
@@ -257,7 +254,7 @@ $(document).ready(() => {
             labelClassVal,
             classVal: "",
             option,
-            optionHidden,
+            optionHidden
           });
         }
       })

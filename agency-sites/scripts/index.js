@@ -292,6 +292,10 @@ const saveMods = (fields, formName, tableName = "") => {
   }
 };
 
+//*=================================================
+//* jQuery section
+//*=================================================
+
 $(document).ready(() => {
   // * sub-navbar/index.js
   $("#sub-nav li").click(function () {
