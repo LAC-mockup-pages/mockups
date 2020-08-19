@@ -380,6 +380,8 @@ Back to Top button
 
 #btn-top {
   border-bottom: solid 2px #555;
+  border-radius: 20px;
+  font-weight: 600;
   color: #555;
 }
 
