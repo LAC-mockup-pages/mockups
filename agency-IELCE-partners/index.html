@@ -40,12 +40,19 @@
       type="text/javascript"
       defer
     ></script>
+    <script src="scripts/data.js" type="text/javascript" defer></script>
+    <script src="./scripts/data-check.js" type="text/javascript" defer></script>
+    <script
+      src="../helpers/helperFunctions.js"
+      type="text/javascript"
+      defer
+    ></script>
 
     <script src="scripts/index.js" type="text/javascript" defer></script>
     <link />
-    <!-- !============================= -->
+    <!-- !===================================== -->
     <!-- ! File: /agency/IELCEPartnersinfo.aspx -->
-    <!-- !============================= -->
+    <!-- !===================================== -->
 
     <title>Mock-up Agency IET/IELCE Partners</title>
   </head>
@@ -255,23 +262,22 @@
       </div>
     </header>
     <!-- Hero -->
-    <div class="container hero blue-bg">
-      <!-- New source entry-->
+    <div class="container-fluid hero">
+      <!-- New partner entry-->
       <div class="container-fluid partner-entry blue-bg">
         <div class="label-text blue-light-text">
           New Partner (Elements in red are required):
         </div>
-        <form class="form-inline blue-bg" role="form" id="new-partner"></form>
+        <form class="form-inline blue-bg" role="form" id="new-entry"></form>
       </div>
       <!-- Data viewing -->
-      <table class="table">
-        <thead></thead>
-        <tbody></tbody>
-      </table>
+      <div class="container-fluid blue-bg view-bloc">
+        <table class="table blue-bg" id="main-table"></table>
+      </div>
     </div>
     <a id="btn-top"
-      ><span class="glyphicon glyphicon-eject" aria-hidden="false"></span> Back
-      to Top</a
+      ><span class="glyphicon glyphicon-eject" aria-hidden="false"></span>
+      Top</a
     >
 
     <!-- Modal for Editing Top Bloc data -->
@@ -285,16 +291,18 @@
             </button>
             <h4 class="modal-title">Editing a Partner</h4>
           </div>
-          <div class="modal-body"></div>
+          <div class="modal-body">
+            <form role="form" id="edit-form"></form>
+          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-              Close
+              Close without saving
             </button>
             <button
               type="button"
               class="btn btn-primary"
-              data-dismiss="modal"
               id="save-btn"
+              form="edit-form"
             >
               Save changes
             </button>
