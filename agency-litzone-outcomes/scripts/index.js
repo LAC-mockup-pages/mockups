@@ -9,8 +9,8 @@ const rowLabels = [
     AgencyID: "agencyId",
     OutcomeSortOrder: "Category",
     Category: "Category",
-    Description: "Description",
-  },
+    Description: "Description"
+  }
 ];
 
 const createNewRecord = (labelsList) => {
@@ -33,13 +33,15 @@ const createNewRecord = (labelsList) => {
       element = elementSelectNewRecord({
         hashTable: categories,
         keyValue: key,
-        option: " required title='Please fill this field'",
+        option:
+          " required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'",
         optionText: "a category",
-        classOption,
+        classOption
       });
     } else {
       if (requiredList.includes(key)) {
-        option = " required title='Please fill this field'";
+        option =
+          " required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'";
       }
       if (hiddenList.includes(key)) classOption += " hidden";
 
@@ -49,16 +51,12 @@ const createNewRecord = (labelsList) => {
         placehold,
         classOption,
         option,
-        type,
+        type
       });
     }
     result.push(element);
   }
 
-  result.push(
-    `<button type="button" id="submit-btn" form="new-entry" class="btn btn-primary">Add</button>
-    <button type="button" id="cancel-btn" form="new-entry" class="btn btn-default">Cancel</button>`
-  );
   return result.join("");
 };
 
@@ -81,7 +79,7 @@ const displayDescriptions = (outcomeList, labelObj) => {
 
       const dataBloc = ` id=${ID} data-order=${OutcomeSortOrder} data-cat="${Category}"`;
 
-      descriptionBloc += `<div class="outcome-view" title="Click to Edit"${dataBloc}>${
+      descriptionBloc += `<div class="outcome-view" data-toggle='tooltip' data-placement='left' title="Click to Edit"${dataBloc}>${
         Description || ""
       }</div>`;
     }
@@ -126,8 +124,9 @@ const createForm = (fieldObj) => {
     selectedValue: catId,
     labelVal: "Category",
     labelClassVal: "class='red-text'",
-    option: "required",
-    optionText: " a category",
+    option:
+      " required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'",
+    optionText: " a category"
   });
 
   const inputDescription = elementInput({
@@ -136,8 +135,9 @@ const createForm = (fieldObj) => {
     value: descText,
     labelClassVal: "class='red-text'",
     classVal: "",
-    option: " required",
-    optionHidden: "form-group",
+    option:
+      " required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'",
+    optionHidden: "form-group"
   });
 
   return formContent + selectCategory + inputDescription;
@@ -190,6 +190,10 @@ const saveMods = (fields, formName, tableName = "") => {
   }
 };
 
+//*=================================================
+//* jQuery section
+//*=================================================
+
 $(document).ready(() => {
   // * sub-navbar/index.js
   $("#sub-nav li").click(function () {
@@ -214,6 +218,15 @@ $(document).ready(() => {
   $("#new-entry").append(createNewRecord(rowLabels));
   $("#main-table").append(createTableHeader(rowLabels[0]));
   $("#view-bloc").append(createViewBloc());
+  $(".site-entry").append(`<div class="container-fluid buttons-bloc-new">
+  <button type="button" id="cancel-btn" form="new-entry"
+    class="btn btn-default pull-right">Cancel</button>
+  <button type="button" id="submit-btn" form="new-entry"
+    class="btn dark-blue-text blue-light-bg pull-right">Add</button>
+</div>`);
+  // Enables customized tooltips
+  $("[data-toggle='tooltip']").tooltip();
+
   // Change text color from red (required) to black
   // when a value is entered
   $(document).on("focusin", "#OutcomeSortOrder-view, #Description", function (

@@ -20,8 +20,8 @@ const rowLabels = [
     County: "County",
     CountyDesc: "County",
     Telephone: "Phone",
-    ReferralSiteEmail: "Email",
-  },
+    ReferralSiteEmail: "Email"
+  }
 ];
 
 const createNewRecord = (labelsList) => {
@@ -45,7 +45,7 @@ const createNewRecord = (labelsList) => {
         keyValue: key,
         option,
         optionText: "a state",
-        classOption,
+        classOption
       });
     } else if (key === "County") {
       // elementSelectNewRecord() <== helperFunctions()
@@ -54,11 +54,12 @@ const createNewRecord = (labelsList) => {
         keyValue: key,
         option,
         optionText: "a county",
-        classOption,
+        classOption
       });
     } else {
       if (requiredList.includes(key)) {
-        option = " required title='Please fill this field'";
+        option =
+          " required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'";
       }
       if (hiddenList.includes(key)) classOption += " hidden";
       if (key === "ReferralSiteEmail") type = "email";
@@ -69,15 +70,11 @@ const createNewRecord = (labelsList) => {
         placehold,
         classOption,
         option,
-        type,
+        type
       });
     }
     result.push(element);
   }
-  result.push(
-    `<button type="button" id="submit-btn" form="new-entry" class="btn btn-primary">Add</button>
-    <button type="button" id="cancel-btn" form="new-entry" class="btn btn-default">Cancel</button>`
-  );
   return result.join("");
 };
 
@@ -92,7 +89,7 @@ const createTableHeader = (labelsObject) => {
           "City",
           "State",
           "Zip",
-          "CountyDesc",
+          "CountyDesc"
         ].includes(label[0])
     )
     .map((label) => label[1]);
@@ -129,7 +126,7 @@ const createTableBody = (dataList, labelObj) => {
       record,
       labelList: filteredLabelList,
       labelObj,
-      hiddenList,
+      hiddenList
     });
   }
   return `<tbody>${rows}</tbody>`;
@@ -172,7 +169,8 @@ const createForm = (list) => {
     if (["fullAddress"].includes(keyVal)) continue;
     if (requiredList.includes(keyVal)) {
       labelClassVal = "class='red-text'";
-      option = "required";
+      option =
+        "required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'";
     }
 
     if (keyVal === "County") {
@@ -186,7 +184,7 @@ const createForm = (list) => {
         labelVal: "County",
         labelClassVal,
         option,
-        optionText: " a county",
+        optionText: " a county"
       });
     } else if (keyVal === "State") {
       if (value === "null") value = "";
@@ -199,7 +197,7 @@ const createForm = (list) => {
         labelVal: "State",
         labelClassVal,
         option,
-        optionText: " a state",
+        optionText: " a state"
       });
     } else {
       // elementInput() <== helperFunctions.js
@@ -210,7 +208,7 @@ const createForm = (list) => {
         labelClassVal,
         classVal,
         option,
-        optionHidden,
+        optionHidden
       });
     }
   }
@@ -275,6 +273,10 @@ const saveMods = (fields, formName, tableName = "") => {
   }
 };
 
+//*=================================================
+//* jQuery section
+//*=================================================
+
 $(document).ready(() => {
   // * sub-navbar/index.js
   $("#sub-nav li").click(function () {
@@ -298,6 +300,14 @@ $(document).ready(() => {
   //* Data viewing
   $("#new-entry").append(createNewRecord(rowLabels));
   $("#main-table").append(createViewBloc());
+  $(".partner-entry").append(`<div class="container-fluid buttons-bloc-new">
+    <button type="button" id="cancel-btn" form="new-entry"
+      class="btn btn-default pull-right">Cancel</button>
+    <button type="button" id="submit-btn" form="new-entry"
+      class="btn dark-blue-text blue-light-bg pull-right">Add</button>
+  </div>`);
+  // Enables customized tooltips
+  $("[data-toggle='tooltip']").tooltip();
 
   // Change text color from red (required) to black
   // when a value is entered
