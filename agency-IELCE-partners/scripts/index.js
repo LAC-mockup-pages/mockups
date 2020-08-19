@@ -25,8 +25,8 @@ const rowLabels = [
     AmountProj: "Projected $$",
     AmountAct: "Actual $$",
     PartnerTrainingType: "Training Type",
-    PartnerCredential: "Credential",
-  },
+    PartnerCredential: "Credential"
+  }
 ];
 
 const createNewRecord = (labelList) => {
@@ -42,13 +42,15 @@ const createNewRecord = (labelList) => {
         "AmountProj",
         "AmountAct",
         "PartnerTrainingType",
-        "PartnerCredential",
+        "PartnerCredential"
       ].includes(key)
   );
   const requiredList = ["IELCEPartnerID", "PartnerName", "PartnerFSID"];
 
   for (const key of keyList) {
-    let option = requiredList.includes(key) ? " required" : "";
+    let option = requiredList.includes(key)
+      ? " required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'"
+      : "";
     let classOption = "";
 
     // inputNoLabel() <== helperFunction.js
@@ -56,7 +58,7 @@ const createNewRecord = (labelList) => {
       key,
       placehold: labelList[0][key],
       classOption,
-      option,
+      option
     });
 
     if (key === "County") {
@@ -68,7 +70,7 @@ const createNewRecord = (labelList) => {
         keyValue: key,
         option,
         optionText: "a county",
-        classOption,
+        classOption
       });
     } else if (key === "State") {
       classOption = "modal-select";
@@ -79,7 +81,7 @@ const createNewRecord = (labelList) => {
         keyValue: key,
         option,
         optionText: "a state",
-        classOption,
+        classOption
       });
     } else if (key === "PartnerFSID") {
       classOption = "modal-select";
@@ -90,19 +92,12 @@ const createNewRecord = (labelList) => {
         keyValue: key,
         option,
         optionText: "a funding",
-        classOption,
+        classOption
       });
     }
 
     result += element;
   }
-  result += `<button type="button" id="submit-btn" form="new-entry"
-            class="btn btn-primary">
-              Add</button>
-          <button type="button" id="cancel-btn" form="new-entry"
-            class="btn btn-default">
-              Cancel</button>`;
-
   return result;
 };
 
@@ -119,7 +114,7 @@ const createTableHeader = (labels) => {
           "State",
           "Zip",
           "CountyDesc",
-          "PartnerFSID",
+          "PartnerFSID"
         ].includes(key)
     )
     .map((field) => labelObj[field]);
@@ -145,7 +140,7 @@ const createTableBody = (dataList, labels) => {
     "State",
     "Zip",
     "County",
-    "PartnerFSID",
+    "PartnerFSID"
   ];
   for (const record of sortedDataList) {
     const { Address, City, State, Zip, Telephone } = record;
@@ -165,7 +160,7 @@ const createTableBody = (dataList, labels) => {
       record,
       labelList: filteredLabelList,
       labelObj: rowLabels[0],
-      hiddenList,
+      hiddenList
     });
   }
   return `<tbody>${rows}</tbody>`;
@@ -209,7 +204,8 @@ const createModalForm = (formId) => {
       let labelClassVal = "";
 
       if (requiredList.includes(keyVal)) {
-        option = "required";
+        option =
+          "required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'";
         labelClassVal += "class='red-text'";
       }
       // zipCodeFormat() elementSelectModal() elementInput()
@@ -223,7 +219,7 @@ const createModalForm = (formId) => {
           labelVal: "County",
           labelClassVal,
           option,
-          optionText: " a county",
+          optionText: " a county"
         });
       } else if (keyVal === "State") {
         return elementSelectModal({
@@ -233,7 +229,7 @@ const createModalForm = (formId) => {
           labelVal: "State",
           labelClassVal,
           option,
-          optionText: " a state",
+          optionText: " a state"
         });
       } else if (keyVal === "PartnerFSID") {
         return elementSelectModal({
@@ -243,7 +239,7 @@ const createModalForm = (formId) => {
           labelVal: "Funding",
           labelClassVal,
           option,
-          optionText: " a funding",
+          optionText: " a funding"
         });
       } else {
         return elementInput({
@@ -253,7 +249,7 @@ const createModalForm = (formId) => {
           labelClassVal,
           classVal,
           option,
-          optionHidden,
+          optionHidden
         });
       }
     })
@@ -321,6 +317,10 @@ const saveMods = (fields, formName, tableName = "") => {
   }
 };
 
+//*=================================================
+//* jQuery section
+//*=================================================
+
 $(document).ready(() => {
   // * sub-navbar/index.js
   $("#sub-nav li").click(function () {
@@ -344,6 +344,14 @@ $(document).ready(() => {
   //* Data viewing
   $("#new-entry").append(createNewRecord(rowLabels));
   $("#main-table").append(createViewBloc());
+  $(".partner-entry").append(`<div class="container-fluid buttons-bloc-new">
+    <button type="button" id="cancel-btn" form="new-entry"
+      class="btn btn-default pull-right">Cancel</button>
+    <button type="button" id="submit-btn" form="new-entry"
+      class="btn dark-blue-text blue-light-bg pull-right">Add</button>
+  </div>`);
+  // Enables customized tooltips
+  $("[data-toggle='tooltip']").tooltip();
 
   // Change text color from red (required) to black
   // when a value is entered
