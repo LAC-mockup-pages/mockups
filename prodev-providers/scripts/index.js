@@ -13,8 +13,8 @@ const rowLabels = [
     State: "State",
     Zip: "ZIP",
     Phone: "Phone",
-    Email: "Email",
-  },
+    Email: "Email"
+  }
 ];
 
 const createNewRecord = (labelsList) => {
@@ -35,12 +35,12 @@ const createNewRecord = (labelsList) => {
         keyValue: key,
         option,
         optionText: "a state",
-        classOption,
+        classOption
       });
     } else {
       if (requiredList.includes(key)) {
         option =
-          " required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'";
+          " required title='Please fill this field' data-toggle='tooltip' data-placement='bottom' ";
       }
       // if (hiddenList.includes(key)) classOption += " hidden";
       if (key === "Email") type = "email";
@@ -51,7 +51,7 @@ const createNewRecord = (labelsList) => {
         placehold,
         classOption,
         option,
-        type,
+        type
       });
     }
     result.push(element);
@@ -86,7 +86,7 @@ const createTableBody = (dataList, labelObj) => {
       record,
       labelList: Object.keys(labelObj),
       labelObj,
-      hiddenList,
+      hiddenList
     });
   }
   return `<tbody>${rows}</tbody>`;
@@ -144,7 +144,7 @@ const createModalForm = (tdList) => {
           labelVal: "State",
           labelClassVal,
           option,
-          optionText: " a state",
+          optionText: " a state"
         });
       } else {
         return elementInput({
@@ -154,7 +154,7 @@ const createModalForm = (tdList) => {
           labelClassVal,
           classVal,
           option,
-          optionHidden,
+          optionHidden
         });
       }
     })
@@ -215,6 +215,10 @@ const saveMods = (fields, formName, tableName = "") => {
     }
   }
 };
+
+//*=================================================
+//* jQuery section
+//*=================================================
 
 $(document).ready(() => {
   // * sub-navbar/index.js
