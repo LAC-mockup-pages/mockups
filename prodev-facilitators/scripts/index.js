@@ -16,8 +16,8 @@ const rowLabels = [
     HomePhone: "Home Phone",
     Email: "Email",
     CellPhone: "Cell Phone",
-    AlternatePhone: "Alt. Phone",
-  },
+    AlternatePhone: "Alt. Phone"
+  }
 ];
 
 const createNewRecord = (labelsList) => {
@@ -38,12 +38,12 @@ const createNewRecord = (labelsList) => {
         keyValue: key,
         option,
         optionText: "a state",
-        classOption,
+        classOption
       });
     } else {
       if (requiredList.includes(key)) {
         option =
-          " required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'";
+          " required title='Please fill this field' data-toggle='tooltip' data-placement='bottom' ";
       }
       // if (hiddenList.includes(key)) classOption += " hidden";
       if (key === "Email") type = "email";
@@ -54,7 +54,7 @@ const createNewRecord = (labelsList) => {
         placehold,
         classOption,
         option,
-        type,
+        type
       });
     }
     result.push(element);
@@ -88,7 +88,7 @@ const createTableBody = (dataList, labelObj) => {
       Zip: formattedZip,
       HomePhone: formattedHomePhone,
       CellPhone: formattedCellPhone,
-      AlternatePhone: formattedAlternatePhone,
+      AlternatePhone: formattedAlternatePhone
     };
 
     // createRow() <== helperFunction.js
@@ -96,7 +96,7 @@ const createTableBody = (dataList, labelObj) => {
       record,
       labelList: Object.keys(labelObj),
       labelObj,
-      hiddenList,
+      hiddenList
     });
   }
   return `<tbody>${rows}</tbody>`;
@@ -142,7 +142,7 @@ const createModalForm = (tdList) => {
 
       if (requiredList.includes(keyVal)) {
         option =
-          "required data-toggle='tooltip' data-placement='bottom' title='Please fill out this field'";
+          "required title='Please fill out this field' data-toggle='tooltip' data-placement='bottom' ";
         labelClassVal += "class='red-text'";
       }
       // zipCodeFormat() elementSelectModal() elementInput()
@@ -156,7 +156,7 @@ const createModalForm = (tdList) => {
           labelVal: "State",
           labelClassVal,
           option,
-          optionText: " a state",
+          optionText: " a state"
         });
       } else {
         return elementInput({
@@ -166,7 +166,7 @@ const createModalForm = (tdList) => {
           labelClassVal,
           classVal,
           option,
-          optionHidden,
+          optionHidden
         });
       }
     })
@@ -228,6 +228,10 @@ const saveMods = (fields, formName, tableName = "") => {
     }
   }
 };
+
+//*=================================================
+//* jQuery section
+//*=================================================
 
 $(document).ready(() => {
   // * sub-navbar/index.js
