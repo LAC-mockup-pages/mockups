@@ -24,8 +24,8 @@ const rowLabels = [
     CPD: "Community Planning Dist.",
     CD: "Congressional Dist.",
     AD: "Assembly Dist.",
-    SD: "Senatorial Dist.",
-  },
+    SD: "Senatorial Dist."
+  }
 ];
 
 const createNewRecord = (labelsList) => {
@@ -44,7 +44,7 @@ const createNewRecord = (labelsList) => {
         "CPD",
         "CD",
         "AD",
-        "SD",
+        "SD"
       ].includes(key)
   );
   for (const key of keyList) {
@@ -59,7 +59,7 @@ const createNewRecord = (labelsList) => {
         keyValue: key,
         option,
         optionText: "a state",
-        classOption,
+        classOption
       });
     } else if (key === "County") {
       // elementSelectNewRecord() <== helperFunctions()
@@ -68,30 +68,23 @@ const createNewRecord = (labelsList) => {
         keyValue: key,
         option,
         optionText: "a county",
-        classOption,
+        classOption
       });
     } else {
       if (requiredList.includes(key)) {
-        option = " required title='Please fill this field'";
+        option =
+          " required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'";
       }
       // inputNoLabel() <== helperFunctions()
       element = inputNoLabel({
         key,
         placehold,
         classOption,
-        option,
+        option
       });
     }
     result.push(element);
   }
-  result.push(
-    `<button type="button" id="submit-btn" form="new-entry"
-      class="btn btn-primary">Add
-    </button>
-    <button type="button" id="cancel-btn" form="new-entry"
-      class="btn btn-default">Cancel
-    </button>`
-  );
   return result.join("");
 };
 
@@ -112,7 +105,7 @@ const createTableHeader = (labelsObject) => {
           "CPD",
           "CD",
           "AD",
-          "SD",
+          "SD"
         ].includes(label[0])
     )
     .map((label) => label[1]);
@@ -135,7 +128,7 @@ const createTableBody = (dataList, labelObj) => {
     "CPD",
     "CD",
     "AD",
-    "SD",
+    "SD"
   ];
 
   const filteredLabelList = Object.keys(labelObj).filter(
@@ -162,7 +155,7 @@ const createTableBody = (dataList, labelObj) => {
       record,
       labelList: filteredLabelList,
       labelObj,
-      hiddenList,
+      hiddenList
     });
   }
   return `<tbody>${rows}</tbody>`;
@@ -207,7 +200,8 @@ const createForm = (list) => {
     if (["fullAddress", "countyDesc"].includes(keyVal)) continue;
     if (requiredList.includes(keyVal)) {
       labelClassVal = "class='red-text'";
-      option = "required";
+      option =
+        "required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'";
     }
 
     if (keyVal === "County") {
@@ -221,7 +215,7 @@ const createForm = (list) => {
         labelVal: "County",
         labelClassVal,
         option,
-        optionText: " a county",
+        optionText: " a county"
       });
     } else if (keyVal === "State") {
       if (value === "null") value = "";
@@ -234,7 +228,7 @@ const createForm = (list) => {
         labelVal: "State",
         labelClassVal,
         option,
-        optionText: " a state",
+        optionText: " a state"
       });
     } else {
       // elementInput() <== helperFunctions.js
@@ -245,7 +239,7 @@ const createForm = (list) => {
         labelClassVal,
         classVal,
         option,
-        optionHidden,
+        optionHidden
       });
     }
   }
@@ -299,6 +293,10 @@ const saveMods = (fields, formName, tableName = "") => {
   }
 };
 
+//*=================================================
+//* jQuery section
+//*=================================================
+
 $(document).ready(() => {
   // * sub-navbar/index.js
   $("#sub-nav li").click(function () {
@@ -322,13 +320,20 @@ $(document).ready(() => {
   // * Data viewing
   $("#new-entry").append(createNewRecord(rowLabels));
   $("#main-table").append(createViewBloc());
+  $(".site-entry").append(`<div class="container-fluid buttons-bloc-new">
+    <button type="button" id="cancel-btn" form="new-entry"
+      class="btn btn-default pull-right">Cancel</button>
+    <button type="button" id="submit-btn" form="new-entry"
+      class="btn dark-blue-text blue-light-bg pull-right">Add</button>
+  </div>`);
+  // Enables customized tooltips
+  $("[data-toggle='tooltip']").tooltip();
 
   // Change text color from red (required) to black
   // when a value is entered
   $(document).on("focusin", "#SiteID, #SiteName", function (evnt) {
     evnt.stopPropagation();
     $(this).toggleClass("dark-text").prop("required", false);
-    // $(this).toggleClass("dark-text");
   });
 
   //* Adding a new site

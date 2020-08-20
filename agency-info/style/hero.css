@@ -1,23 +1,24 @@
-body {
-  background-color: #f0e2d5;
-}
-
 .hero {
-  background-color: white;
-  margin-top: 2%;
+  background-color: #f0f0f5;
+  margin: 2% auto;
   padding-bottom: 1%;
   border: solid #2479b5;
   border-width: 2em 0;
-  border-radius: 5px;
 }
 
 .quarter-bloc {
   padding: 0 2%;
+  background-color: #f0f0f5;
 }
 
 .table-row {
   line-height: 45px;
-  color: #283838;
+  color: #333;
+  background-color: #f0f0f5;
+}
+
+tbody > tr:nth-child(even) {
+  background-color: #f0f0f5;
 }
 
 .separation {
@@ -25,17 +26,16 @@ body {
   margin: 3% 0;
 }
 .row-label {
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: 600;
   line-height: 45px;
 }
 
 .row-data {
-  position: relative;
-  font-size: 1.3em;
-  font-weight: 900;
+  font-size: 1.1em;
+  font-weight: 400;
   line-height: 45px;
-  border-bottom: 2px solid #2479b5;
+  border-bottom: 1px solid #2479b5;
 }
 
 #top-bloc:hover,
@@ -43,33 +43,23 @@ body {
   background-color: #d3e4f0;
 }
 
-.input-field {
-  line-height: 30px;
-}
-
 label {
   width: 25%;
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
-input {
-  font-size: 1.3em;
-  font-weight: 700;
+.input-field > input,
+.input-field > select {
+  font-size: 1.4em;
+  font-weight: 400;
   border: none;
-  text-indent: 4px;
+  text-indent: 0.5%;
   width: 60%;
+  line-height: 45px;
   border-bottom: 1px solid #2479b5;
+  margin-bottom: 0;
 }
 
-.modal-select {
-  font-size: 1.3em;
-  line-height: 50px;
-  font-weight: 700;
-  padding: 5px;
-  border: none;
-  border-bottom: 1px solid #2479b5;
-}
-.modal-header,
-.modal-footer {
-  background-color: #d3e4f0;
+.form-group {
+  margin-bottom: 0;
 }
