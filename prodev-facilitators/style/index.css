@@ -1,6 +1,5 @@
 /* Styling from test-navbar-lac */
-@import "../../navbar/style/index.css";
 
-@import "../../agency-info/style/sub-navbar.css";
+@import "../../main-styling/main.css";
 
 @import "./hero.css";
