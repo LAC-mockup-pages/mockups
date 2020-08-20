@@ -10,7 +10,9 @@ Core CSS rules for all pages
     sans-serif;
 }
 
-/* Colors */
+/* Colors
+============================
+*/
 
 .blue-light-text {
   color: #d3e4f0;
@@ -46,11 +48,144 @@ Core CSS rules for all pages
   background-color: #1d6294;
 }
 
+.chocolate {
+  color: #dd5814;
+}
+
 .yellow-bg {
   background-color: #f7e095;
 }
 
-/* Navbar */
+/* Pages body
+============================
+*/
+
+body {
+  background-color: #f0e2d5;
+}
+
+.hero {
+  margin: 1% 7.5%;
+  padding: 0;
+  border-radius: 5px;
+}
+
+.view-bloc,
+#view-bloc {
+  padding: 0 0 1% 0;
+  border-radius: 5px;
+}
+
+.label-text {
+  font-size: 1.3em;
+  font-weight: 600;
+  padding: 0 0 0.5% 0.5%;
+}
+
+#new-entry > .form-control {
+  font-size: 1.1em;
+  padding: 0.5%;
+  font-weight: 600;
+  margin-right: 0.3%;
+  margin-top: 0.3%;
+  height: 2.5em;
+  width: 18%;
+  transition: box-shadow 0.7s;
+}
+#new-entry {
+  margin-left: 1%;
+}
+
+#new-entry > .form-control:focus {
+  box-shadow: 0 0 0 3px #d3e4f0;
+}
+
+option {
+  color: #333;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+:required::placeholder,
+.form-control:required,
+.delete-msg {
+  color: #dd5814;
+  text-align: left;
+}
+
+.table {
+  margin: 0;
+}
+
+#main-table {
+  border-bottom: 1.5em solid #2479b5;
+  border-radius: 5px;
+}
+tbody > tr:hover {
+  background-color: #d3e4f0;
+}
+
+tbody {
+  background-color: #f5f5f5;
+  color: #333;
+  font-size: 1.4em;
+  font-weight: 400;
+}
+
+/* tbody > tr:nth-child(even) {
+  background-color: #e0e0eb;
+} */
+
+.table > tbody > tr > td {
+  line-height: 40px;
+}
+
+thead,
+th {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #fff;
+}
+
+.input-field {
+  line-height: 2.5em;
+}
+
+.input-field > label {
+  width: 25%;
+  font-size: 1.2em;
+}
+
+.modal-body,
+.modal-body input,
+select {
+  background-color: #f0f0f5;
+}
+
+.delete-msg {
+  width: fit-content;
+  border-bottom: 2px solid#dd5814;
+}
+
+.modal-header,
+.modal-footer {
+  background-color: #d3e4f0;
+}
+
+.input-field > input,
+.modal-select {
+  font-size: 1.4em;
+  font-weight: 400;
+  border: none;
+  text-indent: 4px;
+  width: 60%;
+  border-bottom: 1px solid #2479b5;
+}
+
+/* Navbar
+============================
+*/
+
 #main-logo:hover {
   cursor: pointer;
 }
@@ -184,8 +319,30 @@ Core CSS rules for all pages
   background-color: #bfd3e2;
 }
 
-/* Main buttons */
-/* Back to Top Button */
+/* Sub-Navbar
+============================
+*/
+
+#sub-nav {
+  overflow: visible;
+  font-size: 1.3em;
+  text-align: center;
+}
+
+.sub-navbar {
+  line-height: 3em;
+  margin: 4px;
+  border-radius: 5px;
+}
+
+.sub-navbar li:hover {
+  cursor: pointer;
+}
+
+/* Main buttons
+Back to Top button
+============================
+*/
 
 #btn-top,
 #btn-save,
@@ -204,8 +361,28 @@ Core CSS rules for all pages
   z-index: 1000;
 }
 
+.buttons-bloc-new {
+  margin-top: 0.7%;
+}
+
+#submit-btn,
+#cancel-btn {
+  margin: 0 0.5% 0 2%;
+  width: 5.5em;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+#submit-btn:hover,
+#cancel-btn:hover {
+  box-shadow: 0 0 0 3px #d3e4f0;
+}
+
 #btn-top {
-  background-color: #ff9800;
+  border-bottom: solid 2px #555;
+  border-radius: 20px;
+  font-weight: 600;
+  color: #555;
 }
 
 #btn-save {
@@ -220,7 +397,8 @@ Core CSS rules for all pages
 
 #btn-top:hover {
   cursor: pointer;
-  background-color: #333;
+  background-color: #555;
+  color: #fff;
 }
 
 #btn-save:hover,
@@ -232,13 +410,19 @@ Core CSS rules for all pages
   background-color: #555;
 }
 
-/* Close icon */
+/* Close icon
+============================
+*/
+
 .close {
   color: red;
   font-size: 3em;
 }
 
-/* Tooltips */
+/* Tooltips
+============================
+*/
+
 .tooltip > .tooltip-inner {
   background-color: #f7e095;
   opacity: 0.8;

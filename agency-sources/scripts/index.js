@@ -9,13 +9,13 @@ const rowLabels = [
     AgencyID: "Agency ID",
     FSID: "Source ID",
     FundAbbrev: "Source Name",
-    FundStart: "Begin Date",
-    FundEnd: "End Date",
+    FundStart: "Begin Date (MM/DD/YYYY)",
+    FundEnd: "End Date (MM/DD/YYYY)",
     FY: "Fiscal Year",
     FundNumber: "Contract / Grant #",
     Amount: "Amount",
-    Purpose: "Purpose",
-  },
+    Purpose: "Purpose"
+  }
 ];
 
 const setFiscalYear = (start, end) => {
@@ -44,14 +44,16 @@ const createNewRecord = (labelsList) => {
       element = elementSelectNewRecord({
         hashTable: sourcesData,
         keyValue: key,
-        option: "required",
+        option:
+          " required data-toggle='tooltip' data-placement='bottom' title='Please fill this field'",
         optionText: "a funding source",
-        classOption,
+        classOption
       });
     } else {
       let placehold = labelObj[key];
       if (["FundStart", "FundEnd"].includes(key)) {
-        option = " required title='Please fill this field\n(MM/DD/YYYY)'";
+        option =
+          " required data-toggle='tooltip' data-placement='bottom' title='Please fill this field\n(MM/DD/YYYY)'";
       }
       if (key === "FY") {
         classOption += " hidden";
@@ -61,19 +63,11 @@ const createNewRecord = (labelsList) => {
         key,
         placehold,
         classOption,
-        option,
+        option
       });
     }
     result.push(element);
   }
-  result.push(
-    `<button type="button" id="submit-btn" form="new-entry"
-      class="btn btn-primary">Add
-    </button>
-    <button type="button" id="cancel-btn" form="new-entry"
-      class="btn btn-default">Cancel
-    </button>`
-  );
   return result.join("");
 };
 
@@ -105,7 +99,7 @@ const createTableBody = (dataList, labelList) => {
       record,
       labelList: filteredLabelList,
       labelObj: rowLabels[0],
-      hiddenList,
+      hiddenList
     });
   }
   return `<tbody>${rows}</tbody>`;
@@ -162,6 +156,10 @@ const saveMods = (fields, formName, tableName = "") => {
   }
 };
 
+//*=================================================
+//* jQuery section
+//*=================================================
+
 $(document).ready(() => {
   // * sub-navbar/index.js
   $("#sub-nav li").on("click", function () {
@@ -172,6 +170,14 @@ $(document).ready(() => {
   // * Agency funding sources viewing
   $("#new-entry").append(createNewRecord(rowLabels));
   $("#main-table").append(createViewBloc(rowLabels));
+  $(".source-entry").append(`<div class="container-fluid buttons-bloc-new">
+  <button type="button" id="cancel-btn" form="new-entry"
+    class="btn btn-default pull-right">Cancel</button>
+  <button type="button" id="submit-btn" form="new-entry"
+    class="btn dark-blue-text blue-light-bg pull-right">Add</button>
+</div>`);
+  // Enables customized tooltips
+  $("[data-toggle='tooltip']").tooltip();
 
   // Change text color from red (required) to black
   // when a value other than default is selected
@@ -238,7 +244,7 @@ $(document).ready(() => {
             labelVal: "Source Name",
             labelClassVal: "class='red-text'",
             option: "required",
-            optionText: " a source",
+            optionText: " a source"
           });
         } else {
           let option = "";
@@ -257,7 +263,7 @@ $(document).ready(() => {
             labelClassVal,
             classVal: "",
             option,
-            optionHidden,
+            optionHidden
           });
         }
       })
