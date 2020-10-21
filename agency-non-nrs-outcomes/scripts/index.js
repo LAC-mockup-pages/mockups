@@ -223,8 +223,7 @@ $(document).ready(() => {
 
   //* Data viewing
   $("#new-entry").append(createNewRecord(rowLabels));
-  // $("#main-table").append(createTableHeader(rowLabels[0]));
-  $("#view-bloc").append(createViewBloc());
+  $("#view-bloc").append(createFilterBloc() + createViewBloc());
   $(".outcome-entry").append(`<div class="container-fluid buttons-bloc-new">
   <button type="button" id="cancel-btn" form="new-entry"
     class="btn btn-default pull-right">Cancel</button>
