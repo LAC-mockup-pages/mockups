@@ -86,7 +86,6 @@ const displayDescriptions = (outcomeList) => {
       ? 1
       : 0
   ); // Sort by alpha
-  console.log("sortedList :>> ", sortedList);
   for (const desc of sortedList) {
     if (desc) {
       const { ID, OutcomeSortOrder, Category, Description } = desc;
@@ -109,7 +108,6 @@ const createCard = (dataList) => {
     );
 
     if (outcomes.length < 1) continue;
-    console.log("outcomes :>> ", outcomes);
     const descriptions = displayDescriptions(outcomes);
     const card = `<div class="container-fluid card row" id=${field.OutcomeSortOrder}>
     <div class="category-view col-md-5">${field.Category}</div>
