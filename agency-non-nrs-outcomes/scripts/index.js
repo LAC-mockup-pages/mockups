@@ -253,21 +253,20 @@ $(document).ready(() => {
     $("#view-bloc").append(card);
   });
 
-  //* New entry Cancel button
-  $(document).on("click", "#cancel-btn", function (evnt) {
+  //* New entry Cancel button and Clear Filter button
+  $(document).on("click", "#cancel-btn, #filter-cancel-btn", function (evnt) {
     evnt.stopPropagation();
     location.reload();
   });
 
   //* Change event in filter bloc
-  $(document).on("change", "#OutComeSortOrder-view", function (evnt) {
+  $(document).on("change", "#OutcomeSortOrder-view", function (evnt) {
     evnt.stopPropagation();
     const selectedCategory = $(this).val();
     const selectedList = dataOutcomes.filter(
       (record) => record.OutcomeSortOrder === selectedCategory
     );
-
-    console.log("selectedList :>> ", selectedList);
+    $("#view-bloc").empty().append(createViewBloc(selectedList));
   });
 
   //* Select outcome for editing
