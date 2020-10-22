@@ -46,7 +46,7 @@ const outcomesData = [
     AgencyID: "PRA",
     OutcomeSortOrder: "1",
     Category: "Health Literacy",
-    Description: "applied for health benefits (self)"
+    Description: "Applied for health benefits (self)"
   },
   {
     ID: "3231",
@@ -67,7 +67,7 @@ const outcomesData = [
     AgencyID: "PRA",
     OutcomeSortOrder: "5",
     Category: "Community Outcomes",
-    Description: "Volunteering for meals on wheels"
+    Description: "Burned meals on wheels"
   }
 ];
 

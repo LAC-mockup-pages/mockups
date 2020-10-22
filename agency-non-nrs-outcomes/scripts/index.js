@@ -77,9 +77,17 @@ const createTableHeader = (labelsObject) => {
   return createHeaders(list);
 };
 
-const displayDescriptions = (outcomeList, labelObj) => {
+const displayDescriptions = (outcomeList) => {
   let descriptionBloc = "";
-  for (const desc of outcomeList) {
+  const sortedList = outcomeList.sort((item1, item2) =>
+    item1.Description < item2.Description
+      ? -1
+      : item1.Description > item2.Description
+      ? 1
+      : 0
+  ); // Sort by alpha
+  console.log("sortedList :>> ", sortedList);
+  for (const desc of sortedList) {
     if (desc) {
       const { ID, OutcomeSortOrder, Category, Description } = desc;
 
@@ -93,14 +101,16 @@ const displayDescriptions = (outcomeList, labelObj) => {
   return descriptionBloc;
 };
 
-const createCard = (dataList, labelObj) => {
+const createCard = (dataList) => {
   let body = "";
   for (const field of categories) {
-    const outcomes = dataList
-      .filter((record) => record.OutcomeSortOrder === field.OutcomeSortOrder)
-      .sort((item1, item2) => item2.ID - item1.ID); // Sort by desc. ID
+    const outcomes = dataList.filter(
+      (record) => record.OutcomeSortOrder === field.OutcomeSortOrder
+    );
+
     if (outcomes.length < 1) continue;
-    const descriptions = displayDescriptions(outcomes, labelObj);
+    console.log("outcomes :>> ", outcomes);
+    const descriptions = displayDescriptions(outcomes);
     const card = `<div class="container-fluid card row" id=${field.OutcomeSortOrder}>
     <div class="category-view col-md-5">${field.Category}</div>
     <div class="description-view col-md-7">${descriptions}</div>
@@ -116,7 +126,7 @@ const createViewBloc = (listOutcomes) => {
     <div class="category-header col-md-5">Category</div>
     <div class="description-header col-md-7">Outcomes</div>
   </div>`;
-  const outcomeCards = createCard(listOutcomes, rowLabels[0]);
+  const outcomeCards = createCard(listOutcomes);
   const viewBloc = `${mainHeader}${outcomeCards}`;
   return viewBloc;
 };
