@@ -66,3 +66,13 @@
 .outcome-view:last-child {
   border-bottom: none;
 }
+
+#filter-bloc {
+  margin-bottom: 0.5%;
+  padding-top: 0.8em;
+}
+
+.filter-select {
+  padding-left: 1.1em;
+  max-width: 12%;
+}

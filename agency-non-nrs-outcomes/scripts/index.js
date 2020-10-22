@@ -110,14 +110,14 @@ const createCard = (dataList, labelObj) => {
   return body;
 };
 
-const createViewBloc = () => {
+const createViewBloc = (listOutcomes) => {
   const mainHeader = `
   <div class="container-fluid main-header blue-bg row">
-  <div class="category-header col-md-5">Category</div>
-  <div class="description-header col-md-7">Outcomes</div>
+    <div class="category-header col-md-5">Category</div>
+    <div class="description-header col-md-7">Outcomes</div>
   </div>`;
-
-  const viewBloc = mainHeader + createCard(dataOutcomes, rowLabels[0]);
+  const outcomeCards = createCard(listOutcomes, rowLabels[0]);
+  const viewBloc = `${mainHeader}${outcomeCards}`;
   return viewBloc;
 };
 
@@ -223,7 +223,8 @@ $(document).ready(() => {
 
   //* Data viewing
   $("#new-entry").append(createNewRecord(rowLabels));
-  $("#view-bloc").append(createFilterBloc() + createViewBloc());
+  $("#filter-bloc").append(createFilterBloc());
+  $("#view-bloc").append(createViewBloc(dataOutcomes));
   $(".outcome-entry").append(`<div class="container-fluid buttons-bloc-new">
   <button type="button" id="cancel-btn" form="new-entry"
     class="btn btn-default pull-right">Cancel</button>
@@ -256,6 +257,17 @@ $(document).ready(() => {
   $(document).on("click", "#cancel-btn", function (evnt) {
     evnt.stopPropagation();
     location.reload();
+  });
+
+  //* Change event in filter bloc
+  $(document).on("change", "#OutComeSortOrder-view", function (evnt) {
+    evnt.stopPropagation();
+    const selectedCategory = $(this).val();
+    const selectedList = dataOutcomes.filter(
+      (record) => record.OutcomeSortOrder === selectedCategory
+    );
+
+    console.log("selectedList :>> ", selectedList);
   });
 
   //* Select outcome for editing
