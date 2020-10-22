@@ -17,18 +17,18 @@ export const createFilterBloc = () => {
 
   const primarySelect = elementSelectModal({
     hashTable,
-    keyValue: "OutComeSortOrder",
+    keyValue: "OutcomeSortOrder",
     selectedValue: "",
     labelVal: "Filter by: ",
-    labelClassVal: "class='blue-light-text filter-select'",
+    labelClassVal: "class='blue-light-text filter-select-label'",
     option: "",
     optionText: ""
   });
 
   let bloc = `
 <form  class="form sort-select container-fluid row" role="form" id="filter-form">
-  <div class="col-md-8" id="primary-select">${primarySelect}</div>
-  <div class="col-md-4">
+  <div class="col-md-9" id="primary-select">${primarySelect}</div>
+  <div class="col-md-3">
     <button type="button" id="filter-cancel-btn" form="filter-form" class="btn btn-default">Clear filters</button>
   </div>
 </form>`;
