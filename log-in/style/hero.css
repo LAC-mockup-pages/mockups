@@ -21,6 +21,12 @@ body {
   font-size: 1.1em;
 }
 
+.glyphicon-registration-mark {
+  font-weight: 400;
+  font-size: 0.6em;
+  vertical-align: text-top;
+}
+
 .small-text,
 .regular {
   padding-left: 10%;
