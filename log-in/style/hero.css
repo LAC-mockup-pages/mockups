@@ -1,0 +1,59 @@
+.hero {
+  background-color: #f0f0f5;
+  margin: 2% auto;
+  padding-bottom: 1%;
+  border: solid #2479b5;
+  border-width: 2em 0;
+}
+
+tbody {
+  background-color: #f0f0f5;
+}
+
+.quarter-bloc {
+  padding: 0 2%;
+}
+
+#top-bloc,
+#bottom-bloc {
+  padding-left: 0;
+  padding-right: 0;
+}
+.row {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.separation {
+  border-bottom: 2px solid #d3e4f0;
+  margin: 3% 0;
+}
+.row-label {
+  font-size: 0.9em;
+  font-weight: 600;
+  line-height: 45px;
+}
+
+.row-data {
+  border-bottom: 1px solid #2479b5;
+}
+
+#top-bloc:hover,
+#bottom-bloc:hover {
+  background-color: #d3e4f0;
+}
+
+label {
+  width: 25%;
+  font-size: 1.1em;
+}
+
+.input-field > input,
+.input-field > select {
+  border-bottom: 1px solid #2479b5;
+  margin-bottom: 0;
+}
+
+.form-group {
+  margin-bottom: 0;
+}
