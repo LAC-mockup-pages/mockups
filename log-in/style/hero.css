@@ -1,10 +1,10 @@
-.hero {
+/* .hero {
   background-color: #f0f0f5;
   margin: 2% auto;
   padding-bottom: 1%;
   border: solid #2479b5;
   border-width: 2em 0;
-}
+} */
 
 body {
   background-color: #f0f0f5;
@@ -18,12 +18,12 @@ body {
   background-position: 15% 32%;
   background-repeat: no-repeat;
   font-weight: 600;
-  font-size: 1.1em;
+  font-size: 1.3em;
 }
 
 .glyphicon-registration-mark {
   font-weight: 400;
-  font-size: 0.6em;
+  font-size: 0.7em;
   vertical-align: text-top;
 }
 
@@ -33,7 +33,8 @@ body {
 }
 
 .regular {
-  font-weight: 400;
+  font-weight: 300;
+  font-size: 0.9em;
   padding-right: 6%;
 }
 
