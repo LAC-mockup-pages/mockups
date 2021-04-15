@@ -10,15 +10,36 @@ body {
   background-color: #f0f0f5;
 }
 
+.welcome-info {
+  padding: 1% 0%;
+  color: white;
+  background-color: #a6a6a6;
+  background-image: url(../../assets/SUNY-Seal.png);
+  background-position: 15% 32%;
+  background-repeat: no-repeat;
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+.small-text,
+.regular {
+  padding-left: 10%;
+}
+
+.regular {
+  font-weight: 400;
+  padding-right: 6%;
+}
+
 .footer-logos {
   border-top: 2px solid #a6a6a6;
-  padding: 0.5% 0% 0.5% 6%;
+  padding: 0.5% 0% 0.5% 7%;
 }
 .logo {
   height: inherit;
 }
 .logo img {
-  margin-left: 5%;
+  margin: 0% 5%;
 }
 .row {
   margin-right: 0;
