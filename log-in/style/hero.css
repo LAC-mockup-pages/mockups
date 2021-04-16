@@ -1,14 +1,16 @@
-/* .hero {
-  background-color: #f0f0f5;
-  margin: 2% auto;
-  padding-bottom: 1%;
-  border: solid #2479b5;
-  border-width: 2em 0;
-} */
+/*  Local CSS rules for the page */
 
 body {
   background-color: #f0f0f5;
 }
+
+.hero {
+  margin: 0%;
+  border-radius: 0px;
+}
+
+/* LAC ASISTS info
+=========================== */
 
 .welcome-info {
   padding: 1% 0%;
@@ -38,9 +40,60 @@ body {
   padding-right: 6%;
 }
 
+/* Link panel
+=========================== */
+.link-panel {
+  background-color: #f5f5f5;
+  padding: 1.5% 1%;
+}
+
+.heading-bar {
+  color: #fff;
+  background: #694e77;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px;
+  padding-bottom: 0.75em;
+  padding-top: 0.75em;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.float-right {
+  float: right;
+}
+
+.quick-links {
+  display: block;
+  font-size: 1.2em;
+  list-style-type: none;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+  padding-inline-end: 20px;
+  line-height: 2em;
+}
+
+.quick-links a:link,
+.quick-links a:visited,
+.quick-links a:hover,
+.quick-links a:active {
+  text-decoration: none;
+}
+
+.quick-links li:hover,
+.quick-links a:active {
+  background-color: #d3e4f0;
+}
+
+/* Footer
+ =========================== */
 .footer-logos {
   border-top: 2px solid #a6a6a6;
   padding: 0.5% 0% 0.5% 7%;
+  background-color: #f5f5f5;
 }
 .logo {
   height: inherit;
@@ -51,13 +104,4 @@ body {
 .row {
   margin-right: 0;
   margin-left: 0;
-}
-
-.separation {
-  border-bottom: 2px solid #d3e4f0;
-  margin: 3% 0;
-}
-
-.form-group {
-  margin-bottom: 0;
 }
