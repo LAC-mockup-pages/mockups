@@ -50,7 +50,7 @@ body {
 .heading-bar {
   color: #fff;
   background: #694e77;
-  font-size: 16px;
+  font-size: 1.3em;
   font-weight: bold;
   padding: 8px;
   padding-bottom: 0.75em;
@@ -71,9 +71,15 @@ body {
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-  padding-inline-start: 40px;
-  padding-inline-end: 20px;
+  padding-inline-start: 30px;
+  padding-inline-end: 30px;
   line-height: 2em;
+}
+
+.quick-links a {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .quick-links a:link,
@@ -81,6 +87,7 @@ body {
 .quick-links a:hover,
 .quick-links a:active {
   text-decoration: none;
+  color: #1d6294;
 }
 
 .quick-links li:hover,
