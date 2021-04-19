@@ -14,11 +14,26 @@ body {
 =========================== */
 
 header {
-  padding: 4% 0% 2% 0%;
+  padding: 3% 0% 2% 0%;
 }
 
-.loginbox .input-group {
-  max-width: 12 em;
+#loginform {
+  padding: 7% 0% 0% 10%;
+}
+
+.form-group {
+  padding-right: 5%;
+}
+
+.form-group:first-of-type {
+  padding-left: 3%;
+  font-size: 1.2em;
+}
+
+.forgot {
+  padding-left: 23%;
+  padding-top: 2%;
+  font-size: 1.2em;
 }
 
 /* LAC ASISTS info
@@ -62,6 +77,7 @@ header {
 .heading-bar {
   color: #fff;
   background: #694e77;
+  /* background: #2479b5; */
   font-size: 1.3em;
   font-weight: bold;
   padding: 8px;
