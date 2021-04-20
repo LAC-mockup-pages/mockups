@@ -14,11 +14,6 @@ $(document).ready(function () {
     $("#myModal .modal-title").text(title);
     const newsArticle = $(this).data("news");
 
-    // const characterCodes = newsArticle
-    //   .split("")
-    //   .map((char) => char.charCodeAt(0) + " " + char);
-
-    // console.table(characterCodes);
     $("#myModal .modal-body #myModalTextBox").text(newsArticle);
     $("body").on("hidden.bs.modal", "#myModal", function () {
       $(this).removeData("bs.modal");
