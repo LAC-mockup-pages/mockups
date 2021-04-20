@@ -47,7 +47,7 @@
 
     <script src="../helpers/constants.js" type="text/javascript" defer></script> -->
 
-    <script src="scripts/index.js" type="text/javascript" defer></script>
+    <script src="./scripts/index.js" type="text/javascript" defer></script>
 
     <!-- !============================= -->
     <!-- ! File: /logininfo.aspx -->
@@ -454,5 +454,48 @@ https://visitor.r20.constantcontact.com/d.jsp?llr=kftry8dab&amp;p=oi&amp;m=11036
         </div>
       </div>
     </footer>
+    <div
+      class="modal fade"
+      id="myModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-hidden="true"
+            >
+              ×
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            <textarea
+              name="myModalTextBox"
+              rows="2"
+              cols="20"
+              readonly="readonly"
+              id="myModalTextBox"
+              style="height: 300px; width: 550px"
+            ></textarea>
+          </div>
+          <!-- /modal-body-->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+          <!-- /modal-footer -->
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
   </body>
 </html>
