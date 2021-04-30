@@ -22,8 +22,8 @@ header {
   padding: 7% 0% 0% 10%;
 }
 
-.form-group {
-  padding-right: 5%;
+.form-group:not(.submit-btn) {
+  padding-right: 12%;
 }
 
 .form-group:first-of-type {
@@ -32,17 +32,20 @@ header {
 }
 
 .forgot {
-  padding-left: 23%;
+  padding-left: 28%;
   padding-top: 2%;
   font-size: 1.2em;
 }
 
 .top-section,
-.top-section .col-md-4 {
+.top-section .col-md-4,
+.top-section .col-md-8 {
   padding-left: 0px;
   padding-right: 0px;
 }
-
+.submit-btn {
+  float: right;
+}
 /* LAC ASISTS info
 =========================== */
 
