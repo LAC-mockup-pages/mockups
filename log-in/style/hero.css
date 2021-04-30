@@ -8,6 +8,7 @@ body {
 .hero {
   margin: 0%;
   border-radius: 0px;
+  height: 59%;
 }
 
 /* Header | Login box
@@ -34,6 +35,12 @@ header {
   padding-left: 23%;
   padding-top: 2%;
   font-size: 1.2em;
+}
+
+.top-section,
+.top-section .col-md-4 {
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 /* LAC ASISTS info
@@ -72,6 +79,7 @@ header {
 .link-panel {
   background-color: #f0f0f5;
   padding: 1.5% 1%;
+  height: 100%;
 }
 
 .heading-bar {
