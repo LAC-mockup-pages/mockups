@@ -27,7 +27,6 @@ const createNews = (newsList) => {
 //* =================================================
 $(document).ready(function () {
   //* At 1st rendering, add News Bulletin items from request
-  // const news = createNews([]);
   const news = createNews(GetNewsBulletin);
   $("#news-panel").append(news);
 
@@ -36,7 +35,6 @@ $(document).ready(function () {
     const height = $(this).attr("data-height") || 300;
     const width = $(this).attr("data-width") || 400;
     const title = $(this).text();
-    console.log("title :>> ", this);
     $("#myModal .modal-title").text(title);
     const newsArticle = $(this).data("news");
 

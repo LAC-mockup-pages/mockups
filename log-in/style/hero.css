@@ -129,6 +129,10 @@ header {
   color: #1d6294;
 }
 
+#myModalTextBox {
+  font-size: 1.3em;
+}
+
 .quick-links li:hover,
 .quick-links a:active {
   background-color: #d3e4f0;
