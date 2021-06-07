@@ -2,14 +2,32 @@
 //* =================================================
 
 const createNews = (newsList) => {
-  const newsItem = "";
-  return newsItem;
+  let newsItems = "";
+
+  // newsList is an empty array
+  if (newsList.length < 1) return "<li>No News</li>";
+
+  for (const obj of newsList) {
+    const { ID, newsTitle, newsArticle } = obj;
+    const elementNews = `
+      <li>
+        <a class="modalButton" data-toggle="modal" href="#myModal" data-height="300px" data-width="100%" data-target="#myModal"
+        data-id=${ID} data-news="${newsArticle}">
+          ${newsTitle}
+        </a>
+      </li>
+    `;
+    newsItems += elementNews;
+  }
+  return newsItems;
 };
+
 //* =================================================
 //* jQuery section
 //* =================================================
 $(document).ready(function () {
   //* At 1st rendering, add News Bulletin items from request
+  // const news = createNews([]);
   const news = createNews(GetNewsBulletin);
   $("#news-panel").append(news);
 
