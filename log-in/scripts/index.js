@@ -1,10 +1,18 @@
 //* Logic
 //* =================================================
 
+const createNews = (newsList) => {
+  const newsItem = "";
+  return newsItem;
+};
 //* =================================================
 //* jQuery section
 //* =================================================
 $(document).ready(function () {
+  //* At 1st rendering, add News Bulletin items from request
+  const news = createNews(GetNewsBulletin);
+  $("#news-panel").append(news);
+
   //* Selected news article displayed in modal
   $(document).on("click", "a.modalButton", function (evnt) {
     const height = $(this).attr("data-height") || 300;
